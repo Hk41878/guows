@@ -1,0 +1,42 @@
+*{
+    padding: 0;
+    margin: 0;
+    color: white;
+}
+
+body{
+    background-color: #FF8C8C;
+}
+
+.container{
+position: relative;
+}
+
+.items{
+    position: absolute;
+    top: 50%;
+    transform: translate(-50% -50%);
+}
+
+#web{
+    display: none;
+}
+
+@media (max-width:600px){
+    #web{
+        display: block;
+    }
+    .container{
+        position: relative;
+        }
+        
+        .items{
+            position: absolute;
+            top: 50%;
+            transform: translate(-50% -50%);
+        }
+        
+        #mob{
+            display: none;
+        }
+}
