@@ -1,134 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Layout with Floating Window</title>
-  <style>
-    .container {
-      display: grid;
-      grid-template-areas:
-        "header header header"
-        "main main sidebar"
-        "footer footer footer";
-      grid-template-columns: 1fr 1fr 200px;
-      grid-template-rows: 100px 1fr 50px;
-      height: 100vh;
-    }
-
-    .header {
-      grid-area: header;
-      display: flex;
-      background-color: #f2f2f2;
-    }
-
-    .header-left {
-      flex: 1;
-      background-color: #ddd;
-    }
-
-    .header-center {
-      flex: 2;
-      background-color: #ccc;
-    }
-
-    .header-right {
-      flex: 1;
-      background-color: #ddd;
-    }
-
-    .main {
-      grid-area: main;
-      display: flex;
-      background-color: #e6e6e6;
-    }
-
-    .main-left {
-      flex: 1;
-      background-color: #ccc;
-    }
-
-    .main-right {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .main-right-top {
-      flex: 1;
-      background-color: #ddd;
-    }
-
-    .main-right-bottom {
-      flex: 1;
-      background-color: #eee;
-    }
-
-    .footer {
-      grid-area: footer;
-      background-color: #f2f2f2;
-    }
-
-    .sidebar {
-      grid-area: sidebar;
-      background-color: #ddd;
-      cursor: pointer;
-    }
-
-    .floating-window {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: #fff;
-      padding: 20px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-      z-index: 9999;
-      display: none;
-    }
-
-    .window-content {
-      max-width: 300px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centered Page with Button</title>
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        .button-container {
+            text-align: center;
+        }
+        .round-button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 20px;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        .round-button:hover {
+            background-color: #45a049;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <div class="header-left"></div>
-      <div class="header-center"></div>
-      <div class="header-right"></div>
+    <div class="button-container">
+        <a href="http://192.168.1.56/streaming" class="round-button">Get me in</a>
     </div>
-    <div class="main">
-      <div class="main-left"></div>
-      <div class="main-right">
-        <div class="main-right-top"></div>
-        <div class="main-right-bottom"></div>
-      </div>
-    </div>
-    <div class="footer"></div>
-    <div class="sidebar"></div>
-    <div class="floating-window" id="floatingWindow">
-      <div class="window-content">
-        <h3>Floating Window</h3>
-        <p>This is a floating window that can be shown and hidden by clicking on the sidebar.</p>
-      </div>
-    </div>
+  <div class="contect-me"> 
+    <a href="#"></a>
   </div>
-
-  <script>
-    const floatingWindow = document.getElementById('floatingWindow');
-    const sidebar = document.querySelector('.sidebar');
-
-    sidebar.addEventListener('click', () => {
-      floatingWindow.style.display = 'block';
-    });
-
-    window.addEventListener('click', (event) => {
-      if (event.target !== floatingWindow && !floatingWindow.contains(event.target)) {
-        floatingWindow.style.display = 'none';
-      }
-    });
-  </script>
 </body>
 </html>
