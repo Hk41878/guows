@@ -1,0 +1,100 @@
+body {
+    margin: 20px;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+    transition: background-color 0.3s ease;
+}
+
+/* Social media item color classes */
+.instagram-bg { background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); }
+.whatsapp-bg { background: linear-gradient(135deg, #25D366, #128C7E, #075E54); }
+.facebook-bg { background: linear-gradient(135deg, #4c669f, #3b5998, #192f6a); }
+.linkedin-bg { background: linear-gradient(135deg, #0077B5, #005B85); }
+.twitter-bg { background: linear-gradient(135deg, #1DA1F2, #0D8BD7); }
+.tiktok-bg { background: linear-gradient(135deg, #FE2C55, #25F4EE); }
+.youtube-bg { background: linear-gradient(135deg, #FF0000, #CC0000); }
+.pinterest-bg { background: linear-gradient(135deg, #E60023, #C8232C); }
+.snapchat-bg { background: linear-gradient(135deg, #FFFC00, #FFD300); color: #000; }
+.call-bg { background: linear-gradient(135deg, #00C853, #00E676); }
+.email-bg { background: linear-gradient(135deg, #D93025, #EA4335); }
+.message-bg { background: linear-gradient(135deg, #34B7F1, #0084FF); }
+.telegram-bg { background: linear-gradient(135deg, #0088CC, #00BFFF); }
+
+/* Styling for the profile container */
+.profile-container {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+}
+
+.profile-image {
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.profile-name {
+    margin-top: 10px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+}
+
+.social-media-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+    margin-top: 20px;
+    position: relative;
+    transition: transform 0.3s ease-in-out; /* Smooth transition for animation */
+}
+
+.social-icon {
+    font-size: 5.5em;
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.social-icon:hover {
+    color: #0073e6;
+}
+
+.social-details {
+    display: none;
+    flex-direction: column;
+}
+
+.social-details.show {
+    display: flex;
+}
+
+.social-name {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin: 0;
+    color: #222;
+}
+
+.social-username {
+    font-size: 0.8em;
+    color: #333;
+    margin: 0;
+}
+
+/* CSS for social media items moving out of view */
+.social-media-item.outside {
+    transform: translateX(100vw);
+}
