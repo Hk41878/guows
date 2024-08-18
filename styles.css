@@ -5,7 +5,7 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #f0f0f0;
+    background-color: linear-gradient(135deg, #FE2C55, #25F4EE);
     transition: background-color 0.3s ease;
 }
 
