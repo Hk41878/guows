@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <title>Flipping Card UI Design</title>
+    <link rel="stylesheet" href="honeyinly.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+  <body>
+    <section>
+      <div id="card-container" class="container">
+        <div class="card front-face">
+          <header>
+            <span class="logo">
+              <img src="logo.png" alt="Logo" />
+              <h5>Master Card</h5>
+            </span>
+            <img src="chip.png" alt="Chip" class="chip" />
+          </header>
+
+          <div class="card-details">
+            <div class="name-number">
+              <h6>Card Number</h6>
+              <h5 class="number"><a href="#">8050 2030 3020 5040</a></h5>
+              <h5 class="name">Honey Kumar Vadhwa</h5>
+            </div>
+
+            <div class="valid-date">
+              <h6>Birth Day</h6>
+              <h5>19/08</h5>
+            </div>
+          </div>
+        </div>
+
+        <div class="card back-face">
+          <h6>
+            For customer service call <a href="tel:+393319021033">+393319021033</a>
+            or email at <a href="mailto:hk41878@gmail.com">hk41878@gmail.com</a>
+          </h6>
+          <span class="magnetic-strip"></span>
+          <div class="signature"><i>007</i></div>
+          <div class="social-icons">
+            <a href="tel:+393319021033/" class="social-icon" target="_blank"><i class="fas fa-phone"></i></a>
+            <a href="https://wa.me/+393319021033" class="social-icon" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.facebook.com/honeyinly" class="social-icon" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.instagram.com/honeyinly" class="social-icon" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://x.com/honeyvadhwa" class="social-icon" target="_blank"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const cardContainer = document.getElementById('card-container');
+
+        // Add a class to start the flip animation
+        cardContainer.classList.add('start-flip');
+
+        cardContainer.addEventListener('click', function (event) {
+          // Check if the click target is not a link
+          if (!event.target.closest('a')) {
+            cardContainer.classList.toggle('flip');
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
