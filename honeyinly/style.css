@@ -92,11 +92,13 @@ section::after {
   padding: 25px;
   border-radius: 25px;
   backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px); /* Add this line for Safari */
   background: rgba(255, 255, 255, 0.1);
   box-shadow: 0 25px 45px rgba(0, 0, 0, 0.25);
   border: 1px solid rgba(255, 255, 255, 0.1);
   backface-visibility: hidden;
 }
+
 
 .front-face header,
 .front-face .logo {
@@ -148,7 +150,7 @@ h6 a {
   transform: rotateY(180deg);
 }
 .card.back-face h6 {
-  font-size: 8px;
+  font-size: 10px;
 }
 .card.back-face .magnetic-strip {
   position: absolute;
