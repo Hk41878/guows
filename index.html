@@ -1,75 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
-    <meta property="og:type" content="guows.com">
-    <meta property="og:url" content="https://guows.com">
-    <meta property="og:title" content="ZARYAB Maher G">
-    <meta property="og:description" content="Visiting card with Social links">
-    <meta property="og:image" content="logo.jpg">
-    <title>mehar_g7000</title>
-    <link rel="stylesheet" href="style.css" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:type" content="website">
+<meta property="og:url" content="https://guows.com">
+<meta property="og:title" content="Build Your Own Site">
+<meta property="og:description" content="Need a Website? I’ll Create It for You!">
+<meta property="og:image" content="image.jpg">
+    <title>Profile with Social Media Links</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Add Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  </head>
-  <body>
-    <section>
-      <div id="card-container" class="container">
-        <div class="card front-face">
-          <header>
-            <span class="logo">
-              <img src="logo.png" alt="Logo" />
-              <h5>Master Card</h5>
-            </span>
-            <img src="chip.png" alt="Chip" class="chip" />
-          </header>
-
-          <div class="card-details">
-            <div class="name-number">
-              <h6>Card Number</h6>
-              <h5 class="number"><a href="#">0000 0000 0000 2002</a></h5>
-              <h5 class="name">Mohamed Zaryab Maher</h5>
+</head>
+<body>
+    <div class="profile-container">
+        <img src="profile.jpg" alt="Profile Image" class="profile-image">
+        <p class="profile-name">Honey Leo</p>
+        
+        <!-- Social media items -->
+        <div class="social-media-item instagram">
+            <a href="https://www.instagram.com/Honey_Leo_00/" target="_blank" class="social-icon">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <div class="social-details">
+                <p class="social-name">Instagram</p>
+                <p class="social-username">@Honey_Leo_00</p>
             </div>
-
-            <div class="valid-date">
-              <h6>Birth Day</h6>
-              <h5>31/10</h5>
+        </div>
+                <div class="social-media-item telegram">
+            <a href="https://t.me/hny1047" target="_blank" class="social-icon">
+                <i class="fab fa-telegram"></i>
+            </a>
+            <div class="social-details">
+                <p class="social-name">Telegram</p>
+                <p class="social-username">@Honey_Leo_00</p>
             </div>
-          </div>
         </div>
 
-        <div class="card back-face">
-          <h6>
-            For customer service email at <a href="mailto:mohamedzaryabmaher@gmail.com">mohamedzaryabmaher@gmail.com</a>
-          </h6>
-          <span class="magnetic-strip"></span>
-          <div class="signature"><i>007</i></div>
-          <div class="social-icons">
-            <a href="https://wa.me/+393450243582" class="social-icon" target="_blank"><i class="fab fa-whatsapp"></i></a>
-            <a href="tel:+393450243582/" class="social-icon" target="_blank"><i class="fas fa-phone"></i></a>
-            <a href="https://snapchat.com/t/GS4kpFnH" target="_blank"><i class="fab fa-snapchat-ghost"></i></a>
-            <a href="https://www.tiktok.com/@mehar7000" target="_blank"><i class="fab fa-tiktok"></i></a>
-            <a href="https://www.instagram.com/mehar_g7000" class="social-icon" target="_blank"><i class="fab fa-instagram"></i></a>
-          </div>
+        <div class="social-media-item email">
+            <a href="mailto:info.guows@gmial.com" class="social-icon">
+                <i class="fas fa-envelope"></i>
+            </a>
+            <div class="social-details">
+                <p class="social-name">Email</p>
+                <p class="social-username">Contect with Email</p>
+            </div>
         </div>
-      </div>
-    </section>
-
-    <script>
-      document.addEventListener('DOMContentLoaded', function () {
-        const cardContainer = document.getElementById('card-container');
-
-        // Add a class to start the flip animation
-        cardContainer.classList.add('start-flip');
-
-        cardContainer.addEventListener('click', function (event) {
-          // Check if the click target is not a link
-          if (!event.target.closest('a')) {
-            cardContainer.classList.toggle('flip');
-          }
-        });
-      });
-    </script>
-  </body>
+        <div class="social-media-item whatsapp">
+            <a href="#" target="_blank" class="social-icon">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+            <div class="social-details">
+                <p class="social-name">Whatsapp</p>
+                <p class="social-username">Not_Provided</p>
+            </div>
+        </div>
+        <div class="social-media-item facebook">
+            <a href="#" target="_blank" class="social-icon">
+                <i class="fab fa-facebook"></i>
+            </a>
+            <div class="social-details">
+                <p class="social-name">Facebook</p>
+                <p class="social-username">Not_Provided</p>
+            </div>
+        </div>
+        <div class="social-media-item linkedin">
+            <a href="#/" target="_blank" class="social-icon">
+                <i class="fab fa-linkedin"></i>
+            </a>
+            <div class="social-details">
+                <p class="social-name">Linkedin</p>
+                <p class="social-username">Not_Provided</p>
+            </div>
+        </div>
+        <div class="social-media-item twitter">
+            <a href="#" target="_blank" class="social-icon">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <div class="social-details">
+                <p class="social-name">Twitter</p>
+                <p class="social-username">Not_Provided</p>
+            </div>
+        </div>
+        <div class="social-media-item tiktok">
+            <a href="#" target="_blank" class="social-icon">
+                <i class="fab fa-tiktok"></i>
+            </a>
+            <div class="social-details">
+                <p class="social-name">TikTok</p>
+                <p class="social-username">Not_Provided</p>
+            </div>
+        </div>
+        <div class="social-media-item youtube">
+            <a href="#" target="_blank" class="social-icon">
+                <i class="fab fa-youtube"></i>
+            </a>
+            <div class="social-details">
+                <p class="social-name">Youtube</p>
+                <p class="social-username"></p>
+            </div>
+        </div>
+        <div class="social-media-item pinterest">
+            <a href="#" target="_blank" class="social-icon">
+                <i class="fab fa-pinterest"></i>
+            </a>
+            <div class="social-details">
+                <p class="social-name">Pinterest</p>
+                <p class="social-username">Not_Provided</p>
+            </div>
+        </div>
+        <div class="social-media-item snapchat">
+            <a href="#" target="_blank" class="social-icon">
+                <i class="fab fa-snapchat"></i>
+            </a>
+            <div class="social-details">
+                <p class="social-name">Snapchat</p>
+                <p class="social-username">Not_Provided</p>
+            </div>
+        </div>
+        <div class="social-media-item call">
+            <a href="#" class="social-icon">
+                <i class="fas fa-phone"></i>
+            </a>
+            <div class="social-details">
+                <p class="social-name">Call</p>
+                <p class="social-username">Not_Provided</p>
+            </div>
+        </div>
+        <div class="social-media-item message">
+            <a href="sms:+" class="social-icon">
+                <i class="fas fa-sms"></i>
+            </a>
+            <div class="social-details">
+                <p class="social-name">Message</p>
+                <p class="social-username">Not_Provided</p>
+            </div>
+        </div>
+        <div class="social-media-item blanck">
+            <a href="#" target="_blank" class="social-icon"></a>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
 </html>
