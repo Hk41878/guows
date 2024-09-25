@@ -28,7 +28,7 @@ section::before {
   width: 180px;
   border-radius: 50%;
   transform: translate(-100px, -80px);
-  background: linear-gradient(90deg, #f3f5f5, #ff2018);
+  background: linear-gradient(90deg, #f3f5f5, #0066ff);
   animation: rotate-clockwise 10s linear infinite; /* Clockwise rotation */
 }
 
@@ -39,7 +39,7 @@ section::after {
   width: 180px;
   border-radius: 50%;
   transform: translate(100px, 80px);
-  background: linear-gradient(90deg, #ff6105, #f3f5f5);
+  background: linear-gradient(90deg, #ff6105, #0066ff);
   animation: rotate-counterclockwise 10s linear infinite; /* Counterclockwise rotation */
 }
 
