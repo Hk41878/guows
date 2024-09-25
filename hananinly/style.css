@@ -39,7 +39,7 @@ section::after {
   width: 180px;
   border-radius: 50%;
   transform: translate(100px, 80px);
-  background: linear-gradient(90deg, #ff6105, #0066ff);
+  background: linear-gradient(90deg, #0066ff, #f3f5f5);
   animation: rotate-counterclockwise 10s linear infinite; /* Counterclockwise rotation */
 }
 
