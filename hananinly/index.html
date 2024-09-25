@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta property="og:type" content="guows.com">
+    <meta property="og:url" content="https://guows.com">
+    <meta property="og:title" content="ABDUL HANAN">
+    <meta property="og:description" content="Visiting card with Social links">
+    <meta property="og:image" content="logoa.png">
+    <title>hananinly</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  </head>
+  <body>
+    <section>
+      <div id="card-container" class="container">
+        <div class="card front-face">
+          <header>
+            <span class="logo">
+              <img src="logo.png" alt="Logo" />
+              <h5>United Bank Limited</h5>
+            </span>
+            <img src="chip.png" alt="Chip" class="chip" />
+          </header>
+
+          <div class="card-details">
+            <div class="name-number">
+              <h6>Card Number</h6>
+              <br>             <div class="iban-container">
+                <p id="iban">IBAN PK44UNIL0109000310651</p>
+                <p id="ibann">PK44UNIL0109000310651</p>
+                <i class="fas fa-copy copy-icon" onclick="copyIBAN()"></i>
+              </div>
+              <h5 class="name">Abdul Hanan</h5>
+
+            </div>
+
+            <div class="valid-date">
+              <h6>Birth Day</h6>
+              <h5>09/11</h5>
+            </div>
+          </div>
+        </div>
+
+        <div class="card back-face">
+          <h6>
+            For customer service email at <a href="mailto:hananomanala@gmail.com">hananomanala@gmail.com</a>
+          </h6>
+          <span class="magnetic-strip"></span>
+          <div class="signature"><i>007</i></div>
+          <div class="social-icons">
+            <a href="https://wa.me/+96894403739" class="social-icon" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a href="tel:+96894403739/" class="social-icon" target="_blank"><i class="fas fa-phone"></i></a>
+            <a href="https://snapchat.com/t/ZzJqsEFT" target="_blank"><i class="fab fa-snapchat-ghost"></i></a>
+            <a href="https://www.x.com/honeybolty1" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://www.instagram.com/hananinly" class="social-icon" target="_blank"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const cardContainer = document.getElementById('card-container');
+
+        cardContainer.classList.add('start-flip');
+
+        cardContainer.addEventListener('click', function (event) {
+          if (!event.target.closest('a')) {
+            cardContainer.classList.toggle('flip');
+          }
+        });
+
+        function copyIBANN() {
+          const tempInput = document.createElement("input");
+          tempInput.value = document.getElementById("ibann").textContent;
+          document.body.appendChild(tempInput);
+          tempInput.select();
+          tempInput.setSelectionRange(0, 99999);
+          document.execCommand("copy");
+          document.body.removeChild(tempInput);
+          alert("IBAN copied to clipboard!");
+        }
+
+        const copyIcon = document.querySelector('.copy-icon');
+        if (copyIcon) {
+          copyIcon.addEventListener('click', function (event) {
+            event.stopPropagation();
+            copyIBANN();
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
