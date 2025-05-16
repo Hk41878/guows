@@ -1,0 +1,140 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Friendship Interest Test</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to right, #6dd5fa, #2980b9);
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 700px;
+      margin: 50px auto;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 30px;
+      border-radius: 15px;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .question {
+      margin-bottom: 25px;
+    }
+    .question p {
+      font-size: 1.1em;
+    }
+    .options label {
+      display: block;
+      margin: 5px 0;
+      cursor: pointer;
+    }
+    button {
+      display: block;
+      margin: 20px auto;
+      background: #27ae60;
+      color: white;
+      padding: 10px 25px;
+      font-size: 1em;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #219150;
+    }
+    #result {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Friendship Interest Matching Test</h1>
+    <form id="testForm">
+      <div class="question">
+        <p>1. What do you prefer?</p>
+        <div class="options">
+          <label><input type="radio" name="q1" value="Mountains"> Mountains</label>
+          <label><input type="radio" name="q1" value="Sea"> Sea</label>
+        </div>
+      </div><div class="question">
+    <p>2. Your go-to drink?</p>
+    <div class="options">
+      <label><input type="radio" name="q2" value="Tea"> Tea</label>
+      <label><input type="radio" name="q2" value="Coffee"> Coffee</label>
+    </div>
+  </div>
+
+  <div class="question">
+    <p>3. Do you drink alcohol?</p>
+    <div class="options">
+      <label><input type="radio" name="q3" value="Yes"> Yes</label>
+      <label><input type="radio" name="q3" value="No"> No</label>
+    </div>
+  </div>
+
+  <div class="question">
+    <p>4. Do you smoke?</p>
+    <div class="options">
+      <label><input type="radio" name="q4" value="Yes"> Yes</label>
+      <label><input type="radio" name="q4" value="No"> No</label>
+    </div>
+  </div>
+
+  <div class="question">
+    <p>5. Preferred hangout?</p>
+    <div class="options">
+      <label><input type="radio" name="q5" value="Home chill"> Home chill</label>
+      <label><input type="radio" name="q5" value="Party out"> Party out</label>
+    </div>
+  </div>
+
+  <div class="question">
+    <p>6. Movie preference?</p>
+    <div class="options">
+      <label><input type="radio" name="q6" value="Action"> Action</label>
+      <label><input type="radio" name="q6" value="Romance"> Romance</label>
+    </div>
+  </div>
+
+  <div class="question">
+    <p>7. Do you like pets?</p>
+    <div class="options">
+      <label><input type="radio" name="q7" value="Love them"> Love them</label>
+      <label><input type="radio" name="q7" value="Not into pets"> Not into pets</label>
+    </div>
+  </div>
+
+  <button type="button" onclick="calculateMatch()">Submit</button>
+</form>
+<div id="result"></div>
+
+  </div>  <script>
+    function calculateMatch() {
+      const form = document.getElementById("testForm");
+      const formData = new FormData(form);
+      const answers = {};
+      let filled = 0;
+
+      for (let [key, value] of formData.entries()) {
+        answers[key] = value;
+        filled++;
+      }
+
+      if (filled < 7) {
+        document.getElementById("result").textContent = "Please answer all questions.";
+        return;
+      }
+
+      let resultText = `Your answers have been recorded. Share your choices with a friend and compare!`;
+      document.getElementById("result").textContent = resultText;
+    }
+  </script></body>
+</html>
