@@ -97,18 +97,106 @@
   </div>
 
   <div class="question">
-    <p>6. Movie preference?</p>
+    <p>6. Favorite time of day?</p>
     <div class="options">
-      <label><input type="radio" name="q6" value="Action"> Action</label>
-      <label><input type="radio" name="q6" value="Romance"> Romance</label>
+      <label><input type="radio" name="q6" value="Morning"> Morning</label>
+      <label><input type="radio" name="q6" value="Night"> Night</label>
     </div>
   </div>
 
   <div class="question">
-    <p>7. Do you like pets?</p>
+    <p>7. Food preference?</p>
     <div class="options">
-      <label><input type="radio" name="q7" value="Love them"> Love them</label>
-      <label><input type="radio" name="q7" value="Not into pets"> Not into pets</label>
+      <label><input type="radio" name="q7" value="Veg"> Veg</label>
+      <label><input type="radio" name="q7" value="Non-Veg"> Non-Veg</label>
+    </div>
+  </div>
+
+  <div class="question">
+    <p>8. Pets?</p>
+    <div class="options">
+      <label><input type="radio" name="q8" value="Love them"> Love them</label>
+      <label><input type="radio" name="q8" value="Not into pets"> Not into pets</label>
+    </div>
+  </div>
+
+  <div class="question">
+    <p>9. Favorite vacation style?</p>
+    <div class="options">
+      <label><input type="radio" name="q9" value="Adventure"> Adventure</label>
+      <label><input type="radio" name="q9" value="Relaxation"> Relaxation</label>
+    </div>
+  </div>
+
+  <div class="question">
+    <p>10. Do you enjoy reading?</p>
+    <div class="options">
+      <label><input type="radio" name="q10" value="Yes"> Yes</label>
+      <label><input type="radio" name="q10" value="No"> No</label>
+    </div>
+  </div>
+
+  <div class="question">
+    <p>11. Movie preference?</p>
+    <div class="options">
+      <label><input type="radio" name="q11" value="Action/Thriller"> Action/Thriller</label>
+      <label><input type="radio" name="q11" value="Romance/Drama"> Romance/Drama</label>
+    </div>
+  </div>
+
+  <div class="question">
+    <p>12. Music taste?</p>
+    <div class="options">
+      <label><input type="radio" name="q12" value="Lofi/Calm"> Lofi/Calm</label>
+      <label><input type="radio" name="q12" value="Party/Pop"> Party/Pop</label>
+    </div>
+  </div>
+
+  <div class="question">
+    <p>13. Preferred workout?</p>
+    <div class="options">
+      <label><input type="radio" name="q13" value="Gym"> Gym</label>
+      <label><input type="radio" name="q13" value="Outdoor activities"> Outdoor activities</label>
+    </div>
+  </div>
+
+  <div class="question">
+    <p>14. Gaming?</p>
+    <div class="options">
+      <label><input type="radio" name="q14" value="Love it"> Love it</label>
+      <label><input type="radio" name="q14" value="Not into it"> Not into it</label>
+    </div>
+  </div>
+
+  <div class="question">
+    <p>15. Shopping style?</p>
+    <div class="options">
+      <label><input type="radio" name="q15" value="Online"> Online</label>
+      <label><input type="radio" name="q15" value="In-store"> In-store</label>
+    </div>
+  </div>
+
+  <div class="question">
+    <p>16. Do you follow a routine?</p>
+    <div class="options">
+      <label><input type="radio" name="q16" value="Yes"> Yes</label>
+      <label><input type="radio" name="q16" value="No"> No</label>
+    </div>
+  </div>
+
+  <div class="question">
+    <p>17. Spending habits?</p>
+    <div class="options">
+      <label><input type="radio" name="q17" value="Saver"> Saver</label>
+      <label><input type="radio" name="q17" value="Spender"> Spender</label>
+    </div>
+  </div>
+
+  <div class="question">
+    <p>18. Sleep pattern?</p>
+    <div class="options">
+      <label><input type="radio" name="q18" value="Early sleeper"> Early sleeper</label>
+      <label><input type="radio" name="q18" value="Night owl"> Night owl</label>
     </div>
   </div>
 
@@ -120,21 +208,18 @@
     function calculateMatch() {
       const form = document.getElementById("testForm");
       const formData = new FormData(form);
-      const answers = {};
       let filled = 0;
 
-      for (let [key, value] of formData.entries()) {
-        answers[key] = value;
-        filled++;
+      for (let pair of formData.entries()) {
+        if (pair[1]) filled++;
       }
 
-      if (filled < 7) {
+      if (filled < 18) {
         document.getElementById("result").textContent = "Please answer all questions.";
         return;
       }
 
-      let resultText = `Your answers have been recorded. Share your choices with a friend and compare!`;
-      document.getElementById("result").textContent = resultText;
+      document.getElementById("result").textContent = "Your answers have been recorded. Share your responses with a friend to compare and see how compatible you are!";
     }
   </script></body>
 </html>
