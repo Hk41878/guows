@@ -1,225 +1,191 @@
-<!DOCTYPE html><html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!DOCTYPE html><html lang="en"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Friendship Interest Test</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(to right, #6dd5fa, #2980b9);
-      color: #fff;
+      font-family: 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
       margin: 0;
       padding: 0;
-    }
-    .container {
-      max-width: 700px;
-      margin: 50px auto;
-      background: rgba(0, 0, 0, 0.4);
-      padding: 30px;
-      border-radius: 15px;
-    }
-    h1 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .question {
-      margin-bottom: 25px;
-    }
-    .question p {
-      font-size: 1.1em;
-    }
-    .options label {
-      display: block;
-      margin: 5px 0;
-      cursor: pointer;
-    }
-    button {
-      display: block;
-      margin: 20px auto;
-      background: #27ae60;
-      color: white;
-      padding: 10px 25px;
-      font-size: 1em;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #219150;
-    }
-    #result {
-      text-align: center;
-      margin-top: 30px;
-      font-size: 1.2em;
-    }
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }.container {
+  background-color: white;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  max-width: 700px;
+  width: 100%;
+}
+
+h1 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 30px;
+}
+
+.question {
+  margin-bottom: 20px;
+}
+
+.question p {
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #34495e;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  padding: 8px;
+  background-color: #ecf0f1;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+label:hover {
+  background-color: #d0dce7;
+}
+
+input[type="radio"] {
+  margin-right: 10px;
+}
+
+button {
+  display: block;
+  margin: 30px auto 0;
+  padding: 12px 24px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+.result {
+  margin-top: 30px;
+  text-align: center;
+  font-weight: bold;
+  color: #27ae60;
+}
+
   </style>
-</head>
-<body>
+</head><body>
   <div class="container">
-    <h1>Friendship Interest Matching Test</h1>
+    <h1>Friendship Interest Test</h1>
     <form id="testForm">
       <div class="question">
-        <p>1. What do you prefer?</p>
-        <div class="options">
-          <label><input type="radio" name="q1" value="Mountains"> Mountains</label>
-          <label><input type="radio" name="q1" value="Sea"> Sea</label>
-        </div>
-      </div><div class="question">
-    <p>2. Your go-to drink?</p>
-    <div class="options">
-      <label><input type="radio" name="q2" value="Tea"> Tea</label>
-      <label><input type="radio" name="q2" value="Coffee"> Coffee</label>
-    </div>
-  </div>
-
-  <div class="question">
-    <p>3. Do you drink alcohol?</p>
-    <div class="options">
-      <label><input type="radio" name="q3" value="Yes"> Yes</label>
-      <label><input type="radio" name="q3" value="No"> No</label>
-    </div>
-  </div>
-
-  <div class="question">
-    <p>4. Do you smoke?</p>
-    <div class="options">
-      <label><input type="radio" name="q4" value="Yes"> Yes</label>
-      <label><input type="radio" name="q4" value="No"> No</label>
-    </div>
-  </div>
-
-  <div class="question">
-    <p>5. Preferred hangout?</p>
-    <div class="options">
-      <label><input type="radio" name="q5" value="Home chill"> Home chill</label>
-      <label><input type="radio" name="q5" value="Party out"> Party out</label>
-    </div>
-  </div>
-
-  <div class="question">
-    <p>6. Favorite time of day?</p>
-    <div class="options">
-      <label><input type="radio" name="q6" value="Morning"> Morning</label>
-      <label><input type="radio" name="q6" value="Night"> Night</label>
-    </div>
-  </div>
-
-  <div class="question">
-    <p>7. Food preference?</p>
-    <div class="options">
-      <label><input type="radio" name="q7" value="Veg"> Veg</label>
-      <label><input type="radio" name="q7" value="Non-Veg"> Non-Veg</label>
-    </div>
-  </div>
-
-  <div class="question">
-    <p>8. Pets?</p>
-    <div class="options">
-      <label><input type="radio" name="q8" value="Love them"> Love them</label>
-      <label><input type="radio" name="q8" value="Not into pets"> Not into pets</label>
-    </div>
-  </div>
-
-  <div class="question">
-    <p>9. Favorite vacation style?</p>
-    <div class="options">
-      <label><input type="radio" name="q9" value="Adventure"> Adventure</label>
-      <label><input type="radio" name="q9" value="Relaxation"> Relaxation</label>
-    </div>
-  </div>
-
-  <div class="question">
-    <p>10. Do you enjoy reading?</p>
-    <div class="options">
-      <label><input type="radio" name="q10" value="Yes"> Yes</label>
-      <label><input type="radio" name="q10" value="No"> No</label>
-    </div>
-  </div>
-
-  <div class="question">
-    <p>11. Movie preference?</p>
-    <div class="options">
-      <label><input type="radio" name="q11" value="Action/Thriller"> Action/Thriller</label>
-      <label><input type="radio" name="q11" value="Romance/Drama"> Romance/Drama</label>
-    </div>
-  </div>
-
-  <div class="question">
-    <p>12. Music taste?</p>
-    <div class="options">
-      <label><input type="radio" name="q12" value="Lofi/Calm"> Lofi/Calm</label>
-      <label><input type="radio" name="q12" value="Party/Pop"> Party/Pop</label>
-    </div>
-  </div>
-
-  <div class="question">
-    <p>13. Preferred workout?</p>
-    <div class="options">
-      <label><input type="radio" name="q13" value="Gym"> Gym</label>
-      <label><input type="radio" name="q13" value="Outdoor activities"> Outdoor activities</label>
-    </div>
-  </div>
-
-  <div class="question">
-    <p>14. Gaming?</p>
-    <div class="options">
-      <label><input type="radio" name="q14" value="Love it"> Love it</label>
-      <label><input type="radio" name="q14" value="Not into it"> Not into it</label>
-    </div>
-  </div>
-
-  <div class="question">
-    <p>15. Shopping style?</p>
-    <div class="options">
-      <label><input type="radio" name="q15" value="Online"> Online</label>
-      <label><input type="radio" name="q15" value="In-store"> In-store</label>
-    </div>
-  </div>
-
-  <div class="question">
-    <p>16. Do you follow a routine?</p>
-    <div class="options">
-      <label><input type="radio" name="q16" value="Yes"> Yes</label>
-      <label><input type="radio" name="q16" value="No"> No</label>
-    </div>
-  </div>
-
-  <div class="question">
-    <p>17. Spending habits?</p>
-    <div class="options">
-      <label><input type="radio" name="q17" value="Saver"> Saver</label>
-      <label><input type="radio" name="q17" value="Spender"> Spender</label>
-    </div>
-  </div>
-
-  <div class="question">
-    <p>18. Sleep pattern?</p>
-    <div class="options">
-      <label><input type="radio" name="q18" value="Early sleeper"> Early sleeper</label>
-      <label><input type="radio" name="q18" value="Night owl"> Night owl</label>
-    </div>
-  </div>
-
-  <button type="button" onclick="calculateMatch()">Submit</button>
+        <p>What do you like?</p>
+        <label><input type="radio" name="like" value="mountains">Mountains</label>
+        <label><input type="radio" name="like" value="sea">Sea</label>
+      </div>
+      <div class="question">
+        <p>Tea or Coffee?</p>
+        <label><input type="radio" name="drink" value="tea">Tea</label>
+        <label><input type="radio" name="drink" value="coffee">Coffee</label>
+      </div>
+      <div class="question">
+        <p>Do you drink alcohol?</p>
+        <label><input type="radio" name="alcohol" value="yes">Yes</label>
+        <label><input type="radio" name="alcohol" value="no">No</label>
+      </div>
+      <div class="question">
+        <p>Do you smoke?</p>
+        <label><input type="radio" name="smoke" value="yes">Yes</label>
+        <label><input type="radio" name="smoke" value="no">No</label>
+      </div>
+      <div class="question">
+        <p>Are you a morning or night person?</p>
+        <label><input type="radio" name="time" value="morning">Morning</label>
+        <label><input type="radio" name="time" value="night">Night</label>
+      </div>
+      <div class="question">
+        <p>How do you spend weekends?</p>
+        <label><input type="radio" name="weekend" value="outdoor">Outdoor</label>
+        <label><input type="radio" name="weekend" value="indoor">Indoor</label>
+      </div>
+      <div class="question">
+        <p>What's your ideal vacation?</p>
+        <label><input type="radio" name="vacation" value="adventure">Adventure</label>
+        <label><input type="radio" name="vacation" value="relaxing">Relaxing</label>
+      </div>
+      <div class="question">
+        <p>Are you a pet person?</p>
+        <label><input type="radio" name="pet" value="yes">Yes</label>
+        <label><input type="radio" name="pet" value="no">No</label>
+      </div>
+      <div class="question">
+        <p>Movies or Series?</p>
+        <label><input type="radio" name="entertainment" value="movies">Movies</label>
+        <label><input type="radio" name="entertainment" value="series">Series</label>
+      </div>
+      <div class="question">
+        <p>What kind of music do you like?</p>
+        <label><input type="radio" name="music" value="pop">Pop</label>
+        <label><input type="radio" name="music" value="rock">Rock</label>
+        <label><input type="radio" name="music" value="classical">Classical</label>
+        <label><input type="radio" name="music" value="jazz">Jazz</label>
+      </div>
+      <div class="question">
+        <p>Do you like reading books?</p>
+        <label><input type="radio" name="books" value="yes">Yes</label>
+        <label><input type="radio" name="books" value="no">No</label>
+      </div>
+      <div class="question">
+        <p>How social are you?</p>
+        <label><input type="radio" name="social" value="extrovert">Extrovert</label>
+        <label><input type="radio" name="social" value="introvert">Introvert</label>
+        <label><input type="radio" name="social" value="ambivert">Ambivert</label>
+      </div>
+      <div class="question">
+        <p>Do you enjoy traveling?</p>
+        <label><input type="radio" name="travel" value="yes">Yes</label>
+        <label><input type="radio" name="travel" value="no">No</label>
+      </div>
+      <div class="question">
+        <p>What's your favorite cuisine?</p>
+        <label><input type="radio" name="cuisine" value="indian">Indian</label>
+        <label><input type="radio" name="cuisine" value="italian">Italian</label>
+        <label><input type="radio" name="cuisine" value="chinese">Chinese</label>
+        <label><input type="radio" name="cuisine" value="mexican">Mexican</label>
+      </div>
+      <div class="question">
+        <p>Do you like cooking?</p>
+        <label><input type="radio" name="cooking" value="yes">Yes</label>
+        <label><input type="radio" name="cooking" value="no">No</label>
+      </div>
+      <div class="question">
+        <p>What's your work style?</p>
+        <label><input type="radio" name="workstyle" value="solo">Solo</label>
+        <label><input type="radio" name="workstyle" value="team">Team</label>
+      </div>
+      <div class="question">
+        <p>Do you believe in astrology?</p>
+        <label><input type="radio" name="astrology" value="yes">Yes</label>
+        <label><input type="radio" name="astrology" value="no">No</label>
+      </div>
+      <div class="question">
+        <p>Are you spiritual or logical?</p>
+        <label><input type="radio" name="mindset" value="spiritual">Spiritual</label>
+        <label><input type="radio" name="mindset" value="logical">Logical</label>
+      </div><button type="submit">Submit</button>
 </form>
-<div id="result"></div>
+<div class="result" id="result"></div>
 
   </div>  <script>
-    function calculateMatch() {
-      const form = document.getElementById("testForm");
-      const formData = new FormData(form);
-      let filled = 0;
-
-      for (let pair of formData.entries()) {
-        if (pair[1]) filled++;
-      }
-
-      if (filled < 18) {
-        document.getElementById("result").textContent = "Please answer all questions.";
-        return;
-      }
-
-      document.getElementById("result").textContent = "Your answers have been recorded. Share your responses with a friend to compare and see how compatible you are!";
-    }
-  </script></body>
-</html>
+    document.getElementById("testForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      document.getElementById("result").innerText = "Thanks for completing the test! You can now compare answers with your friend!";
+    });
+  </script></body></html>
