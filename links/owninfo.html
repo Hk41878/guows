@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Device Info</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    h2 { margin-top: 30px; }
+    .info { margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <h1>Mobile Device Info</h1>
+
+  <div>
+    <h2>Location</h2>
+    <div class="info" id="location">Loading...</div>
+
+    <h2>Battery</h2>
+    <div class="info" id="battery">Loading...</div>
+
+    <h2>Device Info</h2>
+    <div class="info" id="device">Loading...</div>
+
+    <h2>Network Info</h2>
+    <div class="info" id="network">Loading...</div>
+  </div>
+
+  <script>
+    // Location
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const { latitude, longitude } = pos.coords;
+          document.getElementById("location").textContent = `Latitude: ${latitude}, Longitude: ${longitude}`;
+        },
+        () => document.getElementById("location").textContent = "Permission denied or unavailable."
+      );
+    } else {
+      document.getElementById("location").textContent = "Geolocation not supported.";
+    }
+
+    // Battery
+    if (navigator.getBattery) {
+      navigator.getBattery().then(battery => {
+        const level = Math.round(battery.level * 100);
+        const charging = battery.charging ? "Yes" : "No";
+        document.getElementById("battery").textContent = `Battery: ${level}%, Charging: ${charging}`;
+      });
+    } else {
+      document.getElementById("battery").textContent = "Battery API not supported.";
+    }
+
+    // Device Info
+    const ua = navigator.userAgent;
+    document.getElementById("device").textContent = `User Agent: ${ua}`;
+
+    // Network Info
+    const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (conn) {
+      document.getElementById("network").textContent = `Type: ${conn.type || 'N/A'}, Effective Type: ${conn.effectiveType}, Downlink: ${conn.downlink}Mbps`;
+    } else {
+      document.getElementById("network").textContent = "Network info not supported.";
+    }
+  </script>
+</body>
+</html>
