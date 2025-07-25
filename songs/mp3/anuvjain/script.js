@@ -6,6 +6,8 @@ const songs = [
   { title: "Track 5", url: "https://guows.com/songs/mp3/anuvjain/music5.mp3" },
 ];
 
+let originalList = [...songs];
+let shuffledList = [...songs];
 let current = 0;
 let isShuffling = false;
 
@@ -17,39 +19,43 @@ const prevBtn = document.getElementById('prev');
 const progress = document.getElementById('progress');
 const shuffleBtn = document.getElementById('shuffle');
 
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+function getCurrentList() {
+  return isShuffling ? shuffledList : originalList;
+}
+
 function loadSong(index) {
-  title.textContent = songs[index].title;
-  audio.src = songs[index].url;
+  const list = getCurrentList();
+  title.textContent = list[index].title;
+  audio.src = list[index].url;
 }
 
 function playSong(index) {
-  loadSong(index);
+  current = index;
+  loadSong(current);
   audio.play();
   playBtn.textContent = '⏸️';
 }
 
 function nextSong() {
-  if (isShuffling) {
-    let next;
-    do {
-      next = Math.floor(Math.random() * songs.length);
-    } while (next === current && songs.length > 1);
-    current = next;
-  } else {
-    current = (current + 1) % songs.length;
-  }
+  const list = getCurrentList();
+  current = (current + 1) % list.length;
   playSong(current);
 }
 
 function prevSong() {
-  current = (current - 1 + songs.length) % songs.length;
+  const list = getCurrentList();
+  current = (current - 1 + list.length) % list.length;
   playSong(current);
 }
 
-// Load first track
-loadSong(current);
-
-// Controls
 playBtn.onclick = () => {
   if (audio.paused) {
     audio.play();
@@ -65,22 +71,31 @@ prevBtn.onclick = prevSong;
 
 shuffleBtn.onclick = () => {
   isShuffling = !isShuffling;
-  shuffleBtn.style.color = isShuffling ? 'limegreen' : 'white';
+  if (isShuffling) {
+    shuffledList = shuffleArray([...songs]);
+    current = 0;
+    playSong(current);
+    shuffleBtn.style.color = 'limegreen';
+  } else {
+    current = 0;
+    playSong(current);
+    shuffleBtn.style.color = 'white';
+  }
 };
 
-// When song ends, auto play next
 audio.addEventListener('ended', nextSong);
 
-// Progress bar update
 audio.addEventListener('timeupdate', () => {
   if (audio.duration) {
     progress.value = (audio.currentTime / audio.duration) * 100;
   }
 });
 
-// Seek bar
 progress.addEventListener('input', () => {
   if (audio.duration) {
     audio.currentTime = (progress.value / 100) * audio.duration;
   }
 });
+
+// Load first song
+loadSong(current);
