@@ -7,6 +7,7 @@ const songs = [
 ];
 
 let current = 0;
+let isShuffling = false
 
 const title = document.getElementById('title');
 const audio = document.getElementById('audio');
@@ -58,3 +59,25 @@ progress.addEventListener('input', () => {
     audio.currentTime = (progress.value / 100) * audio.duration;
   }
 });
+
+const shuffleBtn = document.getElementById('shuffle');
+
+shuffleBtn.onclick = () => {
+  isShuffling = !isShuffling;
+  shuffleBtn.style.color = isShuffling ? 'limegreen' : 'white';
+};
+
+nextBtn.onclick = () => {
+  if (isShuffling) {
+    let next;
+    do {
+      next = Math.floor(Math.random() * songs.length);
+    } while (next === current);
+    current = next;
+  } else {
+    current = (current + 1) % songs.length;
+  }
+  loadSong(current);
+  audio.play();
+  playBtn.textContent = '⏸️';
+};
