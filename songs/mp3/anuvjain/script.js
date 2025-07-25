@@ -35,6 +35,7 @@ function loadSong(index) {
   const list = getCurrentList();
   title.textContent = list[index].title;
   audio.src = list[index].url;
+  document.title = list[index].title + " - Now Playing";
 }
 
 function playSong(index) {
