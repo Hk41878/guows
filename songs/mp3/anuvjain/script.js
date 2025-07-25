@@ -82,6 +82,15 @@ function loadSong(index) {
         audio.currentTime = details.seekTime;
       }
     });
+
+    // Set initial position state
+    if (navigator.mediaSession.setPositionState) {
+      navigator.mediaSession.setPositionState({
+        duration: audio.duration || 0,
+        playbackRate: audio.playbackRate || 1,
+        position: audio.currentTime || 0
+      });
+    }
   }
 }
 
@@ -136,6 +145,15 @@ audio.addEventListener('ended', nextSong);
 audio.addEventListener('timeupdate', () => {
   if (audio.duration) {
     progress.value = (audio.currentTime / audio.duration) * 100;
+
+    // Update position state to enable seek bar in notifications
+    if ('mediaSession' in navigator && navigator.mediaSession.setPositionState) {
+      navigator.mediaSession.setPositionState({
+        duration: audio.duration,
+        playbackRate: audio.playbackRate,
+        position: audio.currentTime
+      });
+    }
   }
 });
 
