@@ -35,7 +35,36 @@ function loadSong(index) {
   const list = getCurrentList();
   title.textContent = list[index].title;
   audio.src = list[index].url;
-  document.title = list[index].title + " ";
+  document.title = list[index].title + " - Now Playing";
+
+  if ('mediaSession' in navigator) {
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: list[index].title,
+      artist: 'Simple Music Player',
+      album: '',
+      artwork: [
+        { src: 'https://cdn-icons-png.flaticon.com/512/727/727245.png', sizes: '512x512', type: 'image/png' }
+      ]
+    });
+
+    navigator.mediaSession.setActionHandler('play', () => {
+      audio.play();
+      playBtn.textContent = '⏸️';
+    });
+
+    navigator.mediaSession.setActionHandler('pause', () => {
+      audio.pause();
+      playBtn.textContent = '▶️';
+    });
+
+    navigator.mediaSession.setActionHandler('previoustrack', () => {
+      prevSong();
+    });
+
+    navigator.mediaSession.setActionHandler('nexttrack', () => {
+      nextSong();
+    });
+  }
 }
 
 function playSong(index) {
