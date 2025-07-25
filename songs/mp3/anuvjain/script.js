@@ -1,13 +1,9 @@
-// Replace these with your GitHub raw file links
 const songs = [
-  {
-    title: "Track 1",
-    url: "https://guows.com/songs/mp3/anuvjain/music1.mp3"
-  },
-  {
-    title: "Track 2",
-    url: "https://raw.githubusercontent.com/yourusername/yourrepo/main/music2.mp3"
-  }
+  { title: "Track 1", url: "https://guows.com/songs/mp3/anuvjain/music1.mp3" },
+  { title: "Track 2", url: "https://guows.com/songs/mp3/anuvjain/music2.mp3" },
+  { title: "Track 3", url: "https://guows.com/songs/mp3/anuvjain/music3.mp3" },
+  { title: "Track 4", url: "https://guows.com/songs/mp3/anuvjain/music4.mp3" },
+  { title: "Track 5", url: "https://guows.com/songs/mp3/anuvjain/music5.mp3" },
 ];
 
 let current = 0;
@@ -23,6 +19,7 @@ function loadSong(index) {
   title.textContent = songs[index].title;
   audio.src = songs[index].url;
   audio.load();
+  playBtn.textContent = '▶️';
 }
 loadSong(current);
 
@@ -40,18 +37,24 @@ nextBtn.onclick = () => {
   current = (current + 1) % songs.length;
   loadSong(current);
   audio.play();
+  playBtn.textContent = '⏸️';
 };
 
 prevBtn.onclick = () => {
   current = (current - 1 + songs.length) % songs.length;
   loadSong(current);
   audio.play();
+  playBtn.textContent = '⏸️';
 };
 
 audio.addEventListener('timeupdate', () => {
-  progress.value = (audio.currentTime / audio.duration) * 100;
+  if (audio.duration) {
+    progress.value = (audio.currentTime / audio.duration) * 100;
+  }
 });
 
 progress.addEventListener('input', () => {
-  audio.currentTime = (progress.value / 100) * audio.duration;
+  if (audio.duration) {
+    audio.currentTime = (progress.value / 100) * audio.duration;
+  }
 });
