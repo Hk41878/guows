@@ -1,5 +1,5 @@
 const songs = [
-  { title: "music 1", url: "https://guows.com/songs/mp3/anuvjain/music1.mp3" },
+  { title: "Track 1", url: "https://guows.com/songs/mp3/anuvjain/music1.mp3" },
   { title: "Track 2", url: "https://guows.com/songs/mp3/anuvjain/music2.mp3" },
   { title: "Track 3", url: "https://guows.com/songs/mp3/anuvjain/music3.mp3" },
   { title: "Track 4", url: "https://guows.com/songs/mp3/anuvjain/music4.mp3" },
@@ -8,6 +8,7 @@ const songs = [
 
 let current = 0;
 let isShuffling = false;
+let playlist = [...songs]; // Will hold either normal or shuffled list
 
 const title = document.getElementById('title');
 const audio = document.getElementById('audio');
@@ -18,8 +19,8 @@ const progress = document.getElementById('progress');
 const shuffleBtn = document.getElementById('shuffle');
 
 function loadSong(index) {
-  title.textContent = songs[index].title;
-  audio.src = songs[index].url;
+  title.textContent = playlist[index].title;
+  audio.src = playlist[index].url;
 }
 
 function playSong(index) {
@@ -28,28 +29,20 @@ function playSong(index) {
   playBtn.textContent = '⏸️';
 }
 
-function getShuffledIndex() {
-  let next;
-  do {
-    next = Math.floor(Math.random() * songs.length);
-  } while (next === current && songs.length > 1);
-  return next;
-}
-
 function nextSong() {
-  current = isShuffling ? getShuffledIndex() : (current + 1) % songs.length;
+  current = (current + 1) % playlist.length;
   playSong(current);
 }
 
 function prevSong() {
-  current = (current - 1 + songs.length) % songs.length;
+  current = (current - 1 + playlist.length) % playlist.length;
   playSong(current);
 }
 
 // Initial load
 loadSong(current);
 
-// Button actions
+// Controls
 playBtn.onclick = () => {
   if (audio.paused) {
     audio.play();
@@ -65,20 +58,27 @@ prevBtn.onclick = prevSong;
 
 shuffleBtn.onclick = () => {
   isShuffling = !isShuffling;
-  shuffleBtn.style.color = isShuffling ? 'limegreen' : 'white';
+
+  if (isShuffling) {
+    playlist = shuffleArray([...songs]);
+    shuffleBtn.style.color = 'limegreen';
+  } else {
+    playlist = [...songs];
+    shuffleBtn.style.color = 'white';
+  }
+
+  current = 0;
+  playSong(current);
 };
 
-// Auto play next (shuffled or not)
 audio.addEventListener('ended', nextSong);
 
-// Progress bar update
 audio.addEventListener('timeupdate', () => {
   if (audio.duration) {
     progress.value = (audio.currentTime / audio.duration) * 100;
   }
 });
 
-// Seek functionality
 progress.addEventListener('input', () => {
   if (audio.duration) {
     audio.currentTime = (progress.value / 100) * audio.duration;
