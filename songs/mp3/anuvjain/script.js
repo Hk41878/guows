@@ -2,7 +2,7 @@
 const songs = [
   {
     title: "Track 1",
-    url: "https://guows.com/songs/mp3/anuvjain/songs/mp3/music1.mp3"
+    url: "https://guows.com/songs/mp3/anuvjain/music1.mp3"
   },
   {
     title: "Track 2",
