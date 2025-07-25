@@ -20,12 +20,10 @@ const shuffleBtn = document.getElementById('shuffle');
 function loadSong(index) {
   title.textContent = songs[index].title;
   audio.src = songs[index].url;
-  audio.load();
-  playBtn.textContent = '▶️';
 }
 
-function playSong(index) {
-  loadSong(index);
+function playCurrentSong() {
+  loadSong(current);
   audio.play();
   playBtn.textContent = '⏸️';
 }
@@ -37,11 +35,15 @@ function getNextIndex() {
       next = Math.floor(Math.random() * songs.length);
     } while (next === current && songs.length > 1);
     return next;
-  } else {
-    return (current + 1) % songs.length;
   }
+  return (current + 1) % songs.length;
 }
 
+function getPrevIndex() {
+  return (current - 1 + songs.length) % songs.length;
+}
+
+// Initial load
 loadSong(current);
 
 playBtn.onclick = () => {
@@ -56,12 +58,12 @@ playBtn.onclick = () => {
 
 nextBtn.onclick = () => {
   current = getNextIndex();
-  playSong(current);
+  playCurrentSong();
 };
 
 prevBtn.onclick = () => {
-  current = (current - 1 + songs.length) % songs.length;
-  playSong(current);
+  current = getPrevIndex();
+  playCurrentSong();
 };
 
 shuffleBtn.onclick = () => {
@@ -69,10 +71,9 @@ shuffleBtn.onclick = () => {
   shuffleBtn.style.color = isShuffling ? 'limegreen' : 'white';
 };
 
-// Handle song end
 audio.addEventListener('ended', () => {
   current = getNextIndex();
-  playSong(current);
+  playCurrentSong();
 });
 
 audio.addEventListener('timeupdate', () => {
