@@ -68,25 +68,7 @@ function loadSong(index) {
       nextSong();
     });
 
-    navigator.mediaSession.setActionHandler('seekbackward', (details) => {
-      const skipTime = details.seekOffset || 10;
-      audio.currentTime = Math.max(audio.currentTime - skipTime, 0);
-    });
-
-    navigator.mediaSession.setActionHandler('seekforward', (details) => {
-      const skipTime = details.seekOffset || 10;
-      audio.currentTime = Math.min(audio.currentTime + skipTime, audio.duration);
-    });
-
-    navigator.mediaSession.setActionHandler('seekto', (details) => {
-      if (details.fastSeek && 'fastSeek' in audio) {
-        audio.fastSeek(details.seekTime);
-      } else {
-        audio.currentTime = details.seekTime;
-      }
-    });
-
-    // Set initial position state
+    // Only position state — no seekforward/backward handlers
     if (navigator.mediaSession.setPositionState) {
       navigator.mediaSession.setPositionState({
         duration: audio.duration || 0,
@@ -149,7 +131,7 @@ audio.addEventListener('timeupdate', () => {
   if (audio.duration) {
     progress.value = (audio.currentTime / audio.duration) * 100;
 
-    // Update position state to enable seek bar in notifications
+    // Keep updating position state for seeking in media panel
     if ('mediaSession' in navigator && navigator.mediaSession.setPositionState) {
       navigator.mediaSession.setPositionState({
         duration: audio.duration,
