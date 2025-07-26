@@ -36,6 +36,9 @@ function loadSong(index) {
   title.textContent = list[index].title;
   audio.src = list[index].url;
   document.title = list[index].title + " - Now Playing";
+  document.body.style.backgroundImage = list[index].background || 'none';
+  document.body.style.backgroundSize = 'cover';
+  document.body.style.backgroundPosition = 'center';
 
   if ('mediaSession' in navigator) {
     navigator.mediaSession.metadata = new MediaMetadata({
