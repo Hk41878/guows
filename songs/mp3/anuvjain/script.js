@@ -1,9 +1,9 @@
 const songs = [
-  { title: "Track 1", url: "https://guows.com/songs/mp3/anuvjain/music1.mp3" },
-  { title: "Track 2", url: "https://guows.com/songs/mp3/anuvjain/music2.mp3" },
-  { title: "Track 3", url: "https://guows.com/songs/mp3/anuvjain/music3.mp3" },
-  { title: "Track 4", url: "https://guows.com/songs/mp3/anuvjain/music4.mp3" },
-  { title: "Track 5", url: "https://guows.com/songs/mp3/anuvjain/music5.mp3" },
+  { title: "Track 1", url: "https://guows.com/songs/mp3/anuvjain/music1.mp3", background: "url('https://example.com/bg1.jpg')" },
+  { title: "Track 2", url: "https://guows.com/songs/mp3/anuvjain/music2.mp3", background: "url('https://i.scdn.co/image/ab67616d0000b2738537cf974af2c408bdd8e1a6')" },
+  { title: "Track 3", url: "https://guows.com/songs/mp3/anuvjain/music3.mp3", background: "url('https://example.com/bg3.jpg')" },
+  { title: "Track 4", url: "https://guows.com/songs/mp3/anuvjain/music4.mp3", background: "url('https://example.com/bg4.jpg')" },
+  { title: "Track 5", url: "https://guows.com/songs/mp3/anuvjain/music5.mp3", background: "url('https://example.com/bg5.jpg')" },
 ];
 
 let originalList = [...songs];
