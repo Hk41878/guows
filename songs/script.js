@@ -1,5 +1,5 @@
 const songs = [
-  { title: "Track 1", url: "https://guows.com/songs/mp3/anuvjain/music1.mp3", background: "url('https://example.com/bg1.jpg')" },
+  { title: "Track 1", url: "https://guows.com/songs/singers/anuv_jain/Aditya%20Rikhari%20-%20SAMJHO%20NA%20.mp3", background: "url('https://c.saavncdn.com/852/Samjho-Na-Hindi-2022-20220209214141-500x500.jpg')" },
   { title: "Track 2", url: "https://guows.com/songs/mp3/anuvjain/music2.mp3", background: "url('https://i.scdn.co/image/ab67616d0000b2738537cf974af2c408bdd8e1a6')" },
   { title: "Track 3", url: "https://guows.com/songs/mp3/anuvjain/music3.mp3", background: "url('https://example.com/bg3.jpg')" },
   { title: "Track 4", url: "https://guows.com/songs/mp3/anuvjain/music4.mp3", background: "url('https://example.com/bg4.jpg')" },
