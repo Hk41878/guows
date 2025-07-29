@@ -1,7 +1,7 @@
 /* Base styles */
 body {
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg, #1e1e1e, #121212);
+  background: black;
   background: url('https://cdn.wallpapersafari.com/91/20/KI68Rg.jpg') no-repeat center center fixed;
   background-size: cover;
   color: white;
