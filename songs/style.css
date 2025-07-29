@@ -1,34 +1,99 @@
+/* Base styles */
 body {
-  font-family: sans-serif;
-  background: #1e1e1e;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg, #1e1e1e, #121212);
   color: white;
   display: flex;
   height: 100vh;
   align-items: center;
   justify-content: center;
+  margin: 0;
+  padding: 0;
 }
 
+/* Music player container */
 .player {
-  background: rgba(255, 255, 255, 0.1); /* semi-transparent white */
-  backdrop-filter: blur(10px); /* glass blur effect */
-  -webkit-backdrop-filter: blur(10px); /* Safari support */
-  padding: 20px;
-  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  padding: 30px 20px;
+  border-radius: 20px;
   text-align: center;
-  width: 300px;
-  border: 1px solid rgba(255, 255, 255, 0.2); /* subtle border */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5); /* optional shadow */
+  width: 320px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
 }
 
+.player:hover {
+  transform: scale(1.02);
+}
+
+/* Title styling */
+#title {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+/* Control buttons */
 .controls button {
-  font-size: 24px;
-  margin: 10px;
-  background: none;
+  font-size: 22px;
+  margin: 10px 12px;
+  background: rgba(255, 255, 255, 0.1);
   border: none;
   color: white;
   cursor: pointer;
+  padding: 12px;
+  border-radius: 50%;
+  transition: background 0.3s ease, transform 0.2s ease;
 }
 
+.controls button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+/* Progress bar */
 #progress {
   width: 100%;
+  margin-top: 20px;
+  -webkit-appearance: none;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.3);
+  outline: none;
+}
+
+#progress::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 14px;
+  width: 14px;
+  background: white;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid #888;
+}
+
+/* Responsive for mobile */
+@media (max-width: 400px) {
+  .player {
+    width: 90%;
+    padding: 20px 15px;
+  }
+
+  .controls button {
+    margin: 8px;
+    padding: 10px;
+    font-size: 20px;
+  }
+
+  #title {
+    font-size: 18px;
+  }
+
+  #progress {
+    height: 5px;
+  }
 }
