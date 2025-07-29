@@ -10,13 +10,32 @@
 
   <div class="player">
     <h2 id="title">Loading...</h2>
-    <audio id="audio" controls preload="metadata"></audio>
+    <audio id="audio" controls preload="metadata" style="display: none;"></audio>
 
     <div class="controls">
-      <button id="prev">⏮️</button>
-      <button id="play">▶️</button>
-      <button id="next">⏭️</button>
-      <button id="shuffle">🔀</button>
+      <button id="prev" aria-label="Previous">
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M11.5 3.5a.5.5 0 0 1 .79.407v8.186a.5.5 0 0 1-.79.407L6.5 8.972v2.621a.5.5 0 0 1-.79.407l-3.5-2.5a.5.5 0 0 1 0-.814l3.5-2.5a.5.5 0 0 1 .79.407v2.621l5-3.528z"/>
+        </svg>
+      </button>
+
+      <button id="play" aria-label="Play">
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M6.271 4.055A.5.5 0 0 1 7 4.5v7a.5.5 0 0 1-.729.445l-4.5-3.5a.5.5 0 0 1 0-.89l4.5-3.5z"/>
+        </svg>
+      </button>
+
+      <button id="next" aria-label="Next">
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M4.5 3.5a.5.5 0 0 1 .79.407v2.621l5-3.528a.5.5 0 0 1 .79.407v8.186a.5.5 0 0 1-.79.407l-5-3.528v2.621a.5.5 0 0 1-.79.407l-3.5-2.5a.5.5 0 0 1 0-.814l3.5-2.5z"/>
+        </svg>
+      </button>
+
+      <button id="shuffle" aria-label="Shuffle">
+        <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M12.354 3.646a.5.5 0 0 0-.708.708L13.293 6H12a4.978 4.978 0 0 0-4.016 2.003l-.753-.753a5.978 5.978 0 0 1 4.011-1.75h1.293l-1.647 1.646a.5.5 0 0 0 .708.708l2.5-2.5a.5.5 0 0 0 0-.708l-2.5-2.5zM2 5.5a.5.5 0 0 0-1 0v1.379a6.973 6.973 0 0 0 2.003 4.753L1.5 13.293a.5.5 0 0 0 .707.707l2.5-2.5a.5.5 0 0 0-.707-.707l-1.503 1.503A5.978 5.978 0 0 1 2 6.879V5.5zm6.248 2.252A4.978 4.978 0 0 0 7 11h1.293l-1.647 1.646a.5.5 0 0 0 .708.708l2.5-2.5a.5.5 0 0 0 0-.708l-2.5-2.5a.5.5 0 0 0-.708.708L8.293 10H7a3.978 3.978 0 0 1 1.248-2.748z"/>
+        </svg>
+      </button>
     </div>
 
     <input type="range" id="progress" value="0" />
