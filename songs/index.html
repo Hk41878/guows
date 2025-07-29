@@ -43,5 +43,18 @@
 
   <script src="https://cdn.jsdelivr.net/npm/shuffle-array@1.0.1/index.min.js"></script>
   <script src="script.js"></script>
+  <script>
+  const defaultBg = "https://cdn.wallpapersafari.com/91/20/KI68Rg.jpg";
+  const thumbnailUrl = "THUMBNAIL_IMAGE_URL_HERE"; // Set this dynamically
+
+  const img = new Image();
+  img.onload = () => {
+    document.body.style.backgroundImage = `url('${thumbnailUrl}')`;
+  };
+  img.onerror = () => {
+    document.body.style.backgroundImage = `url('${defaultBg}')`;
+  };
+  img.src = thumbnailUrl;
+</script>
 </body>
 </html>
