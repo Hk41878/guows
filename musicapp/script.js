@@ -1,109 +1,90 @@
 const songs = [
-  { title: "Song1.mp3", url: "./songs/Song1.mp3" },
-  { title: "Song2.mp3", url: "./songs/Song2.mp3" },
-  { title: "Song3.mp3", url: "./songs/Song3.mp3" }
+  'song1.mp3',
+  'song2.mp3',
+  'song3.mp3',
+  'song4.mp3',
+  'song5.mp3'
 ];
 
+const CACHE_NAME = 'offline-music-v1';
 const player = document.getElementById('player');
-const songsDiv = document.getElementById('songs');
+const songListDiv = document.getElementById('song-list');
+const nowPlayingDiv = document.getElementById('now-playing');
 const statusDiv = document.getElementById('status');
-let currentIndex = 0;
-let isOnline = navigator.onLine;
 
-const CACHE_NAME = 'offline-music-v2';
-const offlineSongs = JSON.parse(localStorage.getItem('offlineSongs') || '[]');
+let currentSongIndex = -1;
 
-function checkCacheStatus(song) {
-  return caches.open(CACHE_NAME).then(cache => cache.match(song.url)).then(response => {
-    if (offlineSongs.includes(song.url)) return 'offline';
-    if (response) return 'smart';
-    return 'none';
-  });
+async function checkCacheStatus(song) {
+  const cache = await caches.open(CACHE_NAME);
+  const response = await cache.match(song);
+  if (!response) return '⬇️'; // Not saved
+  const headers = [...response.headers];
+  if (headers.some(([key]) => key === 'X-Smart-Save')) return '🤖';
+  if (headers.some(([key]) => key === 'X-Permanent')) return '❌';
+  return '⚠️'; // Incomplete
 }
 
-function updateStatus() {
-  statusDiv.textContent = isOnline ? "You are online" : "You are offline";
-}
-
-function renderSongs() {
-  songsDiv.innerHTML = "";
-  songs.forEach((song, i) => {
-    checkCacheStatus(song).then(state => {
-      const div = document.createElement('div');
-      div.className = 'song';
-      if (i === currentIndex) div.classList.add('current');
-      div.textContent = song.title;
-
-      const icon = document.createElement('span');
-      icon.className = 'icon';
-      icon.textContent = state === 'offline' ? '❌' : state === 'smart' ? '🤖' : '⬇️';
-      if (state === 'smart') icon.title = 'Smart Saved';
-      if (state === 'offline') icon.title = 'Saved Offline';
-      if (state === 'none') icon.title = 'Click to Save';
-
-      icon.onclick = (e) => {
-        e.stopPropagation();
-        handleIconClick(song, icon);
-      };
-
-      div.onclick = () => playSong(i);
-      div.appendChild(icon);
-      songsDiv.appendChild(div);
-    });
-  });
-}
-
-function handleIconClick(song, icon) {
-  caches.open(CACHE_NAME).then(async cache => {
-    const cached = await cache.match(song.url);
-    if (offlineSongs.includes(song.url)) {
-      offlineSongs.splice(offlineSongs.indexOf(song.url), 1);
-      localStorage.setItem('offlineSongs', JSON.stringify(offlineSongs));
-      icon.textContent = '⬇️';
-      cache.delete(song.url);
-    } else if (cached) {
-      offlineSongs.push(song.url);
-      localStorage.setItem('offlineSongs', JSON.stringify(offlineSongs));
-      icon.textContent = '❌';
-    } else {
-      icon.textContent = '⚠️';
-      fetch(song.url)
-        .then(response => {
-          if (response.ok) cache.put(song.url, response.clone());
-          icon.textContent = '🤖';
-        })
-        .catch(() => {
-          icon.textContent = '⬇️';
-        });
-    }
-  });
+async function updateUI() {
+  songListDiv.innerHTML = '';
+  for (let i = 0; i < songs.length; i++) {
+    const song = songs[i];
+    const icon = await checkCacheStatus(song);
+    const div = document.createElement('div');
+    div.className = 'song';
+    div.innerHTML = `
+      ${song} <button onclick="playSong(${i})">▶️</button>
+      <button onclick="toggleSave('${song}')">${icon}</button>
+    `;
+    songListDiv.appendChild(div);
+  }
 }
 
 function playSong(index) {
-  currentIndex = index;
-  player.src = songs[currentIndex].url;
-  renderSongs();
+  currentSongIndex = index;
+  const song = songs[index];
+  player.src = song;
+  nowPlayingDiv.textContent = `Now Playing: ${song}`;
 }
 
-player.onended = () => {
-  if (currentIndex < songs.length - 1) {
-    playSong(currentIndex + 1);
+player.addEventListener('ended', () => {
+  if (currentSongIndex + 1 < songs.length) {
+    playSong(currentSongIndex + 1);
   }
-};
-
-window.addEventListener('online', () => {
-  isOnline = true;
-  updateStatus();
-  renderSongs();
 });
 
-window.addEventListener('offline', () => {
-  isOnline = false;
-  updateStatus();
-  renderSongs();
+async function toggleSave(song) {
+  const cache = await caches.open(CACHE_NAME);
+  const existing = await cache.match(song);
+  if (!existing) {
+    // Save permanently
+    const res = await fetch(song);
+    const newRes = new Response(res.body, {
+      headers: { 'X-Permanent': 'true' }
+    });
+    await cache.put(song, newRes);
+  } else {
+    const headers = [...existing.headers];
+    if (headers.some(([key]) => key === 'X-Permanent')) {
+      await cache.delete(song);
+    } else {
+      const res = await fetch(song);
+      const newRes = new Response(res.body, {
+        headers: { 'X-Permanent': 'true' }
+      });
+      await cache.put(song, newRes);
+    }
+  }
+  updateUI();
+}
+
+function updateOnlineStatus() {
+  statusDiv.textContent = navigator.onLine ? "You are online 🌐" : "You are offline 🔌";
+}
+
+window.addEventListener('online', updateOnlineStatus);
+window.addEventListener('offline', updateOnlineStatus);
+
+navigator.serviceWorker.register('sw.js').then(() => {
+  updateOnlineStatus();
+  updateUI();
 });
-
-updateStatus();
-renderSongs();
-
-navigator.serviceWorker.register('sw.js');
