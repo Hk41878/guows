@@ -8,59 +8,56 @@
   <style>
     body {
       font-family: sans-serif;
-      text-align: center;
       background: #111;
       color: #fff;
+      text-align: center;
       padding: 10px;
     }
+
     .status {
       font-weight: bold;
       padding: 10px;
-      background-color: #222;
-      color: #fff;
       border-radius: 5px;
+      margin-bottom: 10px;
     }
+
     .online { background-color: green; }
     .offline { background-color: red; }
+
+    .song-section {
+      max-width: 600px;
+      margin: auto;
+      text-align: left;
+    }
 
     .song-list {
       list-style: none;
       padding: 0;
-      margin-top: 20px;
     }
 
     .song-list li {
-      margin: 10px auto;
-      padding: 10px;
-      max-width: 500px;
       background: #222;
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 5px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-radius: 5px;
     }
 
-    .song-list span {
+    .song-title {
       cursor: pointer;
-      text-align: left;
       flex-grow: 1;
     }
 
-    .download-btn {
-      background: none;
-      color: white;
-      font-size: 20px;
-      border: none;
+    .icon {
+      width: 24px;
+      height: 24px;
       cursor: pointer;
-      padding: 5px;
-    }
-
-    .downloaded {
-      color: limegreen;
     }
 
     audio {
-      width: 90%;
+      width: 100%;
       max-width: 600px;
       margin-top: 20px;
     }
@@ -70,28 +67,15 @@
   <div id="status" class="status">Checking...</div>
   <h1>Offline Music Player</h1>
 
-  <ul class="song-list">
-    <li>
-      <span onclick="playSong('songs/song1.mp3')">Song 1</span>
-      <button class="download-btn" onclick="toggleOffline(this, 'songs/song1.mp3')">⬇️</button>
-    </li>
-    <li>
-      <span onclick="playSong('songs/song2.mp3')">Song 2</span>
-      <button class="download-btn" onclick="toggleOffline(this, 'songs/song2.mp3')">⬇️</button>
-    </li>
-    <li>
-      <span onclick="playSong('songs/song3.mp3')">Song 3</span>
-      <button class="download-btn" onclick="toggleOffline(this, 'songs/song3.mp3')">⬇️</button>
-    </li>
-    <li>
-      <span onclick="playSong('songs/song4.mp3')">Song 4</span>
-      <button class="download-btn" onclick="toggleOffline(this, 'songs/song4.mp3')">⬇️</button>
-    </li>
-    <li>
-      <span onclick="playSong('songs/song5.mp3')">Song 5</span>
-      <button class="download-btn" onclick="toggleOffline(this, 'songs/song5.mp3')">⬇️</button>
-    </li>
-  </ul>
+  <div class="song-section" id="offlineSongsSection">
+    <h2>Offline Songs</h2>
+    <ul class="song-list" id="offlineSongsList"></ul>
+  </div>
+
+  <div class="song-section" id="smartSongsSection" style="display: none;">
+    <h2>Smart Saved Songs</h2>
+    <ul class="song-list" id="smartSongsList"></ul>
+  </div>
 
   <audio id="audioPlayer" controls>
     <source id="audioSource" src="" type="audio/mpeg">
@@ -100,26 +84,32 @@
 
   <script>
     const CACHE_NAME = 'offline-music-v1';
+    const songs = [
+      { title: 'Song 1', url: 'songs/song1.mp3' },
+      { title: 'Song 2', url: 'songs/song2.mp3' },
+      { title: 'Song 3', url: 'songs/song3.mp3' },
+      { title: 'Song 4', url: 'songs/song4.mp3' },
+      { title: 'Song 5', url: 'songs/song5.mp3' }
+    ];
 
-    // Service worker registration
+    // Service Worker registration
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js').then(() => {
-        console.log('Service Worker Registered');
-      });
+      navigator.serviceWorker.register('sw.js');
     }
 
-    // Online/offline status
+    // Update status
     const status = document.getElementById('status');
-    function updateOnlineStatus() {
+    function updateStatus() {
       const online = navigator.onLine;
       status.textContent = online ? '🟢 Online' : '🔴 Offline';
-      status.className = `status ${online ? 'online' : 'offline'}`;
+      status.className = 'status ' + (online ? 'online' : 'offline');
+      loadSongs();
     }
-    window.addEventListener('online', updateOnlineStatus);
-    window.addEventListener('offline', updateOnlineStatus);
-    updateOnlineStatus();
 
-    // Play song
+    window.addEventListener('online', updateStatus);
+    window.addEventListener('offline', updateStatus);
+    updateStatus();
+
     function playSong(url) {
       const player = document.getElementById('audioPlayer');
       const source = document.getElementById('audioSource');
@@ -128,60 +118,64 @@
       player.play();
     }
 
-    // Toggle song cache
-    async function toggleOffline(button, url) {
+    async function toggleOffline(icon, url) {
       const cache = await caches.open(CACHE_NAME);
       const response = await cache.match(url);
+
       if (response) {
         await cache.delete(url);
-        button.classList.remove('downloaded');
-        alert('Removed from offline');
+        icon.src = 'icons/download.png';
       } else {
         await cache.add(url);
-        button.classList.add('downloaded');
-        alert('Added to offline');
+        icon.src = 'icons/remove.png';
       }
+
+      loadSongs();
     }
 
-    // On load, check which songs are already cached
-    window.addEventListener('load', async () => {
+    async function isCached(url) {
       const cache = await caches.open(CACHE_NAME);
-      const all = document.querySelectorAll('.download-btn');
-      for (let btn of all) {
-        const url = btn.getAttribute('onclick').match(/'(.*?)'/)[1];
-        const match = await cache.match(url);
-        if (match) btn.classList.add('downloaded');
+      return await cache.match(url);
+    }
+
+    async function loadSongs() {
+      const offlineList = document.getElementById('offlineSongsList');
+      const smartList = document.getElementById('smartSongsList');
+      const smartSection = document.getElementById('smartSongsSection');
+      const isOnline = navigator.onLine;
+
+      offlineList.innerHTML = '';
+      smartList.innerHTML = '';
+
+      const cache = await caches.open(CACHE_NAME);
+
+      for (const song of songs) {
+        const cached = await cache.match(song.url);
+        const li = document.createElement('li');
+        const title = document.createElement('span');
+        title.className = 'song-title';
+        title.textContent = song.title;
+        title.onclick = () => playSong(song.url);
+
+        const icon = document.createElement('img');
+        icon.className = 'icon';
+        icon.src = cached ? 'icons/remove.png' : 'icons/download.png';
+        icon.onclick = () => toggleOffline(icon, song.url);
+
+        li.appendChild(title);
+        li.appendChild(icon);
+
+        if (cached) {
+          offlineList.appendChild(li);
+        } else if (!isOnline) {
+          smartList.appendChild(li);
+        }
       }
-    });
-  </script>
 
-  <!-- sw.js must be in the root for GitHub Pages -->
-  <script>
-    // Injecting sw.js as inline doesn't work; this is just for info.
-    // Make sure to create a separate sw.js file with the following content:
-    /*
-    const CACHE_NAME = 'offline-music-v1';
-    const FILES_TO_CACHE = [
-      './',
-      './index.html',
-      './style.css',
-      './script.js'
-      // Songs added manually by user
-    ];
+      smartSection.style.display = !isOnline && smartList.children.length > 0 ? 'block' : 'none';
+    }
 
-    self.addEventListener('install', event => {
-      self.skipWaiting();
-      event.waitUntil(
-        caches.open(CACHE_NAME).then(cache => cache.addAll(FILES_TO_CACHE))
-      );
-    });
-
-    self.addEventListener('fetch', event => {
-      event.respondWith(
-        caches.match(event.request).then(response => response || fetch(event.request))
-      );
-    });
-    */
+    window.addEventListener('load', loadSongs);
   </script>
 </body>
 </html>
