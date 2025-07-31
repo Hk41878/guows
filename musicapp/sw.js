@@ -2,28 +2,28 @@ const CACHE_NAME = 'offline-music-v2';
 const STATIC_FILES = [
   './',
   './index.html',
-  './script.js' // Replace with your actual JS file if named differently
+  './script.js'
 ];
 
-self.addEventListener('install', (event) => {
+self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
+    caches.open(CACHE_NAME).then(cache => {
       return cache.addAll(STATIC_FILES);
     })
   );
   self.skipWaiting();
 });
 
-self.addEventListener('activate', (event) => {
+self.addEventListener('activate', event => {
   event.waitUntil(self.clients.claim());
 });
 
-self.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
 
   if (url.pathname.endsWith('.mp3')) {
     event.respondWith(
-      caches.open(CACHE_NAME).then(async (cache) => {
+      caches.open(CACHE_NAME).then(async cache => {
         const cached = await cache.match(event.request);
         if (cached) return cached;
 
@@ -34,14 +34,14 @@ self.addEventListener('fetch', (event) => {
           }
           return response;
         } catch {
-          return new Response('Offline', { status: 503 });
+          return new Response('You are offline', { status: 503 });
         }
       })
     );
   } else {
     event.respondWith(
       caches.match(event.request).then(
-        (res) => res || fetch(event.request)
+        res => res || fetch(event.request)
       )
     );
   }
