@@ -1,41 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Offline Music Player</title>
-  <link rel="manifest" href="manifest.json" />
+  <meta charset="UTF-8">
+  <title>Music Player</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-      font-family: sans-serif;
-      background: black;
+      font-family: Arial, sans-serif;
+      background: #121212;
       color: white;
-      text-align: center;
+      margin: 0;
       padding: 20px;
     }
-    button {
-      margin: 5px;
+    h1 {
+      text-align: center;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: #1e1e1e;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .controls {
+      display: flex;
+      gap: 10px;
       font-size: 20px;
       cursor: pointer;
     }
-    .song {
-      margin: 15px 0;
+    .playing {
+      color: #00ffa6;
     }
-    .now-playing {
-      margin-top: 20px;
-      font-weight: bold;
-      font-size: 18px;
-      color: lightgreen;
+    #status {
+      text-align: center;
+      margin-bottom: 10px;
     }
   </style>
 </head>
 <body>
   <h1>Offline Music Player</h1>
-  <div id="status">Checking connection...</div>
-  <div id="song-list"></div>
-  <div class="now-playing" id="now-playing"></div>
-  <audio id="player" controls autoplay></audio>
-
+  <div id="status">🔄 Checking connection...</div>
+  <ul id="songList"></ul>
+  <audio id="audioPlayer" controls style="width:100%; margin-top: 20px;"></audio>
   <script src="script.js"></script>
 </body>
 </html>
