@@ -61,11 +61,33 @@ async function smartSaveSong(song) {
   localStorage.setItem('smartCacheList', JSON.stringify(smartCacheList));
 }
 
+function updateOnlineStatus() {
+  let statusElem = document.getElementById('onlineStatus');
+  if (!statusElem) {
+    statusElem = document.createElement('div');
+    statusElem.id = 'onlineStatus';
+    statusElem.style.textAlign = 'center';
+    statusElem.style.marginBottom = '15px';
+    statusElem.style.fontWeight = 'bold';
+    statusElem.style.color = 'white';
+    document.body.insertBefore(statusElem, document.body.firstChild);
+  }
+  statusElem.textContent = navigator.onLine ? 'You are ONLINE' : 'You are OFFLINE';
+}
+
 async function renderPlaylist() {
   playlist.innerHTML = '';
+  updateOnlineStatus();
+
+  const offline = !navigator.onLine;
+
   for (let i = 0; i < songs.length; i++) {
     const song = songs[i];
     const icon = getStatusIcon(song);
+
+    // If offline, show only saved songs (smart or permanent)
+    if (offline && icon === '⬇️') continue;
+
     const li = document.createElement('li');
     li.classList.toggle('playing', i === currentIndex);
     li.textContent = song.split('/').pop();
@@ -73,14 +95,18 @@ async function renderPlaylist() {
     const btn = document.createElement('button');
     btn.textContent = icon;
     btn.dataset.index = i;
+
     btn.onclick = async (e) => {
       e.stopPropagation();
       const idx = +btn.dataset.index;
       const s = songs[idx];
       const status = getStatusIcon(s);
+
       if (status === '⬇️') {
-        // Play song and smart save (will show 🤖)
-        await playSong(idx);
+        // Only cache, no auto-play
+        await cacheSong(s);
+        localStorage.setItem(getCacheKeyPermanent(s), true); // treat download as permanent save
+        renderPlaylist();
       } else if (status === '🤖') {
         // Promote to permanent save (❌)
         localStorage.setItem(getCacheKeyPermanent(s), true);
@@ -90,7 +116,7 @@ async function renderPlaylist() {
         localStorage.setItem('smartCacheList', JSON.stringify(smartCacheList));
         renderPlaylist();
       } else if (status === '❌') {
-        // Remove song from cache & offline
+        // Remove from cache & storage
         localStorage.removeItem(getCacheKeyPermanent(s));
         localStorage.removeItem(getCacheKeySmart(s));
         const idxInList = smartCacheList.indexOf(s);
@@ -114,7 +140,7 @@ async function playSong(index) {
   audio.src = songs[index];
   nowPlaying.textContent = 'Now Playing: ' + songs[index].split('/').pop();
   await audio.play();
-  // Smart save only on online mode
+
   if (navigator.onLine) {
     await smartSaveSong(songs[index]);
     renderPlaylist();
@@ -127,6 +153,17 @@ audio.addEventListener('ended', () => {
 });
 
 window.addEventListener('load', () => {
+  updateOnlineStatus();
   renderPlaylist();
   playSong(currentIndex);
+});
+
+window.addEventListener('online', () => {
+  updateOnlineStatus();
+  renderPlaylist();
+});
+
+window.addEventListener('offline', () => {
+  updateOnlineStatus();
+  renderPlaylist();
 });
