@@ -1,134 +1,109 @@
 const songs = [
-  'song1.mp3',
-  'song2.mp3',
-  'song3.mp3',
-  'song4.mp3',
-  'song5.mp3'
+  { title: "Song1.mp3", url: "./songs/Song1.mp3" },
+  { title: "Song2.mp3", url: "./songs/Song2.mp3" },
+  { title: "Song3.mp3", url: "./songs/Song3.mp3" }
 ];
 
-const songList = document.getElementById('songList');
 const player = document.getElementById('player');
-const statusText = document.getElementById('status');
+const songsDiv = document.getElementById('songs');
+const statusDiv = document.getElementById('status');
+let currentIndex = 0;
+let isOnline = navigator.onLine;
 
-let currentIndex = -1;
-const CACHE_NAME = 'music-cache';
+const CACHE_NAME = 'offline-music-v2';
+const offlineSongs = JSON.parse(localStorage.getItem('offlineSongs') || '[]');
 
-window.addEventListener('load', () => {
-  updateNetworkStatus();
-  navigator.serviceWorker.register('sw.js');
-  renderList();
-});
-
-window.addEventListener('online', updateNetworkStatus);
-window.addEventListener('offline', updateNetworkStatus);
-
-function updateNetworkStatus() {
-  statusText.textContent = 'Status: ' + (navigator.onLine ? 'Online' : 'Offline');
-  renderList();
+function checkCacheStatus(song) {
+  return caches.open(CACHE_NAME).then(cache => cache.match(song.url)).then(response => {
+    if (offlineSongs.includes(song.url)) return 'offline';
+    if (response) return 'smart';
+    return 'none';
+  });
 }
 
-async function renderList() {
-  const cache = await caches.open(CACHE_NAME);
-  songList.innerHTML = '';
+function updateStatus() {
+  statusDiv.textContent = isOnline ? "You are online" : "You are offline";
+}
 
-  for (let i = 0; i < songs.length; i++) {
-    const url = songs[i];
-    const req = new Request(url);
-    const cached = await cache.match(req);
+function renderSongs() {
+  songsDiv.innerHTML = "";
+  songs.forEach((song, i) => {
+    checkCacheStatus(song).then(state => {
+      const div = document.createElement('div');
+      div.className = 'song';
+      if (i === currentIndex) div.classList.add('current');
+      div.textContent = song.title;
 
-    let icon = '⬇️';
-    if (downloading.has(url)) {
-      icon = '⚠️';
-    } else if (permanent.has(url)) {
-      icon = '❌';
+      const icon = document.createElement('span');
+      icon.className = 'icon';
+      icon.textContent = state === 'offline' ? '❌' : state === 'smart' ? '🤖' : '⬇️';
+      if (state === 'smart') icon.title = 'Smart Saved';
+      if (state === 'offline') icon.title = 'Saved Offline';
+      if (state === 'none') icon.title = 'Click to Save';
+
+      icon.onclick = (e) => {
+        e.stopPropagation();
+        handleIconClick(song, icon);
+      };
+
+      div.onclick = () => playSong(i);
+      div.appendChild(icon);
+      songsDiv.appendChild(div);
+    });
+  });
+}
+
+function handleIconClick(song, icon) {
+  caches.open(CACHE_NAME).then(async cache => {
+    const cached = await cache.match(song.url);
+    if (offlineSongs.includes(song.url)) {
+      offlineSongs.splice(offlineSongs.indexOf(song.url), 1);
+      localStorage.setItem('offlineSongs', JSON.stringify(offlineSongs));
+      icon.textContent = '⬇️';
+      cache.delete(song.url);
     } else if (cached) {
-      icon = '🤖';
+      offlineSongs.push(song.url);
+      localStorage.setItem('offlineSongs', JSON.stringify(offlineSongs));
+      icon.textContent = '❌';
+    } else {
+      icon.textContent = '⚠️';
+      fetch(song.url)
+        .then(response => {
+          if (response.ok) cache.put(song.url, response.clone());
+          icon.textContent = '🤖';
+        })
+        .catch(() => {
+          icon.textContent = '⬇️';
+        });
     }
-
-    const li = document.createElement('li');
-    li.innerHTML = `<span ${i === currentIndex ? 'class="playing"' : ''}>${url}</span> 
-      <span class="status" data-url="${url}" data-index="${i}" data-icon="${icon}">${icon}</span>`;
-    songList.appendChild(li);
-  }
-
-  attachClickHandlers();
-}
-
-function attachClickHandlers() {
-  document.querySelectorAll('.status').forEach(btn => {
-    btn.onclick = async (e) => {
-      const url = e.target.dataset.url;
-      const index = parseInt(e.target.dataset.index);
-      const icon = e.target.dataset.icon;
-
-      if (icon === '⬇️') {
-        savePermanent(url);
-      } else if (icon === '🤖') {
-        savePermanent(url);
-      } else if (icon === '❌') {
-        removeFromCache(url);
-      }
-      renderList();
-    };
-  });
-
-  document.querySelectorAll('li span:first-child').forEach(span => {
-    span.onclick = () => {
-      const index = songs.indexOf(span.textContent.trim());
-      playSong(index);
-    };
   });
 }
 
-async function playSong(index) {
+function playSong(index) {
   currentIndex = index;
-  const url = songs[index];
-  const cache = await caches.open(CACHE_NAME);
-  const cached = await cache.match(url);
-
-  if (!cached) {
-    smartSave(url);
-  }
-
-  player.src = url;
-  renderList();
+  player.src = songs[currentIndex].url;
+  renderSongs();
 }
 
 player.onended = () => {
-  if (currentIndex + 1 < songs.length) {
+  if (currentIndex < songs.length - 1) {
     playSong(currentIndex + 1);
   }
 };
 
-// Smart save (temporary cache)
-const downloading = new Set();
-async function smartSave(url) {
-  if (downloading.has(url)) return;
-  downloading.add(url);
-  renderList();
+window.addEventListener('online', () => {
+  isOnline = true;
+  updateStatus();
+  renderSongs();
+});
 
-  const res = await fetch(url);
-  const cache = await caches.open(CACHE_NAME);
-  await cache.put(url, res.clone());
+window.addEventListener('offline', () => {
+  isOnline = false;
+  updateStatus();
+  renderSongs();
+});
 
-  downloading.delete(url);
-  renderList();
-}
+updateStatus();
+renderSongs();
 
-// Permanent save
-const permanent = new Set();
-async function savePermanent(url) {
-  const res = await fetch(url);
-  const cache = await caches.open(CACHE_NAME);
-  await cache.put(url, res.clone());
-  permanent.add(url);
-  renderList();
-}
-
-// Remove from cache
-async function removeFromCache(url) {
-  const cache = await caches.open(CACHE_NAME);
-  await cache.delete(url);
-  permanent.delete(url);
-  renderList();
-}
+navigator.serviceWorker.register('sw.js');
