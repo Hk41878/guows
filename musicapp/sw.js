@@ -1,8 +1,9 @@
 const CACHE_NAME = 'offline-music-v1';
 const FILES_TO_CACHE = [
   './',
-  './index.html',  // ✅ Comma added
-  // Songs will be cached on demand
+  './index.html',
+  './icons/download.png',
+  './icons/remove.png'
 ];
 
 self.addEventListener('install', event => {
@@ -12,8 +13,14 @@ self.addEventListener('install', event => {
   );
 });
 
+self.addEventListener('activate', event => {
+  self.clients.claim();
+});
+
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request).then(response => response || fetch(event.request))
+    caches.match(event.request).then(resp => {
+      return resp || fetch(event.request);
+    })
   );
 });
