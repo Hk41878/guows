@@ -5,21 +5,183 @@
   <title>Offline Music Player</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <base href="./">
-  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      background: #111;
+      color: #fff;
+      padding: 10px;
+    }
+    .status {
+      font-weight: bold;
+      padding: 10px;
+      background-color: #222;
+      color: #fff;
+      border-radius: 5px;
+    }
+    .online { background-color: green; }
+    .offline { background-color: red; }
+
+    .song-list {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+
+    .song-list li {
+      margin: 10px auto;
+      padding: 10px;
+      max-width: 500px;
+      background: #222;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 5px;
+    }
+
+    .song-list span {
+      cursor: pointer;
+      text-align: left;
+      flex-grow: 1;
+    }
+
+    .download-btn {
+      background: none;
+      color: white;
+      font-size: 20px;
+      border: none;
+      cursor: pointer;
+      padding: 5px;
+    }
+
+    .downloaded {
+      color: limegreen;
+    }
+
+    audio {
+      width: 90%;
+      max-width: 600px;
+      margin-top: 20px;
+    }
+  </style>
 </head>
 <body>
+  <div id="status" class="status">Checking...</div>
   <h1>Offline Music Player</h1>
 
+  <ul class="song-list">
+    <li>
+      <span onclick="playSong('songs/song1.mp3')">Song 1</span>
+      <button class="download-btn" onclick="toggleOffline(this, 'songs/song1.mp3')">⬇️</button>
+    </li>
+    <li>
+      <span onclick="playSong('songs/song2.mp3')">Song 2</span>
+      <button class="download-btn" onclick="toggleOffline(this, 'songs/song2.mp3')">⬇️</button>
+    </li>
+    <li>
+      <span onclick="playSong('songs/song3.mp3')">Song 3</span>
+      <button class="download-btn" onclick="toggleOffline(this, 'songs/song3.mp3')">⬇️</button>
+    </li>
+    <li>
+      <span onclick="playSong('songs/song4.mp3')">Song 4</span>
+      <button class="download-btn" onclick="toggleOffline(this, 'songs/song4.mp3')">⬇️</button>
+    </li>
+    <li>
+      <span onclick="playSong('songs/song5.mp3')">Song 5</span>
+      <button class="download-btn" onclick="toggleOffline(this, 'songs/song5.mp3')">⬇️</button>
+    </li>
+  </ul>
+
   <audio id="audioPlayer" controls>
-    <source id="audioSource" src="songs/song1.mp3" type="audio/mpeg">
+    <source id="audioSource" src="" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
 
-  <div class="buttons">
-    <button onclick="addToOffline()">Add to Offline</button>
-    <button onclick="removeFromOffline()">Remove from Offline</button>
-  </div>
+  <script>
+    const CACHE_NAME = 'offline-music-v1';
 
-  <script src="script.js"></script>
+    // Service worker registration
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').then(() => {
+        console.log('Service Worker Registered');
+      });
+    }
+
+    // Online/offline status
+    const status = document.getElementById('status');
+    function updateOnlineStatus() {
+      const online = navigator.onLine;
+      status.textContent = online ? '🟢 Online' : '🔴 Offline';
+      status.className = `status ${online ? 'online' : 'offline'}`;
+    }
+    window.addEventListener('online', updateOnlineStatus);
+    window.addEventListener('offline', updateOnlineStatus);
+    updateOnlineStatus();
+
+    // Play song
+    function playSong(url) {
+      const player = document.getElementById('audioPlayer');
+      const source = document.getElementById('audioSource');
+      source.src = url;
+      player.load();
+      player.play();
+    }
+
+    // Toggle song cache
+    async function toggleOffline(button, url) {
+      const cache = await caches.open(CACHE_NAME);
+      const response = await cache.match(url);
+      if (response) {
+        await cache.delete(url);
+        button.classList.remove('downloaded');
+        alert('Removed from offline');
+      } else {
+        await cache.add(url);
+        button.classList.add('downloaded');
+        alert('Added to offline');
+      }
+    }
+
+    // On load, check which songs are already cached
+    window.addEventListener('load', async () => {
+      const cache = await caches.open(CACHE_NAME);
+      const all = document.querySelectorAll('.download-btn');
+      for (let btn of all) {
+        const url = btn.getAttribute('onclick').match(/'(.*?)'/)[1];
+        const match = await cache.match(url);
+        if (match) btn.classList.add('downloaded');
+      }
+    });
+  </script>
+
+  <!-- sw.js must be in the root for GitHub Pages -->
+  <script>
+    // Injecting sw.js as inline doesn't work; this is just for info.
+    // Make sure to create a separate sw.js file with the following content:
+    /*
+    const CACHE_NAME = 'offline-music-v1';
+    const FILES_TO_CACHE = [
+      './',
+      './index.html',
+      './style.css',
+      './script.js'
+      // Songs added manually by user
+    ];
+
+    self.addEventListener('install', event => {
+      self.skipWaiting();
+      event.waitUntil(
+        caches.open(CACHE_NAME).then(cache => cache.addAll(FILES_TO_CACHE))
+      );
+    });
+
+    self.addEventListener('fetch', event => {
+      event.respondWith(
+        caches.match(event.request).then(response => response || fetch(event.request))
+      );
+    });
+    */
+  </script>
 </body>
 </html>
