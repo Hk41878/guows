@@ -1,22 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Smart Audio Player</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Offline Music Player</title>
   <style>
-    body { font-family: sans-serif; background: #111; color: #fff; padding: 20px; }
-    ul { list-style: none; padding: 0; }
-    li { margin: 10px 0; }
-    .playing { font-weight: bold; color: #0f0; }
-    .status { margin-left: 10px; cursor: pointer; }
+    body {
+      font-family: sans-serif;
+      background: #111;
+      color: white;
+      padding: 20px;
+    }
+    .song {
+      margin-bottom: 10px;
+      cursor: pointer;
+    }
+    .current {
+      color: #4fc3f7;
+    }
+    .icon {
+      margin-left: 10px;
+      cursor: pointer;
+    }
+    .status {
+      margin-top: 10px;
+      font-size: 0.9em;
+      color: orange;
+    }
   </style>
 </head>
 <body>
-  <h1>Smart Audio Player</h1>
-  <p id="status">Status: Online</p>
-  <ul id="songList"></ul>
+  <h1>Offline Music Player</h1>
+  <div id="status" class="status">Checking connection...</div>
+  <div id="songs"></div>
   <audio id="player" controls autoplay></audio>
-
   <script src="script.js"></script>
 </body>
 </html>
