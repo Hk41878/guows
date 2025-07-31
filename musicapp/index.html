@@ -2,38 +2,40 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Offline Music Player</title>
+  <link rel="manifest" href="manifest.json" />
   <style>
     body {
       font-family: sans-serif;
-      background: #111;
+      background: black;
       color: white;
+      text-align: center;
       padding: 20px;
     }
+    button {
+      margin: 5px;
+      font-size: 20px;
+      cursor: pointer;
+    }
     .song {
-      margin-bottom: 10px;
-      cursor: pointer;
+      margin: 15px 0;
     }
-    .current {
-      color: #4fc3f7;
-    }
-    .icon {
-      margin-left: 10px;
-      cursor: pointer;
-    }
-    .status {
-      margin-top: 10px;
-      font-size: 0.9em;
-      color: orange;
+    .now-playing {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 18px;
+      color: lightgreen;
     }
   </style>
 </head>
 <body>
   <h1>Offline Music Player</h1>
-  <div id="status" class="status">Checking connection...</div>
-  <div id="songs"></div>
+  <div id="status">Checking connection...</div>
+  <div id="song-list"></div>
+  <div class="now-playing" id="now-playing"></div>
   <audio id="player" controls autoplay></audio>
+
   <script src="script.js"></script>
 </body>
 </html>
