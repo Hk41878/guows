@@ -1,10 +1,10 @@
 const CACHE_NAME = 'offline-music-v1';
 const FILES_TO_CACHE = [
-  '/',
-  '/index.html',
-  '/style.css',
-  '/script.js',
-  '/songs/song1.mp3'
+  './',
+  './index.html',
+  './style.css',
+  './script.js',
+  './songs/song1.mp3'
 ];
 
 self.addEventListener('install', event => {
