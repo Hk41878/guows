@@ -1,0 +1,360 @@
+{
+  "countries": [
+    {
+      "name": "England",
+      "color": "#fc9003",
+      "price": 2500,
+      "upgradeCost": 7000,
+      "rent": {
+        "siteOnly": 700,
+        "oneHouse": 1700,
+        "twoHouses": 3400,
+        "threeHouses": 5100,
+        "hotel": 6100
+      },
+      "mortgageValue": 3500,
+      "info": "If a player owns THREE sites of any colour-group, the rent is Doubled on unimproved sites in that group."
+    },
+    {
+      "name": "France",
+      "color": "#fc9003",
+      "price": 2500,
+      "upgradeCost": 2500,
+      "rent": {
+        "siteOnly": 300,
+        "oneHouse": 1300,
+        "twoHouses": 2600,
+        "threeHouses": 3900,
+        "hotel": 4900
+      },
+      "mortgageValue": 1250,
+      "info": "If a player owns THREE sites of any colour-group, the rent is Doubled on unimproved sites in that group."
+    },
+    {
+      "name": "Switzerland",
+      "color": "#fc9003",
+      "price": 3500,
+      "upgradeCost": 6500,
+      "rent": {
+        "siteOnly": 700,
+        "oneHouse": 1700,
+        "twoHouses": 3400,
+        "threeHouses": 5100,
+        "hotel": 6100
+      },
+      "mortgageValue": 3300,
+      "info": "If a player owns THREE sites of any colour-group, the rent is Doubled on unimproved sites in that group."
+    },
+    {
+      "name": "Italy",
+      "color": "#fc9003",
+      "price": 3500,
+      "upgradeCost": 2000,
+      "rent": {
+        "siteOnly": 200,
+        "oneHouse": 1200,
+        "twoHouses": 2400,
+        "threeHouses": 3600,
+        "hotel": 4600
+      },
+      "mortgageValue": 1000,
+      "info": "If a player owns THREE sites of any colour-group, the rent is Doubled on unimproved sites in that group."
+    },
+    {
+      "name": "Germany",
+      "color": "#fc9003",
+      "price": 3500,
+      "upgradeCost": 3500,
+      "rent": {
+        "siteOnly": 400,
+        "oneHouse": 1400,
+        "twoHouses": 2800,
+        "threeHouses": 4200,
+        "hotel": 5200
+      },
+      "mortgageValue": 1750,
+      "info": "If a player owns THREE sites of any colour-group, the rent is Doubled on unimproved sites in that group."
+    },
+    {
+      "name": "India",
+      "color": "#038cfc",
+      "price": 4500,
+      "upgradeCost": 5500,
+      "rent": {
+        "siteOnly": 550,
+        "oneHouse": 1550,
+        "twoHouses": 3100,
+        "threeHouses": 4650,
+        "hotel": 5650
+      },
+      "mortgageValue": 2750,
+      "info": "If a player owns THREE sites of any colour-group, the rent is Doubled on unimproved sites in that group."
+    },
+    {
+      "name": "Japan",
+      "color": "#038cfc",
+      "price": 2500,
+      "upgradeCost": 2500,
+      "rent": {
+        "siteOnly": 250,
+        "oneHouse": 1250,
+        "twoHouses": 2500,
+        "threeHouses": 3750,
+        "hotel": 4750
+      },
+      "mortgageValue": 1250,
+      "info": "If a player owns THREE sites of any colour-group, the rent is Doubled on unimproved sites in that group."
+    },
+    {
+      "name": "Singapore",
+      "color": "#038cfc",
+      "price": 3000,
+      "upgradeCost": 3000,
+      "rent": {
+        "siteOnly": 300,
+        "oneHouse": 1300,
+        "twoHouses": 2600,
+        "threeHouses": 3900,
+        "hotel": 4900
+      },
+      "mortgageValue": 1500,
+      "info": "If a player owns THREE sites of any colour-group, the rent is Doubled on unimproved sites in that group."
+    },
+    {
+      "name": "China",
+      "color": "#038cfc",
+      "price": 4500,
+      "upgradeCost": 4500,
+      "rent": {
+        "siteOnly": 450,
+        "oneHouse": 1450,
+        "twoHouses": 2900,
+        "threeHouses": 4350,
+        "hotel": 5350
+      },
+      "mortgageValue": 2250,
+      "info": "If a player owns THREE sites of any colour-group, the rent is Doubled on unimproved sites in that group."
+    },
+    {
+      "name": "Hongkong",
+      "color": "#038cfc",
+      "price": 2000,
+      "upgradeCost": 2500,
+      "rent": {
+        "siteOnly": 200,
+        "oneHouse": 1200,
+        "twoHouses": 2400,
+        "threeHouses": 3600,
+        "hotel": 4600
+      },
+      "mortgageValue": 1000,
+      "info": "If a player owns THREE sites of any colour-group, the rent is Doubled on unimproved sites in that group."
+    },
+    {
+      "name": "Egypt",
+      "color": "#88fc03",
+      "price": 3200,
+      "upgradeCost": 3200,
+      "rent": {
+        "siteOnly": 300,
+        "oneHouse": 1300,
+        "twoHouses": 2600,
+        "threeHouses": 3900,
+        "hotel": 4900
+      },
+      "mortgageValue": 1500,
+      "info": "If a player owns THREE sites of any colour-group, the rent is Doubled on unimproved sites in that group."
+    },
+    {
+      "name": "Iraq",
+      "color": "#88fc03",
+      "price": 5000,
+      "upgradeCost": 5000,
+      "rent": {
+        "siteOnly": 500,
+        "oneHouse": 1500,
+        "twoHouses": 3000,
+        "threeHouses": 4500,
+        "hotel": 5500
+      },
+      "mortgageValue": 2500,
+      "info": "If a player owns THREE sites of any colour-group, the rent is Doubled on unimproved sites in that group."
+    },
+    {
+      "name": "Malaysia",
+      "color": "#88fc03",
+      "price": 1500,
+      "upgradeCost": 1500,
+      "rent": {
+        "siteOnly": 200,
+        "oneHouse": 1200,
+        "twoHouses": 2400,
+        "threeHouses": 3600,
+        "hotel": 4600
+      },
+      "mortgageValue": 800,
+      "info": "If a player owns THREE sites of any colour-group, the rent is Doubled on unimproved sites in that group."
+    },
+    {
+      "name": "Iran",
+      "color": "#88fc03",
+      "price": 2500,
+      "upgradeCost": 2500,
+      "rent": {
+        "siteOnly": 300,
+        "oneHouse": 1300,
+        "twoHouses": 2600,
+        "threeHouses": 3900,
+        "hotel": 4900
+      },
+      "mortgageValue": 1250,
+      "info": "If a player owns THREE sites of any colour-group, the rent is Doubled on unimproved sites in that group."
+    },
+    {
+      "name": "Saudi Arabia",
+      "color": "#88fc03",
+      "price": 5500,
+      "upgradeCost": 5500,
+      "rent": {
+        "siteOnly": 600,
+        "oneHouse": 1600,
+        "twoHouses": 3200,
+        "threeHouses": 4800,
+        "hotel": 5800
+      },
+      "mortgageValue": 2800,
+      "info": "If a player owns THREE sites of any colour-group, the rent is Doubled on unimproved sites in that group."
+    },
+    {
+      "name": "Mexico",
+      "color": "#fcdb03",
+      "price": 4000,
+      "upgradeCost": 4000,
+      "rent": {
+        "siteOnly": 900,
+        "oneHouse": 1800,
+        "twoHouses": 3600,
+        "threeHouses": 5400,
+        "hotel": 6400
+      },
+      "mortgageValue": 2000,
+      "info": "If a player owns THREE sites of any colour-group, the rent is Doubled on unimproved sites in that group."
+    },
+    {
+      "name": "Canada",
+      "color": "#fcdb03",
+      "price": 4000,
+      "upgradeCost": 4000,
+      "rent": {
+        "siteOnly": 400,
+        "oneHouse": 1400,
+        "twoHouses": 2800,
+        "threeHouses": 4200,
+        "hotel": 5200
+      },
+      "mortgageValue": 2000,
+      "info": "If a player owns THREE sites of any colour-group, the rent is Doubled on unimproved sites in that group."
+    },
+    {
+      "name": "Brazil",
+      "color": "#fcdb03",
+      "price": 2500,
+      "upgradeCost": 2500,
+      "rent": {
+        "siteOnly": 300,
+        "oneHouse": 1300,
+        "twoHouses": 2600,
+        "threeHouses": 3900,
+        "hotel": 4900
+      },
+      "mortgageValue": 1300,
+      "info": "If a player owns THREE sites of any colour-group, the rent is Doubled on unimproved sites in that group."
+    },
+    {
+      "name": "Australia",
+      "color": "#fcdb03",
+      "price": 3300,
+      "upgradeCost": 3300,
+      "rent": {
+        "siteOnly": 400,
+        "oneHouse": 1400,
+        "twoHouses": 2800,
+        "threeHouses": 4200,
+        "hotel": 5200
+      },
+      "mortgageValue": 2000,
+      "info": "If a player owns THREE sites of any colour-group, the rent is Doubled on unimproved sites in that group."
+    },
+    {
+      "name": "USA",
+      "color": "#fcdb03",
+      "price": 8500,
+      "upgradeCost": 8500,
+      "rent": {
+        "siteOnly": 1000,
+        "oneHouse": 2000,
+        "twoHouses": 4000,
+        "threeHouses": 6000,
+        "hotel": 7000
+      },
+      "mortgageValue": 5000,
+      "info": "If a player owns THREE sites of any colour-group, the rent is Doubled on unimproved sites in that group."
+    }
+  ],
+  "travelTickets": [
+    {
+      "name": "Roadways",
+      "color": "#ffffde",
+      "price": 3500,
+      "rent": 800,
+      "maxRent": 1500,
+      "mortgageValue": 1800,
+      "info": "If you are owner of RAILWAYS the rent is $1500"
+    },
+    {
+      "name": "Railway",
+      "color": "#ffffde",
+      "price": 9500,
+      "rent": 1500,
+      "maxRent": 2500,
+      "mortgageValue": 5000,
+      "info": "If you are owner of ROADWAYS the rent is $2500"
+    },
+    {
+      "name": "Waterways",
+      "color": "#ffffde",
+      "price": 9500,
+      "rent": 1400,
+      "maxRent": 2200,
+      "mortgageValue": 2000,
+      "info": "If you are owner of SATELLITE the Rent is $2200"
+    },
+    {
+      "name": "Satellite",
+      "color": "#ffffde",
+      "price": 2000,
+      "rent": 500,
+      "maxRent": 1000,
+      "mortgageValue": 1250,
+      "info": "If you are owner of WATERWAYS the Rent is $1000"
+    },
+    {
+      "name": "Airways",
+      "color": "#ffffde",
+      "price": 10500,
+      "rent": 1500,
+      "maxRent": 2500,
+      "mortgageValue": 5500,
+      "info": "If you are owner of PETROLEUM the Rent is $2500"
+    },
+    {
+      "name": "Petroleum",
+      "color": "#ffffde",
+      "price": 5500,
+      "rent": 500,
+      "maxRent": 1000,
+      "mortgageValue": 1300,
+      "info": "If you are owner of AIRWAYS the Rent is $1000"
+    }
+  ]
+}
