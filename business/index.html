@@ -65,7 +65,18 @@
   // Optional test button to open selector programmatically
   document.getElementById("openSelector").addEventListener("click", () => {
     openAmountSelector(selected => {
+      // Show alert (optional)
       alert("You selected $" + selected);
+
+      // Prepare WhatsApp message
+      const number = "+393319021033"; // Recipient number
+      const message = `Selected amount: $${selected}`;
+
+      // Create WhatsApp click-to-chat URL
+      const whatsappUrl = `https://wa.me/${number.replace(/\+/,'')}?text=${encodeURIComponent(message)}`;
+
+      // Open in new tab/window
+      window.open(whatsappUrl, "_blank");
     });
   });
 </script>
