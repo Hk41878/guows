@@ -58,13 +58,16 @@
   </div>
 </main>
 
-<!-- ---------------------- Amount Selector Script ---------------------- -->
+<!-- Include the Amount Selector component -->
 <script src="component/amountSelector.js"></script>
-  <script> 
-openAmountSelector(selectedAmount => {
-  console.log("Selected amount: $" + selectedAmount);
-  // Use this amount for your game transactions
-});
+
+<script>
+  // Optional test button to open selector programmatically
+  document.getElementById("openSelector").addEventListener("click", () => {
+    openAmountSelector(selected => {
+      alert("You selected $" + selected);
+    });
+  });
 </script>
 
 </body>
