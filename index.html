@@ -2,20 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Prevent iOS auto-zoom while typing -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
   <title>guows.com — Domain For Sale</title>
-  <meta name="description" content="Premium domain guows.com is for sale. Contact via WhatsApp or Email with pre-filled message." />
+  <meta name="description" content="Premium 5-letter .com domain guows.com is for sale. Contact via WhatsApp or Email with a pre-filled message." />
   <meta name="theme-color" content="#0ea5e9" />
 
-  <!-- Open Graph -->
+  <!-- Open Graph / Twitter (perfect OG size: 1200 x 630 px, 1.91:1) -->
   <meta property="og:title" content="guows.com — Domain For Sale" />
-  <meta property="og:description" content="Grab guows.com. Tap WhatsApp or Email to send a pre-filled message." />
+  <meta property="og:description" content="Short. Brandable. Memorable. Tap to send a pre-filled WhatsApp or Email offer." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://guows.com" />
-  <meta property="og:image" content="https://api.iconify.design/mdi/web.svg?color=%23ffffff" />
+  <meta property="og:image" content="/og-guows-1200x630.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="guows.com — Domain For Sale" />
+  <meta name="twitter:description" content="Short. Brandable. Memorable. Tap to send a pre-filled message." />
+  <meta name="twitter:image" content="/oglogo.jpeg" />
 
   <!-- Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet" />
 
   <style>
     :root{
@@ -25,7 +32,7 @@
       --card-bg: rgba(255,255,255,0.09);
       --card-brd: rgba(255,255,255,0.25);
       --txt: #ffffff;
-      --muted: rgba(255,255,255,0.8);
+      --muted: rgba(255,255,255,0.82);
       --accent: #fbbf24; /* amber-400 */
       --btn:#111827; /* gray-900 */
       --btn-txt:#fff;
@@ -36,21 +43,25 @@
     html,body{ height:100% }
     body{
       margin:0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans";
       color:var(--txt);
-      background:#000;
+      background:#0b1021;
       line-height:1.45;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
+      -webkit-text-size-adjust:100%;
     }
 
-    /* Animated gradient background */
+    /* Taller, fully covering animated background for all mobile bars/Chrome UI states */
     .bg{
       position:fixed; inset:0;
-      background: radial-gradient(1200px 800px at 10% 10%, var(--bg1) 0%, transparent 60%),
-                  radial-gradient(900px 600px at 90% 20%, var(--bg2) 0%, transparent 60%),
-                  radial-gradient(1200px 900px at 50% 100%, var(--bg3) 0%, transparent 65%),
-                  #0b1021;
+      min-height:100svh; /* small viewport height */
+      height:100lvh;     /* large viewport height when URL bar hidden */
+      background:
+        radial-gradient(1200px 800px at 10% 10%, var(--bg1) 0%, transparent 60%),
+        radial-gradient(900px 600px at 90% 20%, var(--bg2) 0%, transparent 60%),
+        radial-gradient(1200px 900px at 50% 100%, var(--bg3) 0%, transparent 65%),
+        #0b1021;
       filter:saturate(1.1) brightness(1.05);
       animation: float 18s ease-in-out infinite alternate;
       z-index:-1;
@@ -61,7 +72,8 @@
     }
 
     .wrap{
-      min-height:100%;
+      min-height:100svh; /* cover even when URL bar shows */
+      min-height:100dvh; /* dynamic viewport height */
       display:grid;
       place-items:center;
       padding:24px;
@@ -128,17 +140,11 @@
       background:var(--btn); color:var(--btn-txt); font-weight:700;
       text-decoration:none; transition: transform .06s ease, opacity .2s ease;
       box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+      font-size:16px; /* >=16px prevents iOS zoom */
     }
     .btn:hover{ transform: translateY(-1px) }
     .btn:active{ transform: translateY(0) scale(.98) }
-    .btn.alt{
-      background:transparent; color:#111827; /* dark text but on translucent chip */
-      background: #fff; 
-    }
-    .btn span.kbd{
-      font: 600 12px/1 Inter, system-ui; padding:4px 6px; border-radius:6px;
-      background: rgba(255,255,255,0.15); color:#fff;
-    }
+    .btn.alt{ background:#fff; color:#111827; }
 
     .field{ display:flex; flex-direction:column; gap:6px; margin-top:10px; }
     label{ font-size:13px; color:var(--muted) }
@@ -150,7 +156,7 @@
       background: rgba(0,0,0,0.35);
       color:#fff;
       outline:none;
-      font: 500 14px/1.4 Inter, system-ui;
+      font: 500 16px/1.4 Inter, system-ui; /* 16px prevents auto-zoom on focus */
     }
     input:focus, textarea:focus, select:focus{ box-shadow: var(--focus) }
 
@@ -173,6 +179,7 @@
     .copy{
       display:inline-flex; align-items:center; gap:8px; cursor:pointer; user-select:none;
       padding:7px 10px; border-radius:10px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2);
+      font-size:14px;
     }
     .copy:active{ transform: scale(.98) }
     .hint{ font-size:12px; color:var(--muted); margin-left:6px }
@@ -248,8 +255,8 @@
           <div class="field">
             <label>Seller Contact</label>
             <div class="muted">
-              Email: <a href="mailto:hk41878@gmail.com" style="color:#fff; text-decoration:underline">hk41878@gmail.com</a><br/>
-              WhatsApp: <a href="https://wa.me/393319021033" style="color:#fff; text-decoration:underline">+39 331 902 1033</a>
+              Email: <a id="emailSeller" href="mailto:hk41878@gmail.com" style="color:#fff; text-decoration:underline">hk41878@gmail.com</a><br/>
+              WhatsApp: <a id="waSeller" href="#" style="color:#fff; text-decoration:underline">+39 331 902 1033</a>
             </div>
           </div>
         </section>
@@ -270,7 +277,7 @@
     </main>
   </div>
 
-  <!-- JSON-LD for better marketplace snippets -->
+  <!-- JSON-LD -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -296,19 +303,21 @@
   <script>
     (function(){
       const DOMAIN = "guows.com";
-      const WA_NUMBER = "393319021033"; // no plus sign for wa.me
+      const WA_NUMBER = "393319021033"; // no plus sign
       const EMAIL = "hk41878@gmail.com";
 
       const q = sel => document.querySelector(sel);
-      const whatsBtn = q('#whatsBtn');
-      const emailBtn = q('#emailBtn');
-      const buyerName = q('#buyerName');
-      const offerAmount = q('#offerAmount');
+      const whatsBtn   = q('#whatsBtn');
+      const emailBtn   = q('#emailBtn');
+      const waSeller   = q('#waSeller');   // NEW: seller contact WA acts like button
+      const emailSeller= q('#emailSeller');
+      const buyerName  = q('#buyerName');
+      const offerAmount= q('#offerAmount');
       const offerCurrency = q('#offerCurrency');
-      const customNotes = q('#customNotes');
-      const preview = q('#preview');
-      const copyBtn = q('#copyBtn');
-      const copyLine = q('#copyLine');
+      const customNotes= q('#customNotes');
+      const preview    = q('#preview');
+      const copyBtn    = q('#copyBtn');
+      const copyLine   = q('#copyLine');
       const updateBtns = q('#updateBtns');
 
       function buildMessage(){
@@ -317,17 +326,11 @@
         const curr = offerCurrency.value;
         const notes = customNotes.value.trim();
 
-        let parts = [];
-        parts.push(`I am interested to buy the domain ${DOMAIN}.`);
-        if(amount){
-          parts.push(`My initial offer is ${amount} ${curr}.`);
-        }
-        if(name){
-          parts.push(`Regards, ${name}.`);
-        }
-        if(notes){
-          parts.push(`Notes: ${notes}`);
-        }
+        const parts = [];
+        parts.push(`I am interested to buy this domain: ${DOMAIN}.`);
+        if(amount){ parts.push(`My initial offer is ${amount} ${curr}.`); }
+        if(name){ parts.push(`Regards, ${name}.`); }
+        if(notes){ parts.push(`Notes: ${notes}`); }
         parts.push(`Please share current price, transfer process, and timeline.`);
         return parts.join(' ');
       }
@@ -338,26 +341,24 @@
 
         const waURL = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
         whatsBtn.setAttribute('href', waURL);
+        waSeller.setAttribute('href', waURL); // make seller link behave the same
 
         const subject = `Offer for ${DOMAIN}`;
         const mailURL = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(msg)}`;
         emailBtn.setAttribute('href', mailURL);
+        emailSeller.setAttribute('href', mailURL); // also prefill seller email link
       }
 
-      function copyDomain(){
+      function copyDomain(target){
         navigator.clipboard?.writeText(DOMAIN).then(()=>{
-          copyBtn.textContent = "✅ Copied guows.com";
-          setTimeout(()=> copyBtn.textContent = "📋 Copy guows.com", 1400);
-        }).catch(()=>{
-          alert("Copy failed. Please select and copy manually: " + DOMAIN);
-        });
-      }
-
-      function copyLineDomain(){
-        navigator.clipboard?.writeText(DOMAIN).then(()=>{
-          copyLine.style.background = "rgba(255,255,255,0.2)";
-          setTimeout(()=> copyLine.style.background = "", 500);
-        });
+          if(target === 'btn'){
+            copyBtn.textContent = "✅ Copied guows.com";
+            setTimeout(()=> copyBtn.innerHTML = '📋 Copy <span class="kbd">guows.com</span>', 1400);
+          } else {
+            copyLine.style.background = "rgba(255,255,255,0.2)";
+            setTimeout(()=> copyLine.style.background = "", 500);
+          }
+        }).catch(()=>{ alert("Copy failed. Please copy manually: " + DOMAIN); });
       }
 
       // Initialize
@@ -369,18 +370,22 @@
         customNotes.addEventListener(evt, setLinks);
       });
       updateBtns.addEventListener('click', setLinks);
-      copyBtn.addEventListener('click', copyDomain);
-      copyLine.addEventListener('click', copyLineDomain);
+      copyBtn.addEventListener('click', ()=>copyDomain('btn'));
+      copyLine.addEventListener('click', ()=>copyDomain('line'));
 
       // Small UX: focus on name for desktop
       if (window.matchMedia('(pointer:fine)').matches) {
         buyerName.focus({preventScroll:true});
       }
 
-      // Keyboard shortcuts
+      // Keyboard shortcut: copy
       document.addEventListener('keydown', (e)=>{
-        if((e.ctrlKey || e.metaKey) && e.key.toLowerCase()==='k'){ e.preventDefault(); copyDomain(); }
+        if((e.ctrlKey || e.metaKey) && e.key.toLowerCase()==='k'){ e.preventDefault(); copyDomain('btn'); }
       });
+
+      // Recompute links if orientation/viewport changes (mobile bars moving)
+      window.addEventListener('resize', ()=>{ setLinks(); }, { passive:true });
+      window.addEventListener('orientationchange', ()=>{ setLinks(); }, { passive:true });
     })();
   </script>
 </body>
