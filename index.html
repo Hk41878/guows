@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>guows.com — Domain For Sale</title>
+  <meta name="description" content="Premium domain guows.com is for sale. Contact via WhatsApp or Email with pre-filled message." />
+  <meta name="theme-color" content="#0ea5e9" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="guows.com — Domain For Sale" />
+  <meta property="og:description" content="Grab guows.com. Tap WhatsApp or Email to send a pre-filled message." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://guows.com" />
+  <meta property="og:image" content="https://api.iconify.design/mdi/web.svg?color=%23ffffff" />
+
+  <!-- Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root{
+      --bg1:#0ea5e9;  /* sky-500 */
+      --bg2:#7c3aed;  /* violet-600 */
+      --bg3:#22c55e;  /* green-500 */
+      --card-bg: rgba(255,255,255,0.09);
+      --card-brd: rgba(255,255,255,0.25);
+      --txt: #ffffff;
+      --muted: rgba(255,255,255,0.8);
+      --accent: #fbbf24; /* amber-400 */
+      --btn:#111827; /* gray-900 */
+      --btn-txt:#fff;
+      --focus: 0 0 0 3px rgba(255,255,255,0.35);
+    }
+
+    *{ box-sizing:border-box }
+    html,body{ height:100% }
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+      color:var(--txt);
+      background:#000;
+      line-height:1.45;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* Animated gradient background */
+    .bg{
+      position:fixed; inset:0;
+      background: radial-gradient(1200px 800px at 10% 10%, var(--bg1) 0%, transparent 60%),
+                  radial-gradient(900px 600px at 90% 20%, var(--bg2) 0%, transparent 60%),
+                  radial-gradient(1200px 900px at 50% 100%, var(--bg3) 0%, transparent 65%),
+                  #0b1021;
+      filter:saturate(1.1) brightness(1.05);
+      animation: float 18s ease-in-out infinite alternate;
+      z-index:-1;
+    }
+    @keyframes float{
+      0%   { transform: translate3d(0,0,0) scale(1) }
+      100% { transform: translate3d(0,-10px,0) scale(1.02) }
+    }
+
+    .wrap{
+      min-height:100%;
+      display:grid;
+      place-items:center;
+      padding:24px;
+    }
+
+    .card{
+      width:min(980px,100%);
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border:1px solid var(--card-brd);
+      border-radius:20px;
+      padding: clamp(20px, 3.5vw, 40px);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(0,0,0,0.35);
+      border:1px solid rgba(255,255,255,0.15);
+      font-size:12px; letter-spacing:.4px; text-transform:uppercase; color:var(--muted);
+    }
+
+    .domain{
+      font-weight:800;
+      font-size: clamp(34px, 6.4vw, 64px);
+      margin:12px 0 6px;
+      letter-spacing: -0.02em;
+    }
+    .tagline{
+      color:var(--muted);
+      font-size: clamp(14px, 2.5vw, 18px);
+      margin: 0 0 18px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:18px;
+    }
+    @media (min-width: 820px){
+      .grid{ grid-template-columns: 1.2fr .9fr; gap:26px; }
+    }
+
+    .panel{
+      background: rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.18);
+      border-radius:16px;
+      padding:16px;
+    }
+    .panel h3{
+      margin:0 0 8px; font-size:18px; font-weight:700;
+    }
+    .panel p{ margin:6px 0; color:var(--muted); }
+
+    .cta{
+      display:flex; flex-wrap:wrap; gap:10px; margin-top:14px;
+    }
+    .btn{
+      appearance:none; border:none; cursor:pointer;
+      display:inline-flex; align-items:center; gap:10px;
+      padding:12px 16px; border-radius:12px;
+      background:var(--btn); color:var(--btn-txt); font-weight:700;
+      text-decoration:none; transition: transform .06s ease, opacity .2s ease;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+    }
+    .btn:hover{ transform: translateY(-1px) }
+    .btn:active{ transform: translateY(0) scale(.98) }
+    .btn.alt{
+      background:transparent; color:#111827; /* dark text but on translucent chip */
+      background: #fff; 
+    }
+    .btn span.kbd{
+      font: 600 12px/1 Inter, system-ui; padding:4px 6px; border-radius:6px;
+      background: rgba(255,255,255,0.15); color:#fff;
+    }
+
+    .field{ display:flex; flex-direction:column; gap:6px; margin-top:10px; }
+    label{ font-size:13px; color:var(--muted) }
+    input, textarea, select{
+      width:100%;
+      padding:12px 12px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,0.25);
+      background: rgba(0,0,0,0.35);
+      color:#fff;
+      outline:none;
+      font: 500 14px/1.4 Inter, system-ui;
+    }
+    input:focus, textarea:focus, select:focus{ box-shadow: var(--focus) }
+
+    .muted{ color:var(--muted); font-size:13px }
+    .pill{ display:inline-flex; align-items:center; gap:8px; padding:6px 10px; background:rgba(255,255,255,0.10); border-radius:999px; border:1px solid rgba(255,255,255,0.16) }
+
+    .footer{
+      margin-top:22px; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;
+      color:var(--muted); font-size:13px;
+    }
+
+    .logo{
+      width:42px; height:42px; display:grid; place-items:center; border-radius:12px;
+      background: linear-gradient(135deg, #fff, #f6f6f6);
+      color:#111827; font-weight:900;
+      border:1px solid rgba(0,0,0,0.08);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15), inset 0 1px 0 #fff;
+    }
+
+    .copy{
+      display:inline-flex; align-items:center; gap:8px; cursor:pointer; user-select:none;
+      padding:7px 10px; border-radius:10px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2);
+    }
+    .copy:active{ transform: scale(.98) }
+    .hint{ font-size:12px; color:var(--muted); margin-left:6px }
+  </style>
+</head>
+<body>
+  <div class="bg" aria-hidden="true"></div>
+
+  <div class="wrap">
+    <main class="card" role="main">
+      <div class="badge" aria-label="status">🚀 Premium Domain • For Sale</div>
+      <h1 class="domain" aria-label="domain name">guows<span style="color:var(--accent)">.com</span></h1>
+      <p class="tagline">Short. Brandable. Memorable. Perfect for a global brand, SaaS, tech, or media project.</p>
+
+      <div class="grid">
+        <!-- Left: Description & Actions -->
+        <section class="panel" aria-labelledby="about">
+          <h3 id="about">About the Domain</h3>
+          <p>
+            <strong>guows.com</strong> is a rare <em>5-letter .com</em> — easy to spell, easy to remember, and versatile for any niche.
+            Own it today and elevate your brand credibility with a clean .com.
+          </p>
+
+          <div class="cta" role="group" aria-label="primary actions">
+            <a id="whatsBtn" class="btn" href="#" rel="noopener" aria-label="Contact on WhatsApp">
+              🟢 WhatsApp
+            </a>
+            <a id="emailBtn" class="btn alt" href="#" rel="noopener" aria-label="Contact via Email">
+              ✉️ Email Offer
+            </a>
+            <button class="btn" id="copyBtn" type="button" aria-label="Copy domain">
+              📋 Copy <span class="kbd">guows.com</span>
+            </button>
+          </div>
+
+          <p class="hint">One tap opens WhatsApp or your email app with a pre-filled message. Edit before sending if you like.</p>
+        </section>
+
+        <!-- Right: Prefill Controls -->
+        <section class="panel" aria-labelledby="message">
+          <h3 id="message">Quick Message (optional)</h3>
+          <div class="field">
+            <label for="buyerName">Your name (adds to message)</label>
+            <input id="buyerName" placeholder="e.g., Alex" inputmode="text" autocomplete="name" />
+          </div>
+          <div class="field">
+            <label for="offerCurrency">Currency</label>
+            <select id="offerCurrency" aria-label="Currency">
+              <option value="USD" selected>USD</option>
+              <option value="EUR">EUR</option>
+              <option value="GBP">GBP</option>
+              <option value="INR">INR</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="offerAmount">Offer (optional)</label>
+            <input id="offerAmount" placeholder="e.g., 1500" inputmode="decimal" />
+          </div>
+          <div class="field">
+            <label for="customNotes">Notes (optional)</label>
+            <textarea id="customNotes" rows="3" placeholder="Any specifics or questions..."></textarea>
+          </div>
+          <div class="cta">
+            <button id="updateBtns" class="btn" type="button">🔄 Update Pre-filled Text</button>
+          </div>
+          <p class="muted" id="previewWrap">
+            <span class="pill">Preview:</span>
+            <span id="preview" style="display:inline-block; margin-left:8px;"></span>
+          </p>
+
+          <hr style="border:0;border-top:1px solid rgba(255,255,255,0.15); margin:14px 0" />
+
+          <div class="field">
+            <label>Seller Contact</label>
+            <div class="muted">
+              Email: <a href="mailto:hk41878@gmail.com" style="color:#fff; text-decoration:underline">hk41878@gmail.com</a><br/>
+              WhatsApp: <a href="https://wa.me/393319021033" style="color:#fff; text-decoration:underline">+39 331 902 1033</a>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="footer" role="contentinfo">
+        <div style="display:flex; align-items:center; gap:10px">
+          <div class="logo" aria-hidden="true">G</div>
+          <div>
+            <strong>guows.com</strong> • Domain for sale  
+            <span class="muted">| Safe transfer via registrar of your choice (e.g., GoDaddy, Namecheap, Dynadot).</span>
+          </div>
+        </div>
+        <div class="copy" id="copyLine">
+          🔗 Domain: <span id="domText">guows.com</span>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- JSON-LD for better marketplace snippets -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Product",
+    "name":"guows.com",
+    "description":"Premium 5-letter .com domain for sale.",
+    "brand":"guows",
+    "url":"https://guows.com",
+    "offers":{
+      "@type":"Offer",
+      "priceCurrency":"USD",
+      "availability":"https://schema.org/InStock",
+      "seller":{
+        "@type":"Person",
+        "name":"Owner",
+        "email":"hk41878@gmail.com",
+        "telephone":"+393319021033"
+      }
+    }
+  }
+  </script>
+
+  <script>
+    (function(){
+      const DOMAIN = "guows.com";
+      const WA_NUMBER = "393319021033"; // no plus sign for wa.me
+      const EMAIL = "hk41878@gmail.com";
+
+      const q = sel => document.querySelector(sel);
+      const whatsBtn = q('#whatsBtn');
+      const emailBtn = q('#emailBtn');
+      const buyerName = q('#buyerName');
+      const offerAmount = q('#offerAmount');
+      const offerCurrency = q('#offerCurrency');
+      const customNotes = q('#customNotes');
+      const preview = q('#preview');
+      const copyBtn = q('#copyBtn');
+      const copyLine = q('#copyLine');
+      const updateBtns = q('#updateBtns');
+
+      function buildMessage(){
+        const name = buyerName.value.trim();
+        const amount = offerAmount.value.trim();
+        const curr = offerCurrency.value;
+        const notes = customNotes.value.trim();
+
+        let parts = [];
+        parts.push(`I am interested to buy the domain ${DOMAIN}.`);
+        if(amount){
+          parts.push(`My initial offer is ${amount} ${curr}.`);
+        }
+        if(name){
+          parts.push(`Regards, ${name}.`);
+        }
+        if(notes){
+          parts.push(`Notes: ${notes}`);
+        }
+        parts.push(`Please share current price, transfer process, and timeline.`);
+        return parts.join(' ');
+      }
+
+      function setLinks(){
+        const msg = buildMessage();
+        preview.textContent = msg;
+
+        const waURL = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+        whatsBtn.setAttribute('href', waURL);
+
+        const subject = `Offer for ${DOMAIN}`;
+        const mailURL = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(msg)}`;
+        emailBtn.setAttribute('href', mailURL);
+      }
+
+      function copyDomain(){
+        navigator.clipboard?.writeText(DOMAIN).then(()=>{
+          copyBtn.textContent = "✅ Copied guows.com";
+          setTimeout(()=> copyBtn.textContent = "📋 Copy guows.com", 1400);
+        }).catch(()=>{
+          alert("Copy failed. Please select and copy manually: " + DOMAIN);
+        });
+      }
+
+      function copyLineDomain(){
+        navigator.clipboard?.writeText(DOMAIN).then(()=>{
+          copyLine.style.background = "rgba(255,255,255,0.2)";
+          setTimeout(()=> copyLine.style.background = "", 500);
+        });
+      }
+
+      // Initialize
+      setLinks();
+      ['input','change'].forEach(evt=>{
+        buyerName.addEventListener(evt, setLinks);
+        offerAmount.addEventListener(evt, setLinks);
+        offerCurrency.addEventListener(evt, setLinks);
+        customNotes.addEventListener(evt, setLinks);
+      });
+      updateBtns.addEventListener('click', setLinks);
+      copyBtn.addEventListener('click', copyDomain);
+      copyLine.addEventListener('click', copyLineDomain);
+
+      // Small UX: focus on name for desktop
+      if (window.matchMedia('(pointer:fine)').matches) {
+        buyerName.focus({preventScroll:true});
+      }
+
+      // Keyboard shortcuts
+      document.addEventListener('keydown', (e)=>{
+        if((e.ctrlKey || e.metaKey) && e.key.toLowerCase()==='k'){ e.preventDefault(); copyDomain(); }
+      });
+    })();
+  </script>
+</body>
+</html>
