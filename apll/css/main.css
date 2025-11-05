@@ -1,0 +1,45 @@
+/* main.css — mobile-first base, fixed bg, strict overflow */
+:root{
+  --ink:#0b0c0d; --muted:#545a63; --primary:#0b5ed7; --bg:#fff;
+  --radius:16px; --shadow:0 10px 32px rgba(0,0,0,.14); --maxw:1100px;
+  --pad:clamp(14px,3.5vw,24px);
+}
+*{box-sizing:border-box; min-width:0}
+html,body{height:100%}
+html{-webkit-text-size-adjust:100%}
+html,body{margin:0; overflow-x:hidden}
+img,svg,video{max-width:100%; height:auto; display:block}
+
+body{
+  font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+  color:var(--ink); background:var(--bg); min-height:100dvh; position:relative;
+}
+
+/* fixed background image */
+body::before{
+  content:""; position:fixed; inset:0; z-index:-2;
+  background:url("../assets/logo.jpeg") center/cover no-repeat fixed;
+  opacity:.50; filter:grayscale(18%);
+}
+/* lighter overlay so glass can show through */
+body::after{
+  content:""; position:fixed; inset:0; z-index:-1; pointer-events:none;
+  background:
+    linear-gradient(to bottom, rgba(255,255,255,.35),
+                             rgba(255,255,255,.45) 40%,
+                             rgba(255,255,255,.55)),
+    radial-gradient(1100px 700px at 50% 20%,
+                    rgba(255,255,255,0),
+                    rgba(255,255,255,.22));
+}
+
+.site-main,.site-footer,.nav-wrap{width:min(100% - 2*var(--pad), var(--maxw)); margin-inline:auto}
+
+.skip-link{position:absolute;left:-9999px}
+.skip-link:focus{left:var(--pad);top:var(--pad);background:#fff;color:#000;padding:8px 12px;border-radius:10px}
+
+.hero{padding:clamp(6px,2.5vw,14px) 0}
+.hero-title{margin:10px 0 6px; font-size:clamp(22px,5.5vw,36px); font-weight:750; letter-spacing:.2px}
+.hero-sub{margin:0;color:var(--muted); font-size:clamp(14px,3.6vw,16px)}
+
+.site-footer{margin:28px auto 40px; color:var(--muted); font-size:14px}

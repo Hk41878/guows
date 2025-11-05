@@ -1,0 +1,92 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AliPerLaLiberta — Services Demo</title>
+  <meta name="description" content="Demo static site (GitHub Pages) for 5 services with in-page action buttons." />
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/services.css">
+  <link rel="stylesheet" href="css/cards.css">
+  <link rel="stylesheet" href="css/upcoming.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <div class="nav-wrap">
+      <div class="brand" aria-label="Brand">AliPerLaLiberta</div>
+
+      <!-- mobile menu toggle -->
+      <button class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="primary-nav">
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+      </button>
+
+      <nav id="primary-nav" class="site-nav" role="navigation" aria-label="Primary">
+        <ul>
+          <li><a class="nav-link is-active" href="./">Home</a></li>
+          <li><a class="nav-link" href="pages/caf/">CAF</a></li>
+          <li><a class="nav-link" href="pages/patronato/">Patronato</a></li>
+          <li><a class="nav-link" href="pages/spid/">SPID</a></li>
+          <li><a class="nav-link" href="pages/disoccupazione/">Disoccupazione</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="site-main" role="main">
+    <section class="hero">
+      <h1 class="hero-title">Your Services — Simple & Fast</h1>
+      <p class="hero-sub">Lightweight demo hosted on GitHub Pages. Buttons are tagged with
+        <code>data-service</code> for future integration.</p>
+    </section>
+
+    <section class="services" aria-label="Available services">
+      <ul class="services-grid">
+        <li class="service-card">
+          <h2 class="service-title">Ticket Booking</h2>
+          <p class="service-desc">Book travel tickets with quick assistance.</p>
+          <button class="btn primary" data-service="ticket-booking" type="button">Book Now</button>
+        </li>
+
+        <li class="service-card">
+          <h2 class="service-title">SPID (Speed ID)</h2>
+          <p class="service-desc">Get your SPID quickly and securely.</p>
+          <button class="btn primary" data-service="spid" type="button">Get Help</button>
+        </li>
+
+        <li class="service-card">
+          <h2 class="service-title">CAF</h2>
+          <p class="service-desc">CAF assistance for documents & practices.</p>
+          <button class="btn primary" data-service="caf" type="button">Ask Assistance</button>
+        </li>
+
+        <li class="service-card">
+          <h2 class="service-title">Patronato</h2>
+          <p class="service-desc">Support for pensions, welfare, and more.</p>
+          <button class="btn primary" data-service="patronato" type="button">Ask Assistance</button>
+        </li>
+
+        <li class="service-card">
+          <h2 class="service-title">Disoccupazione</h2>
+          <p class="service-desc">Guidance for unemployment benefits.</p>
+          <button class="btn primary" data-service="disoccupazione" type="button">Check / Apply</button>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="site-footer" role="contentinfo">
+    <p class="foot-note">Demo only — form popup will be loaded from your secure domain in Part 2.</p>
+  </footer>
+
+  <!-- Mobile menu toggle only (no form logic in Part 1) -->
+  <script src="js/loader.js"></script>
+</body>
+</html>

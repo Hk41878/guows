@@ -1,0 +1,57 @@
+/* services.css — responsive grid + true glass cards */
+.services{ margin-top:8px }
+.services, .services-grid{ background: transparent; }
+
+.services-grid{
+  margin:0; padding:0; list-style:none;
+  display:grid; gap:clamp(10px,3vw,16px);
+  grid-template-columns:1fr;                         /* phones */
+}
+
+@media (min-width:600px){ .services-grid{ grid-template-columns:repeat(2,1fr) } }
+@media (min-width:960px){ .services-grid{ grid-template-columns:repeat(3,1fr) } }
+
+/* TRUE glass: thinner base + stronger blur (Safari/Chrome) */
+.service-card{
+  position:relative; isolation:isolate;
+  background: rgba(255,255,255,.22);
+  border: 1px solid rgba(255,255,255,.55);
+  border-radius:16px;
+  box-shadow: var(--shadow);
+  padding:clamp(14px,3.5vw,18px);
+  display:grid; gap:8px; min-height:150px;
+
+  -webkit-backdrop-filter: blur(28px) saturate(170%);
+  backdrop-filter: blur(28px) saturate(170%);
+  -webkit-mask-image: -webkit-radial-gradient(white, black);
+  background-clip: padding-box;
+
+  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease;
+  overflow:hidden;
+}
+.service-card::after{
+  content:""; position:absolute; inset:0; z-index:-1;
+  background: linear-gradient(180deg, rgba(255,255,255,.28), rgba(255,255,255,.06));
+  pointer-events:none;
+}
+.service-card:active{ transform:scale(.99) }
+@media (hover:hover){ .service-card:hover{ box-shadow:0 16px 40px rgba(0,0,0,.18) } }
+
+.service-title{ margin:0; font-weight:800; font-size:clamp(17px,4.4vw,20px) }
+.service-desc{ margin:0; color:var(--muted); font-size:clamp(14px,3.6vw,15px) }
+
+/* buttons */
+.btn{
+  appearance:none; -webkit-appearance:none; border:0; border-radius:14px;
+  padding:12px 14px; min-height:48px; font:inherit; font-weight:700; letter-spacing:.2px; cursor:pointer;
+}
+.btn.primary{ background:var(--primary); color:#fff }
+.btn.primary:is(:hover,:focus){ filter:brightness(.95); outline:none }
+
+/* hardening against accidental horizontal overflow */
+.service-card *{ min-width:0; word-wrap:break-word; overflow-wrap:anywhere }
+
+/* graceful fallback if backdrop-filter unsupported */
+@supports not ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))){
+  .service-card{ background: rgba(255,255,255,.78); }
+}

@@ -1,0 +1,63 @@
+/* navbar.css — sticky glass header + mobile dropdown */
+.site-header{
+  position:sticky; top:0; z-index:50;
+  background: rgba(255,255,255,.70);
+  -webkit-backdrop-filter: saturate(140%) blur(12px);
+  backdrop-filter: saturate(140%) blur(12px);
+  border-bottom:1px solid rgba(0,0,0,.06);
+}
+
+.nav-wrap{
+  display:grid; grid-template-columns:auto 40px;   /* brand + toggle on mobile */
+  align-items:center; gap:10px; padding:10px 0;
+  width:min(100% - 2*var(--pad), var(--maxw)); margin-inline:auto;
+}
+
+.brand{font-weight:800; letter-spacing:.3px; font-size:clamp(16px,4.5vw,20px)}
+
+/* hamburger */
+.nav-toggle{
+  appearance:none; -webkit-appearance:none; border:0; background:transparent;
+  width:40px; height:40px; border-radius:10px; cursor:pointer; justify-self:end;
+  display:grid; place-items:center;
+}
+.nav-toggle__bar{
+  display:block; width:22px; height:2px; background:#111; margin:3px 0; border-radius:2px;
+}
+
+/* nav menu (mobile: hidden; opens as dropdown) */
+.site-nav{
+  grid-column: 1 / -1;         /* full width under brand/toggle */
+  max-height:0; overflow:hidden;
+  transition:max-height .24s ease;
+}
+.site-nav.is-open{ max-height: 280px; } /* dropdown height */
+
+.site-nav ul{
+  margin:8px 0 0; padding:8px; list-style:none;
+  display:grid; gap:6px;
+  background: rgba(255,255,255,.85);
+  -webkit-backdrop-filter: saturate(140%) blur(8px);
+  backdrop-filter: saturate(140%) blur(8px);
+  border:1px solid rgba(0,0,0,.06); border-radius:12px;
+}
+
+.nav-link{
+  text-decoration:none; color:var(--ink);
+  padding:10px 12px; border-radius:10px; display:block;
+}
+.nav-link:is(:hover,:focus){ background:rgba(0,0,0,.06) }
+.nav-link.is-active{ color:var(--primary) }
+
+/* ≥768px: show horizontal nav; hide hamburger; no overlap */
+@media (min-width:768px){
+  .nav-wrap{ grid-template-columns: 1fr auto; }
+  .nav-toggle{ display:none; }
+  .site-nav{
+    max-height:unset; overflow:visible; grid-column:auto;
+  }
+  .site-nav ul{
+    background:transparent; border:0; border-radius:0;
+    display:flex; gap:10px; align-items:center; padding:0; margin:0;
+  }
+}
