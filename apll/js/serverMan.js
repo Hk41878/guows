@@ -1,5 +1,5 @@
 // ==============================
-// serverMan.js — Part 1 (FINAL)
+// serverMan.js — FULL FIXED VERSION
 // ==============================
 
 // ---------- CONFIGURATION ----------
@@ -24,6 +24,9 @@ let currentStatus = null;
     currentStatus = status;
 
     console.log(`[serverMan] Initial status: ${status ? "ONLINE" : "OFFLINE"}`);
+
+    // 🔥 FIXED: Update the floating ball here
+    updateStatusBall(status);
 
     // Load appropriate form
     if (status) {
@@ -93,14 +96,17 @@ function startBackgroundCheck() {
     setInterval(async () => {
         const newStatus = await checkServer();
 
+        // 🔥 FIXED: Always update floating ball
+        updateStatusBall(newStatus);
+
+        // If status changed
         if (newStatus !== currentStatus) {
             console.log(`[serverMan] Status changed: ${currentStatus} → ${newStatus}`);
 
-            // Update current state
             const previousStatus = currentStatus;
             currentStatus = newStatus;
 
-            // Trigger reload overlay if needed
+            // Reload overlay trigger
             if (ENABLE_RELOAD_DETECTION) {
                 if (previousStatus === false && newStatus === true && initialStatus === false) {
                     console.log("[serverMan] Triggering reload overlay...");
