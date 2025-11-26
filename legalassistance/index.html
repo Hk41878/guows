@@ -10,8 +10,8 @@
   <link rel="preconnect" href="https://maps.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://maps.gstatic.com" crossorigin>
   <!-- Styles: main.css imports base / navbar / drawer / hero / welcome (+ footer.css already imported by you) -->
-  <link rel="stylesheet" href="css/main.css" />
-  <link rel="stylesheet" href="/css/allform.css">
+  <link rel="stylesheet" href="../css/main.css" />
+  <link rel="stylesheet" href="../css/allform.css">
 </head>
 <body>
 
@@ -35,7 +35,7 @@
         <!-- Left: Logo + Brand -->
         <div class="nav-left">
           <a class="brand-logo" href="/" aria-label="AliPerLaLiberta Home">
-            <img src="logo.jpeg" alt="AliPerLaLiberta logo" decoding="async" />
+            <img src="../logo.jpeg" alt="AliPerLaLiberta logo" decoding="async" />
           </a>
           <span class="brand-name" data-i18n="nav.brand">AliPerLaLiberta</span>
         </div>
@@ -163,143 +163,66 @@
 
     </aside>
 
-    <!-- Main Content -->
-    <main id="main" class="content" role="main">
+<!-- Main Content -->
+<!-- Main Legal Assistance Content (fully isolated) -->
+<main id="legalMain" class="legal-section" role="main" data-page="legal">
+  <section class="legal-hero">
+    <div class="legal-hero-card">
+      <h1 data-i18n="legal.title">Assistenza Legale</h1>
+      <p data-i18n="legal.desc">Supporto completo per pratiche legali e documentazione per stranieri.</p>
 
-      <!-- Hero 1 — CAF -->
-      <section class="hero">
-        <div class="hero-card">
-          <h1 data-i18n="services.caf.title">CAF (Centro di Assistenza Fiscale)</h1>
-          <p data-i18n="services.caf.desc">
-            Ti aiutiamo con tutte le pratiche fiscali come dichiarazione dei redditi, ISEE, modelli 730, e altre procedure tributarie, in modo semplice e veloce.
-          </p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="caf/" data-i18n="hero.cta.discover">Scopri il servizio</a>
-            <a class="btn btn-outline"
-               href="#"
-               data-share
-               data-share-url="caf/"
-               data-share-title="CAF (Centro di Assistenza Fiscale)"
-               data-share-text="Ti aiutiamo con tutte le pratiche fiscali in modo semplice e veloce."
-               data-i18n="hero.cta.share">
-              Condividi
-            </a>
-          </div>
+      <div class="legal-services-grid">
+        <div class="legal-service-card">
+          <h3>Ricongiungimento familiare</h3>
+          <p data-i18n="legal.services.ricongiungimento">Assistenza per la richiesta di ricongiungimento dei familiari.</p>
+          <button class="btn btn-legal-primary js-reservation-btn" data-service="Ricongiungimento familiare" data-i18n="legal.button.book">Prenota ora</button>
         </div>
-      </section>
 
-      <!-- Hero 2 — Patronato -->
-      <section class="hero">
-        <div class="hero-card">
-          <h1 data-i18n="services.patronato.title">Patronato</h1>
-          <p data-i18n="services.patronato.desc">
-            Offriamo supporto per pensioni, indennità, disoccupazione e altre pratiche previdenziali o assistenziali con consulenza personalizzata.
-          </p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="patronato/" data-i18n="hero.cta.discover">Scopri il servizio</a>
-            <a class="btn btn-outline"
-               href="#"
-               data-share
-               data-share-url="patronato/"
-               data-share-title="Patronato"
-               data-share-text="Supporto per pensioni, indennità e pratiche assistenziali con consulenza personalizzata."
-               data-i18n="hero.cta.share">
-              Condividi
-            </a>
-          </div>
+        <div class="legal-service-card">
+          <h3>Richiesta cittadinanza</h3>
+          <p data-i18n="legal.services.cittadinanza">Supporto completo per l’ottenimento della cittadinanza italiana.</p>
+          <button class="btn btn-legal-primary js-reservation-btn" data-service="Richiesta cittadinanza" data-i18n="legal.button.book">Prenota ora</button>
         </div>
-      </section>
 
-      <!-- Hero 3 — Assistenza Legale -->
-      <section class="hero">
-        <div class="hero-card">
-          <h1 data-i18n="services.legal.title">Assistenza Legale / Supporto</h1>
-          <p data-i18n="services.legal.desc">
-            Un aiuto legale chiaro e accessibile per contratti, documenti, vertenze o problemi legati ai diritti del lavoro e civili.
-          </p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="legalassistance/" data-i18n="hero.cta.discover">Scopri il servizio</a>
-            <a class="btn btn-outline"
-               href="#"
-               data-share
-               data-share-url="legalassistance/"
-               data-share-title="Assistenza Legale / Supporto"
-               data-share-text="Aiuto legale chiaro e accessibile per contratti e diritti del lavoro."
-               data-i18n="hero.cta.share">
-              Condividi
-            </a>
-          </div>
+        <div class="legal-service-card">
+          <h3>Compilazione Kit</h3>
+          <p data-i18n="legal.services.kit">Aiuto nella compilazione dei moduli e documenti ufficiali.</p>
+          <button class="btn btn-legal-primary js-reservation-btn" data-service="Compilazione Kit" data-i18n="legal.button.book">Prenota ora</button>
         </div>
-      </section>
 
-      <!-- Hero 4 — Corsi di Formazione -->
-      <section class="hero">
-        <div class="hero-card">
-          <h1 data-i18n="services.corsi.title">Corsi di Formazione🔴</h1>
-          <p data-i18n="services.corsi.desc">
-            Corsi professionali e aggiornamenti formativi per migliorare le competenze e trovare nuove opportunità di lavoro.
-          </p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="corsiformazione/" data-i18n="hero.cta.discover">Scopri il servizio</a>
-            <a class="btn btn-outline"
-               href="#"
-               data-share
-               data-share-url="corsiformazione/"
-               data-share-title="Corsi di Formazione"
-               data-share-text="Corsi professionali e aggiornamenti per nuove opportunità di lavoro."
-               data-i18n="hero.cta.share">
-              Condividi
-            </a>
-          </div>
+        <div class="legal-service-card">
+          <h3>Rinnovo permesso di soggiorno</h3>
+          <p data-i18n="legal.services.rinnovo">Guida e assistenza nel rinnovo del permesso di soggiorno.</p>
+          <button class="btn btn-legal-primary js-reservation-btn" data-service="Rinnovo permesso di soggiorno" data-i18n="legal.button.book">Prenota ora</button>
         </div>
-      </section>
 
-      <!-- Hero 5 — Creazione Siti Web -->
-      <section class="hero">
-        <div class="hero-card">
-          <h1 data-i18n="services.web.title">Creazione Siti Web🔴</h1>
-          <p data-i18n="services.web.desc">
-            Realizziamo siti web professionali e moderni per aziende, freelance o piccoli business, curando design e funzionalità.
-          </p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="creazionesiti/" data-i18n="hero.cta.discover">Scopri il servizio</a>
-            <a class="btn btn-outline"
-               href="#"
-               data-share
-               data-share-url="creazionesiti/"
-               data-share-title="Creazione Siti Web"
-               data-share-text="Realizziamo siti web moderni per aziende e professionisti."
-               data-i18n="hero.cta.share">
-              Condividi
-            </a>
-          </div>
+        <div class="legal-service-card">
+          <h3>Iscrizione test di lingua italiana</h3>
+          <p data-i18n="legal.services.testLingua">Iscrizione e preparazione al test di lingua per stranieri.</p>
+          <button class="btn btn-legal-primary js-reservation-btn" data-service="Iscrizione test di lingua italiana" data-i18n="legal.button.book">Prenota ora</button>
         </div>
-      </section>
 
-      <!-- Hero 6 — Biglietti & E-Visa -->
-      <section class="hero">
-        <div class="hero-card">
-          <h1 data-i18n="services.biglietti.title">Biglietti & E-Visa Supporto🔴</h1>
-          <p data-i18n="services.biglietti.desc">
-            Prenotazioni per treni, autobus e aerei. Aiuto anche per ottenere eVisa per chi viaggia all’estero in modo rapido e sicuro.
-          </p>
-          <div class="hero-actions">
-            <a class="btn btn-primary" href="biglietti/" data-i18n="hero.cta.discover">Scopri il servizio</a>
-            <a class="btn btn-outline"
-               href="#"
-               data-share
-               data-share-url="biglietti/"
-               data-share-title="Biglietti & E-Visa Supporto"
-               data-share-text="Prenotazioni per treni, bus, aerei e assistenza per eVisa internazionali."
-               data-i18n="hero.cta.share">
-              Condividi
-            </a>
-          </div>
+        <div class="legal-service-card">
+          <h3>Rilascio carta di soggiorno</h3>
+          <p data-i18n="legal.services.rilascioCarta">Supporto per la richiesta della carta di soggiorno.</p>
+          <button class="btn btn-legal-primary js-reservation-btn" data-service="Rilascio carta di soggiorno" data-i18n="legal.button.book">Prenota ora</button>
         </div>
-      </section>
 
-    </main>
+        <div class="legal-service-card">
+          <h3>Aggiornamento carta di soggiorno</h3>
+          <p data-i18n="legal.services.aggiornamentoCarta">Assistenza per aggiornare i dati nella carta di soggiorno.</p>
+          <button class="btn btn-legal-primary js-reservation-btn" data-service="Aggiornamento carta di soggiorno" data-i18n="legal.button.book">Prenota ora</button>
+        </div>
 
+        <div class="legal-service-card">
+          <h3>Invio PEC Prefettura / Questura</h3>
+          <p data-i18n="legal.services.pec">Invio pratiche ufficiali tramite PEC per appuntamenti e comunicazioni.</p>
+          <button class="btn btn-legal-primary js-reservation-btn" data-service="Invio PEC Prefettura / Questura" data-i18n="legal.button.book">Prenota ora</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
     <!-- ===== Site Footer (Contacts + Legal) ===== -->
     <footer class="site-footer" role="contentinfo">
       <div class="footer-grid">
@@ -492,6 +415,7 @@
     </p>
   </div>
 </footer>
+
 
 
 <script src="../js/config.js" defer></script>
