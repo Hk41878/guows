@@ -25,7 +25,7 @@
 
     .card {
       width: 100%;
-      max-width: 900px;
+      max-width: 980px;
       background: rgba(16, 22, 40, 0.96);
       border-radius: 16px;
       padding: 20px 22px;
@@ -34,7 +34,7 @@
     }
 
     .card-header {
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
 
     .title {
@@ -46,41 +46,6 @@
     .subtitle {
       font-size: 0.9rem;
       color: #9fa7c3;
-    }
-
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 14px;
-      font-size: 0.9rem;
-    }
-
-    thead {
-      background: rgba(255, 255, 255, 0.04);
-    }
-
-    th, td {
-      padding: 8px 10px;
-      text-align: left;
-      vertical-align: top;
-    }
-
-    tbody tr:nth-child(even) {
-      background: rgba(255, 255, 255, 0.02);
-    }
-
-    .key {
-      width: 30%;
-      font-weight: 600;
-      color: #c4c9e5;
-      word-break: break-word;
-    }
-
-    .value {
-      width: 70%;
-      color: #e5e7f4;
-      word-break: break-word;
-      white-space: pre-wrap;
     }
 
     .badge {
@@ -96,6 +61,37 @@
       margin-top: 6px;
     }
 
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0 4px;
+    }
+
+    .btn {
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.04);
+      color: #e5e7f4;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.2s ease, border-color 0.2s ease, transform 0.1s ease;
+    }
+
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.25);
+      transform: translateY(-1px);
+    }
+
+    .btn:active {
+      transform: translateY(0);
+    }
+
     .section-label {
       display: inline-block;
       margin-top: 10px;
@@ -104,6 +100,48 @@
       text-transform: uppercase;
       letter-spacing: 0.06em;
       color: #8891b0;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 0.9rem;
+    }
+
+    thead {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    th,
+    td {
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    tbody tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .key {
+      width: 32%;
+      font-weight: 600;
+      color: #c4c9e5;
+      word-break: break-word;
+    }
+
+    .value {
+      width: 68%;
+      color: #e5e7f4;
+      word-break: break-word;
+      white-space: pre-wrap;
+    }
+
+    .footer-note {
+      margin-top: 10px;
+      font-size: 0.75rem;
+      color: #7b82a0;
     }
 
     @media (max-width: 600px) {
@@ -115,7 +153,8 @@
         font-size: 1.1rem;
       }
 
-      th, td {
+      th,
+      td {
         padding: 6px 6px;
       }
     }
@@ -126,10 +165,16 @@
     <div class="card-header">
       <div class="title">Browser User Info (No-Permission Data)</div>
       <div class="subtitle">
-        This page shows only data that JavaScript can read without asking the user for permission.
+        This page shows only data that JavaScript can read without asking for any explicit permission.
       </div>
       <div class="badge">
         <span>Live snapshot</span>
+      </div>
+
+      <div class="actions">
+        <button class="btn" id="copyJsonBtn">Copy as JSON</button>
+        <button class="btn" id="downloadJsonBtn">Download JSON</button>
+        <button class="btn" id="refreshBtn">Refresh data</button>
       </div>
     </div>
 
@@ -143,12 +188,18 @@
         </tr>
       </thead>
       <tbody id="infoBody">
-        <!-- Rows will be inserted by JavaScript -->
+        <!-- Filled by JS -->
       </tbody>
     </table>
+
+    <div class="footer-note">
+      Data is collected on each load without using location, camera, microphone, or any permission-based API.
+    </div>
   </div>
 
   <script>
+    var lastInfoArray = [];
+
     function safeGet(fn, fallback) {
       try {
         var value = fn();
@@ -164,59 +215,319 @@
     function getWebGLInfo() {
       try {
         var canvas = document.createElement("canvas");
-        var gl =
-          canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-        if (!gl) return { vendor: "Unavailable", renderer: "Unavailable" };
-
-        var debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
-        if (!debugInfo) {
-          return { vendor: "Hidden by browser", renderer: "Hidden by browser" };
+        var gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+        if (!gl) {
+          return {
+            vendor: "Unavailable",
+            renderer: "Unavailable",
+            maxTextureSize: "Unavailable"
+          };
         }
 
-        var vendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
-        var renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+        var debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
+        var vendor = "Hidden by browser";
+        var renderer = "Hidden by browser";
+
+        if (debugInfo) {
+          vendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) || "Unknown";
+          renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL) || "Unknown";
+        }
+
+        var maxTextureSize = gl.getParameter(gl.MAX_TEXTURE_SIZE) || "Unknown";
 
         return {
-          vendor: vendor || "Unknown",
-          renderer: renderer || "Unknown"
+          vendor: vendor,
+          renderer: renderer,
+          maxTextureSize: maxTextureSize
         };
       } catch (e) {
-        return { vendor: "Error", renderer: "Error" };
+        return {
+          vendor: "Error",
+          renderer: "Error",
+          maxTextureSize: "Error"
+        };
       }
     }
 
-    function collectInfo() {
+    async function getBatteryInfo() {
+      try {
+        if (!navigator.getBattery) {
+          return {
+            supported: false,
+            level: "Not supported",
+            charging: "Not supported",
+            chargingTime: "Not supported",
+            dischargingTime: "Not supported"
+          };
+        }
+
+        var battery = await navigator.getBattery();
+
+        return {
+          supported: true,
+          level: Math.round(battery.level * 100) + "%",
+          charging: battery.charging ? "Yes" : "No",
+          chargingTime: battery.chargingTime === Infinity ? "Infinity" : battery.chargingTime + " sec",
+          dischargingTime: battery.dischargingTime === Infinity ? "Infinity" : battery.dischargingTime + " sec"
+        };
+      } catch (err) {
+        return {
+          supported: false,
+          level: "Error",
+          charging: "Error",
+          chargingTime: "Error",
+          dischargingTime: "Error"
+        };
+      }
+    }
+
+    async function getStorageEstimate() {
+      try {
+        if (!navigator.storage || !navigator.storage.estimate) {
+          return {
+            supported: false,
+            quota: "Not supported",
+            usage: "Not supported"
+          };
+        }
+
+        var estimate = await navigator.storage.estimate();
+        var quota = estimate.quota || 0;
+        var usage = estimate.usage || 0;
+
+        return {
+          supported: true,
+          quotaBytes: quota,
+          usageBytes: usage,
+          quotaMB: (quota / (1024 * 1024)).toFixed(2),
+          usageMB: (usage / (1024 * 1024)).toFixed(2)
+        };
+      } catch (err) {
+        return {
+          supported: false,
+          quota: "Error",
+          usage: "Error"
+        };
+      }
+    }
+
+    async function getMediaDevicesInfo() {
+      var result = {
+        supported: false,
+        total: "Not supported",
+        kinds: {}
+      };
+
+      try {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
+          return result;
+        }
+
+        var devices = await navigator.mediaDevices.enumerateDevices();
+        result.supported = true;
+        result.total = devices.length;
+        var counts = {};
+
+        devices.forEach(function (d) {
+          if (!d.kind) {
+            return;
+          }
+          if (!counts[d.kind]) {
+            counts[d.kind] = 0;
+          }
+          counts[d.kind] += 1;
+        });
+
+        result.kinds = counts;
+        return result;
+      } catch (err) {
+        return {
+          supported: false,
+          total: "Error",
+          kinds: {}
+        };
+      }
+    }
+
+    function detectFonts() {
+      var testFonts = [
+        "Arial",
+        "Verdana",
+        "Times New Roman",
+        "Courier New",
+        "Georgia",
+        "Tahoma",
+        "Trebuchet MS",
+        "Impact",
+        "Comic Sans MS",
+        "Helvetica"
+      ];
+
+      var baseFont = "sans-serif";
+      var testString = "abcdefghijklmnopqrstuvwxyz0123456789";
+      var fontSize = "72px";
+
+      var canvas = document.createElement("canvas");
+      var context = canvas.getContext("2d");
+
+      function getWidth(fontFamily) {
+        context.font = fontSize + " " + fontFamily;
+        return context.measureText(testString).width;
+      }
+
+      var baseWidth = getWidth(baseFont);
+      var availableFonts = [];
+
+      testFonts.forEach(function (font) {
+        var width = getWidth("'" + font + "', " + baseFont);
+        if (Math.abs(width - baseWidth) > 0.1) {
+          availableFonts.push(font);
+        }
+      });
+
+      return availableFonts;
+    }
+
+    function getFeaturesSupport() {
+      return {
+        webgl: !!window.WebGLRenderingContext,
+        webrtc: typeof RTCPeerConnection !== "undefined" ||
+                typeof webkitRTCPeerConnection !== "undefined" ||
+                typeof mozRTCPeerConnection !== "undefined",
+        bluetooth: !!navigator.bluetooth,
+        usb: !!navigator.usb,
+        nfc: !!navigator.nfc,
+        mediaDevices: !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia),
+        serviceWorker: "serviceWorker" in navigator,
+        pushManager: "PushManager" in window,
+        vibration: "vibrate" in navigator,
+        clipboardRead: !!(navigator.clipboard && navigator.clipboard.readText),
+        clipboardWrite: !!(navigator.clipboard && navigator.clipboard.writeText)
+      };
+    }
+
+    async function getAudioInfo() {
+      try {
+        var AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) {
+          return {
+            supported: false,
+            sampleRate: "Not supported"
+          };
+        }
+
+        var ctx = new AudioCtx();
+        var sampleRate = ctx.sampleRate;
+        ctx.close();
+
+        return {
+          supported: true,
+          sampleRate: sampleRate
+        };
+      } catch (err) {
+        return {
+          supported: false,
+          sampleRate: "Error"
+        };
+      }
+    }
+
+    function getPluginsInfo() {
+      try {
+        if (!navigator.plugins) {
+          return {
+            supported: false,
+            plugins: []
+          };
+        }
+
+        var list = [];
+        for (var i = 0; i < navigator.plugins.length; i++) {
+          var p = navigator.plugins[i];
+          list.push(p.name);
+        }
+
+        return {
+          supported: true,
+          count: list.length,
+          plugins: list
+        };
+      } catch (err) {
+        return {
+          supported: false,
+          plugins: []
+        };
+      }
+    }
+
+    async function collectInfo() {
       var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection || null;
       var glInfo = getWebGLInfo();
+      var features = getFeaturesSupport();
+      var fonts = detectFonts();
+      var plugins = getPluginsInfo();
+
+      var darkMode = safeGet(function () {
+        return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "Dark" : "Light";
+      }, "Not available");
+
+      var reducedMotion = safeGet(function () {
+        return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "Reduce" : "No preference";
+      }, "Not available");
+
+      var timezone = safeGet(function () {
+        return Intl.DateTimeFormat().resolvedOptions().timeZone;
+      }, "Not available");
+
+      var timezoneOffset = new Date().getTimezoneOffset();
+
+      var uptimeMs = performance && performance.now ? performance.now() : null;
+
+      var batteryPromise = getBatteryInfo();
+      var storagePromise = getStorageEstimate();
+      var mediaDevicesPromise = getMediaDevicesInfo();
+      var audioPromise = getAudioInfo();
+
+      var results = await Promise.all([
+        batteryPromise,
+        storagePromise,
+        mediaDevicesPromise,
+        audioPromise
+      ]);
+
+      var battery = results[0];
+      var storage = results[1];
+      var mediaDevices = results[2];
+      var audio = results[3];
 
       var data = [
-        // Browser
         { key: "Browser userAgent", value: navigator.userAgent },
         { key: "Browser language", value: navigator.language },
-        { key: "Browser languages list", value: safeGet(function () { return (navigator.languages || []).join(", "); }, "Not available") },
+        { key: "Browser languages list", value: (navigator.languages || []).join(", ") || "Not available" },
         { key: "Platform", value: navigator.platform || "Not available" },
         { key: "Cookies enabled", value: navigator.cookieEnabled },
         { key: "Do Not Track", value: navigator.doNotTrack || "Not specified" },
 
-        // Device
-        { key: "CPU cores (hardwareConcurrency)", value: safeGet(function () { return navigator.hardwareConcurrency; }, "Not supported") },
-        { key: "Approx device memory (GB)", value: safeGet(function () { return navigator.deviceMemory; }, "Not supported") },
+        { key: "CPU cores (hardwareConcurrency)", value: navigator.hardwareConcurrency || "Not supported" },
+        { key: "Approx device memory (GB)", value: navigator.deviceMemory || "Not supported" },
         {
           key: "Touch support",
           value:
-            ("maxTouchPoints" in navigator && navigator.maxTouchPoints > 0) ||
-            "ontouchstart" in window
+            ("maxTouchPoints" in navigator && navigator.maxTouchPoints > 0) || "ontouchstart" in window
               ? "Touch capable"
               : "No touch detected"
         },
 
-        // Screen
         { key: "Screen size (width x height)", value: screen.width + " x " + screen.height },
         { key: "Available screen size", value: screen.availWidth + " x " + screen.availHeight },
-        { key: "Pixel depth", value: screen.pixelDepth },
-        { key: "Device pixel ratio", value: window.devicePixelRatio },
+        { key: "Color depth", value: screen.colorDepth || "Not available" },
+        { key: "Pixel depth", value: screen.pixelDepth || "Not available" },
+        { key: "Device pixel ratio", value: window.devicePixelRatio || 1 },
 
-        // Network
+        { key: "Window inner size", value: window.innerWidth + " x " + window.innerHeight },
+        { key: "Window outer size", value: window.outerWidth + " x " + window.outerHeight },
+        { key: "Scroll position", value: window.scrollX + ", " + window.scrollY },
+
         {
           key: "Connection type",
           value: connection && connection.type ? connection.type : "Not supported or hidden"
@@ -238,35 +549,92 @@
           value: connection && typeof connection.saveData === "boolean" ? connection.saveData : "Not supported"
         },
 
-        // System
+        { key: "Battery supported", value: battery.supported },
+        { key: "Battery level", value: battery.level },
+        { key: "Charging", value: battery.charging },
+        { key: "Charging time", value: battery.chargingTime },
+        { key: "Discharging time", value: battery.dischargingTime },
+
         {
-          key: "Time zone",
-          value: safeGet(function () {
-            return Intl.DateTimeFormat().resolvedOptions().timeZone;
-          }, "Not available")
+          key: "Storage supported",
+          value: storage.supported
         },
+        {
+          key: "Storage quota (MB)",
+          value: storage.quotaMB !== undefined ? storage.quotaMB : "Not available"
+        },
+        {
+          key: "Storage usage (MB)",
+          value: storage.usageMB !== undefined ? storage.usageMB : "Not available"
+        },
+
+        {
+          key: "Media devices supported",
+          value: mediaDevices.supported
+        },
+        {
+          key: "Media devices total",
+          value: mediaDevices.total
+        },
+        {
+          key: "Media devices by kind",
+          value: JSON.stringify(mediaDevices.kinds)
+        },
+
+        {
+          key: "Audio supported",
+          value: audio.supported
+        },
+        {
+          key: "Audio sample rate",
+          value: audio.sampleRate
+        },
+
+        { key: "Time zone", value: timezone },
+        { key: "Time zone offset (minutes)", value: timezoneOffset },
         { key: "Local time", value: new Date().toString() },
 
-        // Referrer and page
         { key: "Current URL", value: location.href },
         { key: "Referrer", value: document.referrer || "None" },
 
-        // Storage support (only capabilities, not actual content)
         { key: "localStorage support", value: typeof window.localStorage !== "undefined" },
         { key: "sessionStorage support", value: typeof window.sessionStorage !== "undefined" },
         { key: "IndexedDB support", value: typeof window.indexedDB !== "undefined" },
 
-        // GPU (WebGL)
         { key: "WebGL vendor", value: glInfo.vendor },
-        { key: "WebGL renderer", value: glInfo.renderer }
+        { key: "WebGL renderer", value: glInfo.renderer },
+        { key: "WebGL max texture size", value: glInfo.maxTextureSize },
+
+        { key: "Features support", value: JSON.stringify(features) },
+        { key: "Available common fonts", value: fonts.length ? fonts.join(", ") : "Not detected" },
+
+        { key: "Plugins supported", value: plugins.supported },
+        {
+          key: "Plugins count",
+          value: plugins.supported ? plugins.count : "Not available"
+        },
+        {
+          key: "Plugins list",
+          value: plugins.supported ? plugins.plugins.join(", ") : "Not available"
+        },
+
+        { key: "Preferred color scheme", value: darkMode },
+        { key: "Reduced motion preference", value: reducedMotion },
+
+        {
+          key: "Performance uptime (ms since load)",
+          value: uptimeMs !== null ? uptimeMs.toFixed(2) : "Not available"
+        }
       ];
 
       return data;
     }
 
-    function renderTable() {
+    async function renderTable() {
       var infoBody = document.getElementById("infoBody");
-      var info = collectInfo();
+      infoBody.innerHTML = "";
+      var info = await collectInfo();
+      lastInfoArray = info;
 
       info.forEach(function (item) {
         var tr = document.createElement("tr");
@@ -286,7 +654,72 @@
       });
     }
 
-    document.addEventListener("DOMContentLoaded", renderTable);
+    function infoArrayToObject() {
+      var obj = {};
+      lastInfoArray.forEach(function (item) {
+        obj[item.key] = item.value;
+      });
+      return obj;
+    }
+
+    async function handleCopyJson() {
+      if (!lastInfoArray.length) {
+        await renderTable();
+      }
+      var dataObj = infoArrayToObject();
+      var json = JSON.stringify(dataObj, null, 2);
+
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(json);
+          alert("JSON copied to clipboard");
+        } else {
+          var temp = document.createElement("textarea");
+          temp.value = json;
+          document.body.appendChild(temp);
+          temp.select();
+          document.execCommand("copy");
+          document.body.removeChild(temp);
+          alert("JSON copied to clipboard");
+        }
+      } catch (e) {
+        alert("Could not copy JSON");
+      }
+    }
+
+    async function handleDownloadJson() {
+      if (!lastInfoArray.length) {
+        await renderTable();
+      }
+      var dataObj = infoArrayToObject();
+      var json = JSON.stringify(dataObj, null, 2);
+
+      var blob = new Blob([json], { type: "application/json" });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url;
+      a.download = "user-info-debug.json";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      renderTable();
+
+      document.getElementById("copyJsonBtn").addEventListener("click", function () {
+        handleCopyJson();
+      });
+
+      document.getElementById("downloadJsonBtn").addEventListener("click", function () {
+        handleDownloadJson();
+      });
+
+      document.getElementById("refreshBtn").addEventListener("click", function () {
+        renderTable();
+      });
+    });
   </script>
 </body>
 </html>
