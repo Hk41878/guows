@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>User Info Debug Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: #0b1020;
+      color: #f5f5f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 900px;
+      background: rgba(16, 22, 40, 0.96);
+      border-radius: 16px;
+      padding: 20px 22px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .card-header {
+      margin-bottom: 14px;
+    }
+
+    .title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      font-size: 0.9rem;
+      color: #9fa7c3;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 14px;
+      font-size: 0.9rem;
+    }
+
+    thead {
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    th, td {
+      padding: 8px 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    tbody tr:nth-child(even) {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .key {
+      width: 30%;
+      font-weight: 600;
+      color: #c4c9e5;
+      word-break: break-word;
+    }
+
+    .value {
+      width: 70%;
+      color: #e5e7f4;
+      word-break: break-word;
+      white-space: pre-wrap;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: rgba(76, 175, 80, 0.08);
+      color: #9de29d;
+      border: 1px solid rgba(76, 175, 80, 0.35);
+      margin-top: 6px;
+    }
+
+    .section-label {
+      display: inline-block;
+      margin-top: 10px;
+      margin-bottom: 4px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #8891b0;
+    }
+
+    @media (max-width: 600px) {
+      .card {
+        padding: 14px 12px;
+      }
+
+      .title {
+        font-size: 1.1rem;
+      }
+
+      th, td {
+        padding: 6px 6px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="card-header">
+      <div class="title">Browser User Info (No-Permission Data)</div>
+      <div class="subtitle">
+        This page shows only data that JavaScript can read without asking the user for permission.
+      </div>
+      <div class="badge">
+        <span>Live snapshot</span>
+      </div>
+    </div>
+
+    <span class="section-label">Collected fields</span>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Field</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody id="infoBody">
+        <!-- Rows will be inserted by JavaScript -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    function safeGet(fn, fallback) {
+      try {
+        var value = fn();
+        if (value === undefined || value === null || value === "") {
+          return fallback;
+        }
+        return value;
+      } catch (e) {
+        return fallback;
+      }
+    }
+
+    function getWebGLInfo() {
+      try {
+        var canvas = document.createElement("canvas");
+        var gl =
+          canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+        if (!gl) return { vendor: "Unavailable", renderer: "Unavailable" };
+
+        var debugInfo = gl.getExtension("WEBGL_debug_renderer_info");
+        if (!debugInfo) {
+          return { vendor: "Hidden by browser", renderer: "Hidden by browser" };
+        }
+
+        var vendor = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL);
+        var renderer = gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+
+        return {
+          vendor: vendor || "Unknown",
+          renderer: renderer || "Unknown"
+        };
+      } catch (e) {
+        return { vendor: "Error", renderer: "Error" };
+      }
+    }
+
+    function collectInfo() {
+      var connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection || null;
+      var glInfo = getWebGLInfo();
+
+      var data = [
+        // Browser
+        { key: "Browser userAgent", value: navigator.userAgent },
+        { key: "Browser language", value: navigator.language },
+        { key: "Browser languages list", value: safeGet(function () { return (navigator.languages || []).join(", "); }, "Not available") },
+        { key: "Platform", value: navigator.platform || "Not available" },
+        { key: "Cookies enabled", value: navigator.cookieEnabled },
+        { key: "Do Not Track", value: navigator.doNotTrack || "Not specified" },
+
+        // Device
+        { key: "CPU cores (hardwareConcurrency)", value: safeGet(function () { return navigator.hardwareConcurrency; }, "Not supported") },
+        { key: "Approx device memory (GB)", value: safeGet(function () { return navigator.deviceMemory; }, "Not supported") },
+        {
+          key: "Touch support",
+          value:
+            ("maxTouchPoints" in navigator && navigator.maxTouchPoints > 0) ||
+            "ontouchstart" in window
+              ? "Touch capable"
+              : "No touch detected"
+        },
+
+        // Screen
+        { key: "Screen size (width x height)", value: screen.width + " x " + screen.height },
+        { key: "Available screen size", value: screen.availWidth + " x " + screen.availHeight },
+        { key: "Pixel depth", value: screen.pixelDepth },
+        { key: "Device pixel ratio", value: window.devicePixelRatio },
+
+        // Network
+        {
+          key: "Connection type",
+          value: connection && connection.type ? connection.type : "Not supported or hidden"
+        },
+        {
+          key: "Effective connection type",
+          value: connection && connection.effectiveType ? connection.effectiveType : "Not supported"
+        },
+        {
+          key: "Downlink (approx Mbps)",
+          value: connection && connection.downlink ? connection.downlink : "Not supported"
+        },
+        {
+          key: "Round-trip time (ms)",
+          value: connection && connection.rtt ? connection.rtt : "Not supported"
+        },
+        {
+          key: "Data saver enabled",
+          value: connection && typeof connection.saveData === "boolean" ? connection.saveData : "Not supported"
+        },
+
+        // System
+        {
+          key: "Time zone",
+          value: safeGet(function () {
+            return Intl.DateTimeFormat().resolvedOptions().timeZone;
+          }, "Not available")
+        },
+        { key: "Local time", value: new Date().toString() },
+
+        // Referrer and page
+        { key: "Current URL", value: location.href },
+        { key: "Referrer", value: document.referrer || "None" },
+
+        // Storage support (only capabilities, not actual content)
+        { key: "localStorage support", value: typeof window.localStorage !== "undefined" },
+        { key: "sessionStorage support", value: typeof window.sessionStorage !== "undefined" },
+        { key: "IndexedDB support", value: typeof window.indexedDB !== "undefined" },
+
+        // GPU (WebGL)
+        { key: "WebGL vendor", value: glInfo.vendor },
+        { key: "WebGL renderer", value: glInfo.renderer }
+      ];
+
+      return data;
+    }
+
+    function renderTable() {
+      var infoBody = document.getElementById("infoBody");
+      var info = collectInfo();
+
+      info.forEach(function (item) {
+        var tr = document.createElement("tr");
+
+        var tdKey = document.createElement("td");
+        tdKey.className = "key";
+        tdKey.textContent = item.key;
+
+        var tdValue = document.createElement("td");
+        tdValue.className = "value";
+        tdValue.textContent =
+          typeof item.value === "object" ? JSON.stringify(item.value) : String(item.value);
+
+        tr.appendChild(tdKey);
+        tr.appendChild(tdValue);
+        infoBody.appendChild(tr);
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", renderTable);
+  </script>
+</body>
+</html>
