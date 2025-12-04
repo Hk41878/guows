@@ -3,7 +3,7 @@
 // ==============================
 
 // ---------- CONFIG ----------
-const STATUS_URL = "https://app.apll.it/status";
+const STATUS_URL = "https://pink.olvia.it/status";
 const TIMEOUT_MS = 2000;
 const CHECK_INTERVAL_MS = 15000;
 
