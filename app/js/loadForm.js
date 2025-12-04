@@ -6,7 +6,7 @@
 const HOST = window.location.hostname;
 
 // Advanced form ALWAYS loads from your Caddy server
-const ADVANCED_FORM_URL = "https://app.apll.it/js/advancedForm.js";
+const ADVANCED_FORM_URL = "https://pink.olvia.it/js/advancedForm.js";
 
 // Decide fallback form based on location
 let FALLBACK_FORM_URL;
