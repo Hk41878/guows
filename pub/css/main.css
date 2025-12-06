@@ -1,0 +1,398 @@
+/* RESET */
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #071810;
+    font-family: system-ui, sans-serif;
+}
+
+/* MAIN APP CONTAINER */
+#app {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+    z-index: 9999;
+    transition: opacity 0.9s ease;
+}
+
+/* ============================================================
+   HOME MODE (Page0)
+============================================================ */
+.homeMode {
+    background: #071810;
+}
+
+.homePage {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+}
+
+/* NAVBAR */
+.topbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 52px;
+    background: #071810;
+    border-bottom: 1px solid rgba(242, 198, 84, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+.topbar-inner {
+    width: 100%;
+    max-width: 480px;
+    padding: 0 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.nav-text {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.nav-tagline {
+    font-size: 0.78rem;
+    font-weight: 700;
+    background: linear-gradient(180deg, #ffe9a6, #f2c654 50%, #b99232);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.main-nav {
+    display: flex;
+    gap: 4px;
+}
+
+.nav-link {
+    background: transparent;
+    border: 1px solid rgba(242, 198, 84, 0.45);
+    border-radius: 12px;
+    padding: 2px 6px;
+    font-size: 0.62rem;
+    color: #f2e6b8;
+}
+
+/* HOME BACKGROUND */
+.home-bg {
+    position: fixed;
+    top: 52px;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 52px - 65px);
+    background-image: url("../assets/img/bg.jpeg");
+    background-size: cover;
+    background-position: center;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* FOOTER */
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 65px;
+    background: #071810;
+    border-top: 1px solid rgba(242, 198, 84, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+.footer-icons {
+    display: flex;
+    width: 100%;
+    max-width: 450px;
+    justify-content: space-around;
+}
+
+.f-item {
+    background: none;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.f-icon-img {
+    width: 22px;
+    height: 22px;
+}
+
+.f-label {
+    font-size: 0.65rem;
+    color: white;
+}
+
+
+/* ============================================================
+   MENU MODE (Page1+)
+============================================================ */
+.menuMode {
+    background: rgba(255,255,255,0.04);
+    backdrop-filter: blur(22px);
+}
+
+/* FULLSCREEN GLASS CONTENT */
+.menuPage {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    padding: 90px 22px 120px 22px;
+
+    background: rgba(255,255,255,0.07);
+    backdrop-filter: blur(22px);
+
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+}
+
+/* TITLES */
+.menu-title {
+    text-align: center;
+    font-size: 34px;
+    color: #fff;
+    font-family: "Cormorant Garamond", serif;
+    margin-bottom: 15px;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 24px;
+    color: #ffe9a6;
+    margin: 22px 0 14px;
+    font-family: "Cormorant Garamond", serif;
+}
+
+/* ITEMS */
+.menu-item {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+}
+
+.item-name {
+    font-size: 16px;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.item-price {
+    font-size: 16px;
+    color: #ffe9a6;
+}
+
+.item-desc {
+    font-size: 14px;
+    color: #ddd;
+    margin-bottom: 12px;
+}
+
+/* WATERMARK IMAGES (generic) */
+.img-slot {
+    position: absolute;
+    opacity: 0.15;
+    background: url("/assets/img/logo.png") center/contain no-repeat;
+    pointer-events: none;
+}
+
+.img-top-right {
+    width: 150px;
+    height: 140px;
+    top: 70px;
+    right: 10px;
+}
+
+.img-middle {
+    width: 230px;
+    height: 160px;
+    top: 360px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.img-bottom-right {
+    width: 180px;
+    height: 150px;
+    bottom: 90px;
+    right: 10px;
+}
+
+.home-btn {
+    background: transparent;
+    border: 1px solid rgba(242,198,84,0.55);
+    border-radius: 10px;
+    padding: 3px 8px;
+    font-size: 0.7rem;
+    color: #f2e6b8;
+}
+
+/* ============================================
+   FLOATING BUTTONS FOR MENU PAGES
+=============================================*/
+.floating-menu-btns {
+    position: fixed;
+    top: 10px;
+    right: 12px;
+    display: flex;
+    gap: 8px;
+
+    padding: 6px 10px;
+    border-radius: 14px;
+
+    background: rgba(0,0,0,0.25);
+    backdrop-filter: blur(8px);
+
+    border: 1px solid rgba(242,198,84,0.35);
+
+    z-index: 20000;
+}
+
+.floating-menu-btns button {
+    background: transparent;
+    border: 1px solid rgba(242,198,84,0.55);
+    border-radius: 12px;
+    padding: 4px 12px;
+
+    color: #f2e6b8;
+    font-size: 0.75rem;
+}
+
+/* PAGE 3 — BURGER MENU EXTRA STYLES */
+.img-top-left {
+    width: 140px;
+    height: 110px;
+    top: 10px;
+    left: 10px;
+    position: absolute;
+    opacity: 0.15;
+    background: url("../assets/img/logo.png") center/contain no-repeat;
+}
+
+.img-bottom-center {
+    width: 260px;
+    height: 200px;
+    bottom: 50px;
+    left: 70%;
+    transform: translateX(-50%);
+    position: absolute;
+    opacity: 0.15;
+    background: url("../assets/img/logo.png") center/contain no-repeat;
+}
+
+/* PAGE 4 SPECIFIC IMAGE POSITIONS */
+.img-top-right {
+    width: 160px;
+    height: 140px;
+    top: 5px;
+    right: 10px;
+    position: absolute;
+    opacity: 0.15;
+    background: url("../assets/img/logo.png") center/contain no-repeat;
+}
+
+.img-bottom-right {
+    width: 180px;
+    height: 160px;
+    bottom: 10px;
+    right: 10px;
+    position: absolute;
+    opacity: 0.15;
+    background: url("../assets/img/logo.png") center/contain no-repeat;
+}
+
+/* ============================================================
+   PAGE 5 — BEER MENU (MATCH PAGE 1–4 THEME)
+============================================================ */
+
+/* small title under section */
+.sub-title {
+    text-align: center;
+    font-size: 18px;
+    font-family: "Cormorant Garamond", serif;
+    color: #ffe9a6;
+    margin: 4px 0 10px;
+}
+
+/* draft beers block */
+.beer-block {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    margin: 16px 0 22px;
+}
+
+.beer-left {
+    width: 60%;
+}
+
+.beer-right {
+    width: 40%;
+    text-align: right;
+}
+
+/* names & descriptions – same feel as item-name / item-desc */
+.beer-name {
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: #fff;
+}
+
+.beer-desc {
+    font-size: 14px;
+    color: #ddd;
+    line-height: 1.32;
+    margin-top: 4px;
+}
+
+/* prices / gradazione */
+.grad,
+.sizes,
+.beer-price {
+    font-size: 14px;
+    color: #ffe9a6;
+    font-weight: 600;
+    margin-top: 3px;
+}
+
+/* bottle grid — two columns */
+.bottle-grid {
+    display: flex;
+    gap: 20px;
+    margin-top: 18px;
+}
+
+.bottle-grid .col {
+    width: 50%;
+}
