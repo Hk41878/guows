@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Harry's Pub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/popup.css">
+</head>
+
+<body>
+
+    <!-- Load popup first -->
+    <script type="module" src="js/popup.js"></script>
+
+    <!-- POPUP OVERLAY -->
+    <div id="openingOverlay" class="opening-overlay">
+        <div class="overlay-inner">
+            <img src="assets/img/nuova-apertura.jpg" class="overlay-img" alt="New Opening">
+
+            <div class="overlay-text">
+                Grand Opening – Harry's Pub
+            </div>
+
+            <button id="closeOverlay" class="overlay-close">×</button>
+        </div>
+    </div>
+
+    <main id="app"></main>
+
+    <script type="module" src="js/menuPages.js"></script>
+    <script type="module" src="js/swipe.js"></script>
+    <script type="module" src="js/social-links.js"></script>
+<script type="module" src="js/share-links.js"></script>
+
+</body>
+</html>
