@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Green Screen Test Site</title>
+
+<style>
+    body {
+        margin: 0;
+        background: #000;
+        font-family: sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    /* Full width top image */
+    #topImage {
+        width: 100%;
+        display: block;
+    }
+
+    /* Center video container */
+    #videoWrap {
+        width: 90%;
+        margin-top: 20px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* REMOVE GREEN BACKGROUND (simple CSS keying effect) */
+    video {
+        width: 100%;
+        display: block;
+        mix-blend-mode: multiply;  /* Helps remove bright green */
+        filter: chroma(#00ff00);   /* Some browsers support this */
+    }
+</style>
+</head>
+<body>
+
+    <!-- Full width image -->
+    <img id="topImage" src="img.jpeg" alt="Top Banner">
+
+    <!-- Centre video (looping, autoplay, muted, no controls) -->
+    <div id="videoWrap">
+        <video src="video.mp4" autoplay muted loop playsinline></video>
+    </div>
+
+</body>
+</html>
