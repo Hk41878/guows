@@ -1,315 +1,173 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
-  />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <title>PAX Counter → WhatsApp Group</title>
+<meta charset="utf-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-  <style>
-    :root { color-scheme: dark; }
-    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-    html, body { height: 100%; margin: 0; }
-    body{
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: #0b0f14;
-      color: #e8eef7;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding: 18px;
-      touch-action: manipulation; /* helps reduce double-tap zoom */
-    }
+<title>PAX Counter</title>
 
-    .wrap{
-      width: min(520px, 100%);
-      display:flex;
-      flex-direction:column;
-      gap: 14px;
-    }
+<style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{
+margin:0;height:100%;
+font-family:system-ui,Arial;
+background:#0c0f14;color:#fff
+}
 
-    .top{
-      display:flex;
-      gap: 10px;
-      align-items:stretch;
-    }
+body{
+display:flex;
+align-items:center;
+justify-content:center;
+touch-action:manipulation;
+}
 
-    .countBox{
-      flex: 1;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 14px;
-      padding: 12px 14px;
-      display:flex;
-      flex-direction:column;
-      gap: 6px;
-    }
-    .label{ font-size: 12px; opacity: 0.8; }
-    .value{
-      font-size: 34px;
-      font-weight: 750;
-      letter-spacing: 0.5px;
-      display:flex;
-      align-items:baseline;
-      gap: 8px;
-    }
-    .value small{
-      font-size: 14px;
-      font-weight: 650;
-      opacity: 0.8;
-    }
+.wrap{
+width:min(420px,100%);
+padding:16px;
+display:flex;
+flex-direction:column;
+gap:14px;
+}
 
-    .miniBtns{
-      display:flex;
-      gap: 10px;
-    }
+.top{
+background:#151a22;
+border-radius:14px;
+padding:14px;
+text-align:center;
+}
 
-    .btn{
-      border: 1px solid rgba(255,255,255,0.14);
-      background: rgba(255,255,255,0.06);
-      color: #e8eef7;
-      border-radius: 14px;
-      padding: 12px 14px;
-      font-weight: 650;
-      font-size: 14px;
-      cursor: pointer;
-      user-select: none;
-      -webkit-user-select: none;
-      touch-action: manipulation;
-    }
-    .btn:active{ transform: translateY(1px); }
+.total{
+font-size:34px;
+font-weight:800;
+}
+.small{opacity:.7;font-size:14px}
 
-    .center{
-      height: 48vh;
-      min-height: 260px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.10);
-      border-radius: 18px;
-      position: relative;
-      overflow:hidden;
-    }
+.center{
+height:48vh;
+min-height:260px;
+border-radius:20px;
+background:#10151d;
+display:flex;
+align-items:center;
+justify-content:center;
+position:relative;
+overflow:hidden;
+}
 
-    .tapBtn{
-      width: 180px;
-      height: 180px;
-      border-radius: 999px;
-      border: 2px solid rgba(255,255,255,0.22);
-      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.18), rgba(255,255,255,0.06));
-      color: #e8eef7;
-      font-size: 18px;
-      font-weight: 800;
-      letter-spacing: 0.4px;
-      cursor: pointer;
-      user-select: none;
-      -webkit-user-select: none;
-      touch-action: manipulation;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      text-align:center;
-      padding: 14px;
-    }
-    .tapBtn:active{ transform: scale(0.985); }
+.tap{
+width:180px;height:180px;
+border-radius:50%;
+border:2px solid #2a3140;
+background:#1a2130;
+color:#fff;
+font-size:18px;
+font-weight:800;
+}
 
-    .bottom{
-      display:flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
+.float{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:28px;
+font-weight:800;
+opacity:0;
+animation:pop .6s ease forwards;
+}
 
-    .sendBtn{
-      flex: 1;
-      min-width: 220px;
-      background: rgba(37, 211, 102, 0.16);
-      border-color: rgba(37, 211, 102, 0.38);
-    }
+@keyframes pop{
+0%{opacity:0;transform:translate(-50%,-20%)}
+100%{opacity:1;transform:translate(-50%,-60%)}
+}
 
-    .note{
-      font-size: 12px;
-      opacity: 0.75;
-      line-height: 1.35;
-    }
+.bottom{
+display:flex;
+gap:10px;
+}
 
-    .toast{
-      position: fixed;
-      left: 50%;
-      bottom: 18px;
-      transform: translateX(-50%);
-      background: rgba(0,0,0,0.72);
-      border: 1px solid rgba(255,255,255,0.12);
-      color: #e8eef7;
-      padding: 10px 12px;
-      border-radius: 12px;
-      font-size: 13px;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 180ms ease;
-      max-width: min(520px, calc(100% - 24px));
-      text-align:center;
-      backdrop-filter: blur(10px);
-    }
-    .toast.show{ opacity: 1; }
-  </style>
+button{
+flex:1;
+padding:14px;
+border-radius:14px;
+border:1px solid #2a3140;
+background:#151a22;
+color:#fff;
+font-weight:700;
+}
+
+.whatsapp{
+background:#1f7a4f;
+border-color:#25d366;
+}
+</style>
 </head>
 
 <body>
-  <div class="wrap">
-    <div class="top">
-      <div class="countBox" aria-live="polite">
-        <div class="label">Current Count</div>
-        <div class="value">
-          <span id="count">0</span>
-          <small>pax</small>
-        </div>
-      </div>
 
-      <div class="miniBtns">
-        <button class="btn" id="minus" type="button" title="Decrease">-1</button>
-        <button class="btn" id="reset" type="button" title="Reset">Reset</button>
-      </div>
-    </div>
+<div class="wrap">
 
-    <div class="center">
-      <button class="tapBtn" id="tap" type="button">
-        TAP<br/>TO COUNT
-      </button>
-    </div>
+<div class="top">
+<div class="total"><span id="total">0</span> pax</div>
+<div class="small">Total Count (never resets)</div>
+</div>
 
-    <div class="bottom">
-      <button class="btn sendBtn" id="send" type="button">
-        Send to WhatsApp Group
-      </button>
-      <button class="btn" id="copy" type="button">
-        Copy Message
-      </button>
-    </div>
+<div class="center" id="center">
+<button class="tap" id="tap">TAP</button>
+</div>
 
-    <div class="note" id="note">
-      Flow: “Send” pe click → message clipboard me copy hoga → WhatsApp group open hoga → group me paste karke send kar dena.
-    </div>
-  </div>
+<div class="bottom">
+<button id="copy">Copy</button>
+<button class="whatsapp" id="send">Copy & Open WhatsApp</button>
+</div>
 
-  <div class="toast" id="toast"></div>
+</div>
 
-  <script>
-    // =========================
-    // SETTINGS (your details)
-    // =========================
-    const GROUP_INVITE_LINK = "https://chat.whatsapp.com/Fd9iT1Uf958LgJVzhO18lo";
-    const STORAGE_KEY = "pax_counter_value_v1";
+<script>
+const totalEl = document.getElementById("total");
+const tapBtn  = document.getElementById("tap");
+const center  = document.getElementById("center");
+const sendBtn = document.getElementById("send");
+const copyBtn = document.getElementById("copy");
 
-    // =========================
-    // STATE + UI
-    // =========================
-    const countEl = document.getElementById("count");
-    const tapBtn  = document.getElementById("tap");
-    const minusBtn= document.getElementById("minus");
-    const resetBtn= document.getElementById("reset");
-    const sendBtn = document.getElementById("send");
-    const copyBtn = document.getElementById("copy");
-    const toastEl = document.getElementById("toast");
+let total = Number(localStorage.getItem("TOTAL_PAX")||0);
+let session = 0;
 
-    let count = Number(localStorage.getItem(STORAGE_KEY) || "0");
-    if (!Number.isFinite(count) || count < 0) count = 0;
+render();
 
-    function render() {
-      countEl.textContent = String(count);
-    }
+function render(){
+totalEl.textContent = total;
+}
 
-    function showToast(msg) {
-      toastEl.textContent = msg;
-      toastEl.classList.add("show");
-      clearTimeout(showToast._t);
-      showToast._t = setTimeout(() => toastEl.classList.remove("show"), 1600);
-    }
+function showFloat(){
+const f = document.createElement("div");
+f.className="float";
+f.textContent = `+${session}`;
+center.appendChild(f);
+setTimeout(()=>f.remove(),600);
+}
 
-    function buildMessage() {
-      // Format: "[Counted number] [pax]"
-      // Example: "59 pax"
-      return `${count} pax`;
-    }
+// FAST CLICK SAFE
+tapBtn.addEventListener("pointerdown", ()=>{
+session++;
+total++;
+localStorage.setItem("TOTAL_PAX",total);
+render();
+showFloat();
+});
 
-    async function copyToClipboard(text) {
-      // Try modern clipboard first
-      try {
-        await navigator.clipboard.writeText(text);
-        return true;
-      } catch (_) {
-        // Fallback
-        try {
-          const ta = document.createElement("textarea");
-          ta.value = text;
-          ta.setAttribute("readonly", "");
-          ta.style.position = "fixed";
-          ta.style.left = "-9999px";
-          document.body.appendChild(ta);
-          ta.select();
-          const ok = document.execCommand("copy");
-          document.body.removeChild(ta);
-          return ok;
-        } catch (_) {
-          return false;
-        }
-      }
-    }
+// COPY ONLY
+copyBtn.onclick = async ()=>{
+await navigator.clipboard.writeText(`${session} pax`);
+};
 
-    // =========================
-    // EVENTS
-    // =========================
-    tapBtn.addEventListener("click", () => {
-      count += 1;
-      localStorage.setItem(STORAGE_KEY, String(count));
-      render();
-      // tiny feedback
-      if (count % 10 === 0) showToast(`Count: ${count}`);
-    });
+// COPY + OPEN WHATSAPP (NO GROUP)
+sendBtn.onclick = async ()=>{
+await navigator.clipboard.writeText(`${session} pax`);
+session = 0; // reset session only
+window.location.href = "https://wa.me/";
+};
+</script>
 
-    minusBtn.addEventListener("click", () => {
-      count = Math.max(0, count - 1);
-      localStorage.setItem(STORAGE_KEY, String(count));
-      render();
-    });
-
-    resetBtn.addEventListener("click", () => {
-      count = 0;
-      localStorage.setItem(STORAGE_KEY, "0");
-      render();
-      showToast("Reset done");
-    });
-
-    copyBtn.addEventListener("click", async () => {
-      const msg = buildMessage();
-      const ok = await copyToClipboard(msg);
-      showToast(ok ? "Message copied" : "Copy failed (manual copy karo)");
-    });
-
-    sendBtn.addEventListener("click", async () => {
-      const msg = buildMessage();
-      const ok = await copyToClipboard(msg);
-
-      // Open group invite link (this is the only reliable way to open a specific group from a website)
-      // WhatsApp doesn't officially support "open this group + prefill text" via a public URL,
-      // so we copy the message and open the group, then you just paste & send.
-      showToast(ok ? "Copied. Opening WhatsApp group..." : "Opening group. Paste manually.");
-      window.location.href = GROUP_INVITE_LINK;
-    });
-
-    // initial render
-    render();
-
-    // prevent iOS double-tap zoom (extra)
-    let lastTouchEnd = 0;
-    document.addEventListener("touchend", function (e) {
-      const now = Date.now();
-      if (now - lastTouchEnd <= 300) e.preventDefault();
-      lastTouchEnd = now;
-    }, { passive: false });
-  </script>
 </body>
 </html>
