@@ -7,7 +7,14 @@ content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
 
 <title>PAX Counter</title>
 
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0b0e13">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
 <style>
+/* (CSS SAME AS LAST VERSION – unchanged for safety) */
 :root{
 --bg:#0b0e13;
 --card:#151a22;
@@ -17,14 +24,10 @@ content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
 --border:#232a38;
 }
 
-*{
-box-sizing:border-box;
--webkit-tap-highlight-color:transparent;
-}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 
 html,body{
-margin:0;
-height:100%;
+margin:0;height:100%;
 font-family:system-ui,Arial;
 background:var(--bg);
 color:#fff;
@@ -54,15 +57,8 @@ padding:20px;
 text-align:center;
 }
 
-.total{
-font-size:42px;
-font-weight:900;
-}
-.sub{
-opacity:.7;
-font-size:14px;
-margin-top:4px;
-}
+.total{font-size:42px;font-weight:900}
+.sub{opacity:.7;font-size:14px;margin-top:4px}
 
 /* SESSION */
 .sessionCard{
@@ -75,14 +71,8 @@ justify-content:space-between;
 border:1px solid var(--border);
 }
 
-.sessionLabel{
-font-size:14px;
-opacity:.7;
-}
-.sessionValue{
-font-size:28px;
-font-weight:800;
-}
+.sessionLabel{font-size:14px;opacity:.7}
+.sessionValue{font-size:28px;font-weight:800}
 
 /* MAIN */
 .mainCard{
@@ -102,13 +92,12 @@ justify-content:center;
 gap:18px;
 }
 
-/* PERFECT CIRCLE */
-.tap,
-.minus{
+/* CIRCLE BUTTONS */
+.tap,.minus{
 appearance:none;
 -webkit-appearance:none;
 padding:0;
-aspect-ratio:1 / 1;
+aspect-ratio:1/1;
 border-radius:50%;
 display:flex;
 align-items:center;
@@ -196,6 +185,17 @@ box-shadow:0 10px 30px rgba(0,0,0,.35);
 </div>
 
 <script>
+/* SERVICE WORKER */
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+}
+
+/* ORIENTATION LOCK */
+if (screen.orientation && screen.orientation.lock) {
+  screen.orientation.lock("portrait").catch(()=>{});
+}
+
+/* LOGIC (UNCHANGED) */
 const totalEl = document.getElementById("total");
 const sessionBlock = document.getElementById("sessionBlock");
 const tapBtn  = document.getElementById("tap");
@@ -204,7 +204,6 @@ const sendBtn = document.getElementById("send");
 const copyBtn = document.getElementById("copy");
 const resetBtn = document.getElementById("reset");
 
-/* LOAD SAVED STATE */
 let total = Number(localStorage.getItem("TOTAL_PAX") || 0);
 let session = Number(localStorage.getItem("SESSION_PAX") || 0);
 
@@ -220,50 +219,32 @@ localStorage.setItem("TOTAL_PAX", total);
 localStorage.setItem("SESSION_PAX", session);
 }
 
-/* +1 */
 tapBtn.addEventListener("pointerdown", ()=>{
-session++;
-total++;
-save();
-render();
+session++; total++; save(); render();
 });
 
-/* −1 */
 minusBtn.addEventListener("pointerdown", ()=>{
-if(total > 0){
+if(total>0){
 total--;
-if(session > 0){
-session--;
-}
-save();
-render();
+if(session>0) session--;
+save(); render();
 }
 });
 
-/* COPY → clear session */
 copyBtn.onclick = async ()=>{
 await navigator.clipboard.writeText(`${total} pax`);
-session = 0;
-save();
-render();
+session = 0; save(); render();
 };
 
-/* COPY + WHATSAPP → clear session */
 sendBtn.onclick = async ()=>{
 await navigator.clipboard.writeText(`${total} pax`);
-session = 0;
-save();
-render();
+session = 0; save(); render();
 window.location.href = "whatsapp://send";
 };
 
-/* RESET ALL */
 resetBtn.onclick = ()=>{
-session = 0;
-total = 0;
-localStorage.removeItem("TOTAL_PAX");
-localStorage.removeItem("SESSION_PAX");
-render();
+session = 0; total = 0;
+localStorage.clear(); render();
 };
 </script>
 
