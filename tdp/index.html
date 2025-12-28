@@ -17,8 +17,19 @@ content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
 --border:#232a38;
 }
 
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;height:100%;font-family:system-ui,Arial;background:var(--bg);color:#fff}
+*{
+box-sizing:border-box;
+-webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+margin:0;
+height:100%;
+font-family:system-ui,Arial;
+background:var(--bg);
+color:#fff;
+overflow:hidden; /* 🔒 scroll OFF */
+}
 
 body{
 display:flex;
@@ -46,11 +57,14 @@ text-align:center;
 .total{
 font-size:42px;
 font-weight:900;
-letter-spacing:1px;
 }
-.sub{opacity:.7;font-size:14px;margin-top:4px}
+.sub{
+opacity:.7;
+font-size:14px;
+margin-top:4px;
+}
 
-/* SESSION CARD */
+/* SESSION */
 .sessionCard{
 background:var(--card);
 border-radius:18px;
@@ -70,7 +84,7 @@ font-size:28px;
 font-weight:800;
 }
 
-/* MAIN ACTION */
+/* MAIN */
 .mainCard{
 background:var(--card-soft);
 border-radius:22px;
@@ -88,28 +102,38 @@ justify-content:center;
 gap:18px;
 }
 
-.tap{
-width:170px;height:170px;
+/* PERFECT CIRCLE BUTTONS */
+.tap,
+.minus{
+appearance:none;
+-webkit-appearance:none;
+padding:0;
+aspect-ratio:1 / 1;
 border-radius:50%;
-border:2px solid var(--border);
+display:flex;
+align-items:center;
+justify-content:center;
+}
+
+.tap{
+width:170px;
 background:#1a2130;
+border:2px solid var(--border);
 font-size:18px;
 font-weight:900;
 color:#fff;
 }
 
 .minus{
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;           /* important */
-  line-height: 1;       /* important */
+width:64px;
+background:#2a1515;
+border:2px solid #5a2a2a;
+font-size:22px;
+font-weight:900;
+color:#fff;
 }
 
-/* BUTTONS */
+/* ACTIONS */
 .actions{
 display:flex;
 gap:12px;
@@ -136,7 +160,7 @@ background:rgba(177,74,74,.15);
 border-color:var(--danger);
 }
 
-/* SMALL SHADOW */
+/* SHADOW */
 .header,.sessionCard,.mainCard{
 box-shadow:0 10px 30px rgba(0,0,0,.35);
 }
@@ -147,31 +171,28 @@ box-shadow:0 10px 30px rgba(0,0,0,.35);
 
 <div class="app">
 
-  <!-- HEADER -->
-  <div class="header">
-    <div class="total"><span id="total">0</span> pax</div>
-    <div class="sub">Total Count</div>
-  </div>
+<div class="header">
+<div class="total"><span id="total">0</span> pax</div>
+<div class="sub">Total Count</div>
+</div>
 
-  <!-- SESSION -->
-  <div class="sessionCard">
-    <div class="sessionLabel">Current Session</div>
-    <div class="sessionValue" id="sessionBlock">+0</div>
-  </div>
+<div class="sessionCard">
+<div class="sessionLabel">Current Session</div>
+<div class="sessionValue" id="sessionBlock">+0</div>
+</div>
 
-  <!-- MAIN -->
-  <div class="mainCard">
-    <div class="tapArea">
-      <button class="minus" id="minus">−</button>
-      <button class="tap" id="tap">TAP</button>
-    </div>
+<div class="mainCard">
+<div class="tapArea">
+<button class="minus" id="minus">−</button>
+<button class="tap" id="tap">TAP</button>
+</div>
 
-    <div class="actions">
-      <button id="copy">Copy</button>
-      <button class="whatsapp" id="send">Copy & Open WhatsApp</button>
-      <button class="reset" id="reset">Reset All</button>
-    </div>
-  </div>
+<div class="actions">
+<button id="copy">Copy</button>
+<button class="whatsapp" id="send">Copy & Open WhatsApp</button>
+<button class="reset" id="reset">Reset All</button>
+</div>
+</div>
 
 </div>
 
@@ -184,8 +205,9 @@ const sendBtn = document.getElementById("send");
 const copyBtn = document.getElementById("copy");
 const resetBtn = document.getElementById("reset");
 
+/* LOAD SAVED STATE */
 let total = Number(localStorage.getItem("TOTAL_PAX") || 0);
-let session = 0;
+let session = Number(localStorage.getItem("SESSION_PAX") || 0);
 
 render();
 
@@ -194,41 +216,50 @@ totalEl.textContent = total;
 sessionBlock.textContent = `+${session}`;
 }
 
+/* +1 */
 tapBtn.addEventListener("pointerdown", ()=>{
 session++;
 total++;
-localStorage.setItem("TOTAL_PAX", total);
+save();
 render();
 });
 
+/* −1 (special logic) */
 minusBtn.addEventListener("pointerdown", ()=>{
-if(session>0 && total>0){
-session--;
+if(total > 0){
 total--;
-localStorage.setItem("TOTAL_PAX", total);
+if(session > 0){
+session--;
+}
+save();
 render();
 }
 });
 
+/* COPY TOTAL */
 copyBtn.onclick = async ()=>{
 await navigator.clipboard.writeText(`${total} pax`);
-session = 0;
-render();
 };
 
+/* COPY + OPEN WHATSAPP */
 sendBtn.onclick = async ()=>{
 await navigator.clipboard.writeText(`${total} pax`);
-session = 0;
-render();
 window.location.href = "whatsapp://send";
 };
 
+/* RESET ALL */
 resetBtn.onclick = ()=>{
 session = 0;
 total = 0;
 localStorage.removeItem("TOTAL_PAX");
+localStorage.removeItem("SESSION_PAX");
 render();
 };
+
+function save(){
+localStorage.setItem("TOTAL_PAX", total);
+localStorage.setItem("SESSION_PAX", session);
+}
 </script>
 
 </body>
