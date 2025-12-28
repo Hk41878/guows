@@ -28,7 +28,7 @@ height:100%;
 font-family:system-ui,Arial;
 background:var(--bg);
 color:#fff;
-overflow:hidden; /* 🔒 scroll OFF */
+overflow:hidden;
 }
 
 body{
@@ -102,7 +102,7 @@ justify-content:center;
 gap:18px;
 }
 
-/* PERFECT CIRCLE BUTTONS */
+/* PERFECT CIRCLE */
 .tap,
 .minus{
 appearance:none;
@@ -160,7 +160,6 @@ background:rgba(177,74,74,.15);
 border-color:var(--danger);
 }
 
-/* SHADOW */
 .header,.sessionCard,.mainCard{
 box-shadow:0 10px 30px rgba(0,0,0,.35);
 }
@@ -216,6 +215,11 @@ totalEl.textContent = total;
 sessionBlock.textContent = `+${session}`;
 }
 
+function save(){
+localStorage.setItem("TOTAL_PAX", total);
+localStorage.setItem("SESSION_PAX", session);
+}
+
 /* +1 */
 tapBtn.addEventListener("pointerdown", ()=>{
 session++;
@@ -224,7 +228,7 @@ save();
 render();
 });
 
-/* −1 (special logic) */
+/* −1 */
 minusBtn.addEventListener("pointerdown", ()=>{
 if(total > 0){
 total--;
@@ -236,14 +240,20 @@ render();
 }
 });
 
-/* COPY TOTAL */
+/* COPY → clear session */
 copyBtn.onclick = async ()=>{
 await navigator.clipboard.writeText(`${total} pax`);
+session = 0;
+save();
+render();
 };
 
-/* COPY + OPEN WHATSAPP */
+/* COPY + WHATSAPP → clear session */
 sendBtn.onclick = async ()=>{
 await navigator.clipboard.writeText(`${total} pax`);
+session = 0;
+save();
+render();
 window.location.href = "whatsapp://send";
 };
 
@@ -255,11 +265,6 @@ localStorage.removeItem("TOTAL_PAX");
 localStorage.removeItem("SESSION_PAX");
 render();
 };
-
-function save(){
-localStorage.setItem("TOTAL_PAX", total);
-localStorage.setItem("SESSION_PAX", session);
-}
 </script>
 
 </body>
