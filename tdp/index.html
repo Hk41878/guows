@@ -117,7 +117,7 @@ border-color:#a14a4a;
 
 <div class="top">
 <div class="total"><span id="total">0</span> pax</div>
-<div class="small">Total Count (never resets)</div>
+<div class="small">Total Count</div>
 </div>
 
 <div class="session" id="sessionBlock">
@@ -132,7 +132,7 @@ border-color:#a14a4a;
 <div class="bottom">
 <button id="copy">Copy</button>
 <button class="whatsapp" id="send">Copy & Open WhatsApp</button>
-<button class="reset" id="reset">Reset Session</button>
+<button class="reset" id="reset">Reset All</button>
 </div>
 
 </div>
@@ -156,7 +156,7 @@ totalEl.textContent = total;
 sessionBlock.textContent = `+${session}`;
 }
 
-// TAP +1
+// +1
 tapBtn.addEventListener("pointerdown", ()=>{
 session++;
 total++;
@@ -164,9 +164,9 @@ localStorage.setItem("TOTAL_PAX", total);
 render();
 });
 
-// MINUS −1
+// −1
 minusBtn.addEventListener("pointerdown", ()=>{
-if(session > 0){
+if(session > 0 && total > 0){
 session--;
 total--;
 localStorage.setItem("TOTAL_PAX", total);
@@ -174,24 +174,26 @@ render();
 }
 });
 
-// COPY
+// COPY TOTAL
 copyBtn.onclick = async ()=>{
-await navigator.clipboard.writeText(`${session} pax`);
+await navigator.clipboard.writeText(`${total} pax`);
 session = 0;
 render();
 };
 
-// COPY + OPEN WHATSAPP
+// COPY + OPEN WHATSAPP (TOTAL)
 sendBtn.onclick = async ()=>{
-await navigator.clipboard.writeText(`${session} pax`);
+await navigator.clipboard.writeText(`${total} pax`);
 session = 0;
 render();
 window.location.href = "whatsapp://send";
 };
 
-// RESET SESSION
+// RESET EVERYTHING
 resetBtn.onclick = ()=>{
 session = 0;
+total = 0;
+localStorage.removeItem("TOTAL_PAX");
 render();
 };
 </script>
