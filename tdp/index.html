@@ -43,20 +43,29 @@ font-weight:800;
 }
 .small{opacity:.7;font-size:14px}
 
+/* SESSION BLOCK */
+.session{
+background:#10151d;
+border-radius:14px;
+padding:12px;
+text-align:center;
+min-height:52px;
+font-weight:700;
+letter-spacing:.5px;
+}
+
 .center{
-height:48vh;
-min-height:260px;
+height:40vh;
+min-height:220px;
 border-radius:20px;
 background:#10151d;
 display:flex;
 align-items:center;
 justify-content:center;
-position:relative;
-overflow:hidden;
 }
 
 .tap{
-width:180px;height:180px;
+width:170px;height:170px;
 border-radius:50%;
 border:2px solid #2a3140;
 background:#1a2130;
@@ -65,25 +74,10 @@ font-size:18px;
 font-weight:800;
 }
 
-.float{
-position:absolute;
-top:50%;
-left:50%;
-transform:translate(-50%,-50%);
-font-size:28px;
-font-weight:800;
-opacity:0;
-animation:pop .6s ease forwards;
-}
-
-@keyframes pop{
-0%{opacity:0;transform:translate(-50%,-20%)}
-100%{opacity:1;transform:translate(-50%,-60%)}
-}
-
 .bottom{
 display:flex;
 gap:10px;
+flex-wrap:wrap;
 }
 
 button{
@@ -100,6 +94,11 @@ font-weight:700;
 background:#1f7a4f;
 border-color:#25d366;
 }
+
+.reset{
+background:#3a1f1f;
+border-color:#a14a4a;
+}
 </style>
 </head>
 
@@ -112,60 +111,76 @@ border-color:#25d366;
 <div class="small">Total Count (never resets)</div>
 </div>
 
-<div class="center" id="center">
+<div class="session" id="sessionBlock">
+[ session empty ]
+</div>
+
+<div class="center">
 <button class="tap" id="tap">TAP</button>
 </div>
 
 <div class="bottom">
 <button id="copy">Copy</button>
 <button class="whatsapp" id="send">Copy & Open WhatsApp</button>
+<button class="reset" id="reset">Reset Session</button>
 </div>
 
 </div>
 
 <script>
 const totalEl = document.getElementById("total");
+const sessionBlock = document.getElementById("sessionBlock");
 const tapBtn  = document.getElementById("tap");
-const center  = document.getElementById("center");
 const sendBtn = document.getElementById("send");
 const copyBtn = document.getElementById("copy");
+const resetBtn = document.getElementById("reset");
 
 let total = Number(localStorage.getItem("TOTAL_PAX")||0);
 let session = 0;
+let sessionText = [];
 
 render();
 
 function render(){
 totalEl.textContent = total;
+sessionBlock.textContent = sessionText.length
+? sessionText.join(" ")
+: "[ session empty ]";
 }
 
-function showFloat(){
-const f = document.createElement("div");
-f.className="float";
-f.textContent = `+${session}`;
-center.appendChild(f);
-setTimeout(()=>f.remove(),600);
-}
-
-// FAST CLICK SAFE
+// FAST + SAFE TAP
 tapBtn.addEventListener("pointerdown", ()=>{
 session++;
 total++;
+sessionText.push(`[+${session}]`);
 localStorage.setItem("TOTAL_PAX",total);
 render();
-showFloat();
 });
 
 // COPY ONLY
 copyBtn.onclick = async ()=>{
 await navigator.clipboard.writeText(`${session} pax`);
+session = 0;
+sessionText = [];
+render();
 };
 
 // COPY + OPEN WHATSAPP (NO GROUP)
 sendBtn.onclick = async ()=>{
 await navigator.clipboard.writeText(`${session} pax`);
-session = 0; // reset session only
-window.location.href = "https://wa.me/";
+session = 0;
+sessionText = [];
+render();
+
+// open WhatsApp safely (no error popup)
+window.location.href = "whatsapp://send";
+};
+
+// RESET SESSION ONLY
+resetBtn.onclick = ()=>{
+session = 0;
+sessionText = [];
+render();
 };
 </script>
 
