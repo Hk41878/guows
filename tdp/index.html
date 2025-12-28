@@ -8,12 +8,18 @@ content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
 <title>PAX Counter</title>
 
 <style>
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{
-margin:0;height:100%;
-font-family:system-ui,Arial;
-background:#0c0f14;color:#fff
+:root{
+--bg:#0b0e13;
+--card:#151a22;
+--card-soft:#10151d;
+--accent:#25d366;
+--danger:#b14a4a;
+--border:#232a38;
 }
+
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;font-family:system-ui,Arial;background:var(--bg);color:#fff}
+
 body{
 display:flex;
 align-items:center;
@@ -21,56 +27,75 @@ justify-content:center;
 touch-action:manipulation;
 }
 
-.wrap{
-width:min(420px,100%);
-padding:16px;
+.app{
+width:min(430px,100%);
+padding:18px;
 display:flex;
 flex-direction:column;
-gap:14px;
+gap:18px;
 }
 
-.top{
-background:#151a22;
-border-radius:14px;
-padding:14px;
+/* HEADER */
+.header{
+background:linear-gradient(180deg,#1a2130,#121722);
+border-radius:20px;
+padding:20px;
 text-align:center;
 }
 
 .total{
-font-size:34px;
+font-size:42px;
+font-weight:900;
+letter-spacing:1px;
+}
+.sub{opacity:.7;font-size:14px;margin-top:4px}
+
+/* SESSION CARD */
+.sessionCard{
+background:var(--card);
+border-radius:18px;
+padding:16px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+border:1px solid var(--border);
+}
+
+.sessionLabel{
+font-size:14px;
+opacity:.7;
+}
+.sessionValue{
+font-size:28px;
 font-weight:800;
 }
-.small{opacity:.7;font-size:14px}
 
-.session{
-background:#10151d;
-border-radius:14px;
-padding:14px;
-text-align:center;
-font-size:26px;
-font-weight:800;
-min-height:54px;
+/* MAIN ACTION */
+.mainCard{
+background:var(--card-soft);
+border-radius:22px;
+padding:22px;
+display:flex;
+flex-direction:column;
+gap:18px;
+border:1px solid var(--border);
 }
 
-.center{
-height:40vh;
-min-height:220px;
-border-radius:20px;
-background:#10151d;
+.tapArea{
 display:flex;
 align-items:center;
 justify-content:center;
-gap:16px;
+gap:18px;
 }
 
 .tap{
-width:160px;height:160px;
+width:170px;height:170px;
 border-radius:50%;
-border:2px solid #2a3140;
+border:2px solid var(--border);
 background:#1a2130;
-color:#fff;
 font-size:18px;
-font-weight:800;
+font-weight:900;
+color:#fff;
 }
 
 .minus{
@@ -78,62 +103,74 @@ width:64px;height:64px;
 border-radius:50%;
 border:2px solid #5a2a2a;
 background:#2a1515;
-color:#fff;
 font-size:22px;
 font-weight:900;
+color:#fff;
 }
 
-.bottom{
+/* BUTTONS */
+.actions{
 display:flex;
-gap:10px;
+gap:12px;
 flex-wrap:wrap;
 }
 
 button{
 flex:1;
-padding:14px;
-border-radius:14px;
-border:1px solid #2a3140;
-background:#151a22;
+padding:15px;
+border-radius:16px;
+border:1px solid var(--border);
+background:var(--card);
 color:#fff;
 font-weight:700;
 }
 
 .whatsapp{
-background:#1f7a4f;
-border-color:#25d366;
+background:rgba(37,211,102,.18);
+border-color:var(--accent);
 }
 
 .reset{
-background:#3a1f1f;
-border-color:#a14a4a;
+background:rgba(177,74,74,.15);
+border-color:var(--danger);
+}
+
+/* SMALL SHADOW */
+.header,.sessionCard,.mainCard{
+box-shadow:0 10px 30px rgba(0,0,0,.35);
 }
 </style>
 </head>
 
 <body>
 
-<div class="wrap">
+<div class="app">
 
-<div class="top">
-<div class="total"><span id="total">0</span> pax</div>
-<div class="small">Total Count</div>
-</div>
+  <!-- HEADER -->
+  <div class="header">
+    <div class="total"><span id="total">0</span> pax</div>
+    <div class="sub">Total Count</div>
+  </div>
 
-<div class="session" id="sessionBlock">
-+0
-</div>
+  <!-- SESSION -->
+  <div class="sessionCard">
+    <div class="sessionLabel">Current Session</div>
+    <div class="sessionValue" id="sessionBlock">+0</div>
+  </div>
 
-<div class="center">
-<button class="minus" id="minus">−</button>
-<button class="tap" id="tap">TAP</button>
-</div>
+  <!-- MAIN -->
+  <div class="mainCard">
+    <div class="tapArea">
+      <button class="minus" id="minus">−</button>
+      <button class="tap" id="tap">TAP</button>
+    </div>
 
-<div class="bottom">
-<button id="copy">Copy</button>
-<button class="whatsapp" id="send">Copy & Open WhatsApp</button>
-<button class="reset" id="reset">Reset All</button>
-</div>
+    <div class="actions">
+      <button id="copy">Copy</button>
+      <button class="whatsapp" id="send">Copy & Open WhatsApp</button>
+      <button class="reset" id="reset">Reset All</button>
+    </div>
+  </div>
 
 </div>
 
@@ -156,7 +193,6 @@ totalEl.textContent = total;
 sessionBlock.textContent = `+${session}`;
 }
 
-// +1
 tapBtn.addEventListener("pointerdown", ()=>{
 session++;
 total++;
@@ -164,9 +200,8 @@ localStorage.setItem("TOTAL_PAX", total);
 render();
 });
 
-// −1
 minusBtn.addEventListener("pointerdown", ()=>{
-if(session > 0 && total > 0){
+if(session>0 && total>0){
 session--;
 total--;
 localStorage.setItem("TOTAL_PAX", total);
@@ -174,14 +209,12 @@ render();
 }
 });
 
-// COPY TOTAL
 copyBtn.onclick = async ()=>{
 await navigator.clipboard.writeText(`${total} pax`);
 session = 0;
 render();
 };
 
-// COPY + OPEN WHATSAPP (TOTAL)
 sendBtn.onclick = async ()=>{
 await navigator.clipboard.writeText(`${total} pax`);
 session = 0;
@@ -189,7 +222,6 @@ render();
 window.location.href = "whatsapp://send";
 };
 
-// RESET EVERYTHING
 resetBtn.onclick = ()=>{
 session = 0;
 total = 0;
