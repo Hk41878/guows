@@ -1,0 +1,24 @@
+/* CURRENT SESSION BOX */
+.sessionCard{
+  background:var(--card);
+  border-radius:18px;
+  padding:16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border:1px solid var(--border);
+  box-shadow:0 10px 30px rgba(0,0,0,.35);
+  margin-bottom:18px;
+}
+
+/* LABEL */
+.sessionLabel{
+  font-size:14px;
+  opacity:.7;
+}
+
+/* VALUE */
+.sessionValue{
+  font-size:28px;
+  font-weight:800;
+}

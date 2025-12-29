@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<title>PAX Counter</title>
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0b0e13">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/header.css">
+<link rel="stylesheet" href="css/currentSession.css">
+<link rel="stylesheet" href="css/volume.css">
+<link rel="stylesheet" href="css/tap.css">
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- TOP -->
+  <div class="header">
+    <div class="total">
+      <span id="total">0</span>
+      <span id="unitLabel" class="unit-label">pax</span>
+    </div>
+
+    <div class="sub">Total Count</div>
+
+    <!-- Edit Mode Button + Dropdown -->
+    <div class="edit-wrapper">
+      <button id="editModeBtn" class="edit-btn" type="button">Edit Mode</button>
+
+      <div id="editMenu" class="edit-menu hidden">
+        <button data-action="reset" type="button">Reset</button>
+        <button data-action="save" type="button">Save</button>
+        <button data-action="cancel" type="button">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sessionCard">
+    <div class="sessionLabel">Current Session</div>
+    <div class="sessionValue" id="sessionBlock">+0</div>
+  </div>
+
+  <!-- FLEX SPACE -->
+  <div class="spacer"></div>
+
+  <!-- VOLUME BAR (above buttons) -->
+  <div class="volume-bar">
+    <div class="volume-label" id="volumeLabel">Volume 50%</div>
+
+    <div class="volume-row">
+      <span class="vol-btn">−</span>
+
+      <input
+        type="range"
+        min="0"
+        max="100"
+        value="50"
+        id="volumeSlider"
+        class="volume-slider"
+      >
+
+      <span class="vol-icon" id="volIcon">🔈</span>
+    </div>
+  </div>
+
+  <!-- BUTTONS BOX (bottom) -->
+  <div class="mainCard bottomBox">
+
+    <div class="tapArea">
+      <button class="minus" id="minus" type="button">−</button>
+
+      <!-- TAP WRAPPER: Drag + Size controls move together -->
+      <div class="tap-wrap" id="tapWrap">
+        <div class="size-controls" id="sizeControls">
+          <button class="size-btn" id="tapSizePlus" type="button">+</button>
+          <button class="size-btn" id="tapSizeMinus" type="button">−</button>
+        </div>
+
+        <button class="tap" id="tap" type="button">TAP</button>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button id="copy" type="button">Copy</button>
+      <button class="whatsapp" id="send" type="button">Copy & Open WhatsApp</button>
+      <button class="reset" id="reset" type="button">Reset All</button>
+    </div>
+  </div>
+
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

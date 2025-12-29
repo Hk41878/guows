@@ -1,0 +1,116 @@
+/* =========================
+   HEADER CONTAINER
+========================= */
+.header{
+  position:relative;
+  background:linear-gradient(180deg,#1a2130,#121722);
+  border-radius:20px;
+  padding:20px;
+  text-align:center;
+  box-shadow:0 10px 30px rgba(0,0,0,.35);
+  margin-bottom:18px;
+}
+
+/* =========================
+   TOTAL COUNT ROW
+========================= */
+.total{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  font-size:42px;
+  font-weight:900;
+  line-height:1;
+}
+
+/* =========================
+   UNIT LABEL
+========================= */
+.unit-label{
+  font-size:20px;
+  font-weight:700;
+  opacity:.85;
+  cursor:pointer;
+  user-select:none;
+}
+
+/* input state */
+.unit-label.editing{
+  border-bottom:2px dashed #25d366;
+  padding:2px 6px;
+}
+
+/* =========================
+   SUB TEXT
+========================= */
+.sub{
+  opacity:.7;
+  font-size:14px;
+  margin-top:6px;
+}
+
+/* =========================
+   EDIT MODE BUTTON
+========================= */
+.edit-wrapper{
+  position:absolute;
+  top:14px;
+  right:14px;
+  z-index:9999;
+}
+
+.edit-btn{
+  padding:6px 10px;
+  font-size:13px;
+  border-radius:8px;
+  background:#1a2130;
+  border:1px solid #232a38;
+  color:#fff;
+}
+
+/* =========================
+   EDIT DROPDOWN
+========================= */
+.edit-menu{
+  margin-top:6px;
+  display:flex;
+  flex-direction:column;
+  background:#151a22;
+  border:1px solid #232a38;
+  border-radius:10px;
+  overflow:hidden;
+}
+
+.edit-menu button{
+  padding:10px 14px;
+  background:none;
+  border:none;
+  color:#fff;
+  text-align:left;
+  font-size:14px;
+}
+
+.edit-menu button:hover{
+  background:#1a2130;
+}
+
+.hidden{
+  display:none;
+}
+
+/* =========================
+   EDIT MODE – GREEN + CENTER
+========================= */
+.edit-active .unit-label{
+  background:#25d366;
+  color:#000;
+  padding:4px 10px;
+  border-radius:8px;
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:90px;   /* text perfectly centered */
+  text-align:center;
+}

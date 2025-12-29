@@ -1,0 +1,177 @@
+/* =========================
+   MAIN BUTTON BOX
+========================= */
+.mainCard{
+  background:var(--card-soft);
+  border-radius:22px;
+  padding:22px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+  border:1px solid var(--border);
+  box-shadow:0 10px 30px rgba(0,0,0,.35);
+}
+
+/* bottom spacing */
+.bottomBox{
+  margin-bottom:30px;
+}
+
+/* =========================
+   TAP ROW
+========================= */
+.tapArea{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:18px;
+}
+
+/* =========================
+   BASE CIRCLE BUTTONS
+========================= */
+.tap{
+  appearance:none;
+  -webkit-appearance:none;
+  padding:0;
+  aspect-ratio:1/1;
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+/* TAP */
+.tap{
+  width:170px;
+  height:170px;           /* 🔥 lock size */
+  background:#1a2130;
+  border:2px solid var(--border);
+  font-size:18px;
+  font-weight:900;
+  color:#fff;
+  position:relative;
+  z-index:2;
+}
+
+/* =========================
+   TAP WRAP (drag safe)
+========================= */
+.tap-wrap{
+  position:relative;
+  display:inline-block;
+  flex:0 0 auto;
+  transform-origin:center center;
+  touch-action:none;
+}
+
+/* =========================
+   SIZE CONTROLS (EDIT MODE)
+   inside TAP + always visible in edit mode
+========================= */
+.size-controls{
+  position:absolute;
+  inset:0;
+  display:none;
+  z-index:4;              /* 🔥 above TAP */
+  pointer-events:none;    /* drag block na ho */
+}
+
+.edit-active .size-controls{
+  display:block;
+}
+
+/* SIZE BUTTONS (CIRCLE) */
+.size-btn{
+  position:absolute;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  border:2px solid rgba(255,255,255,.35);
+  background:rgba(0,0,0,.15);
+  color:#fff;
+  font-size:22px;
+  font-weight:300;
+  padding:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  pointer-events:auto;    /* ✅ clickable */
+}
+
+/* + → TAP ke top center (INSIDE) */
+#tapSizePlus{
+  top:10px;
+  left:50%;
+  transform:translateX(-50%);
+}
+
+/* − → TAP ke bottom center (INSIDE) */
+#tapSizeMinus{
+  bottom:10px;
+  left:50%;
+  transform:translateX(-50%);
+}
+
+/* =========================
+   ACTION BUTTONS
+========================= */
+.actions{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.actions button{
+  flex:1;
+  padding:15px;
+  border-radius:16px;
+  border:1px solid var(--border);
+  background:var(--card);
+  color:#fff;
+  font-weight:700;
+}
+
+.whatsapp{
+  background:rgba(37,211,102,.18);
+  border-color:var(--accent);
+}
+
+.reset{
+  background:rgba(177,74,74,.15);
+  border-color:var(--danger);
+}
+
+/* =========================
+   EDIT MODE – TAP VISUAL
+========================= */
+.edit-active .tap{
+  background:#25d366;
+  color:#000;
+}
+
+/* COUNT MINUS BUTTON – SAME SIZE AS TAP */
+.minus{
+  appearance:none;
+  -webkit-appearance:none;
+
+  width:170px;
+  height:170px;
+
+  aspect-ratio:1/1;
+  border-radius:50%;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  background:#2a1515;
+  border:2px solid #5a2a2a;
+
+  font-size:28px;   /* thoda bada, balance ke liye */
+  font-weight:900;
+  color:#fff;
+
+  padding:0;
+  flex:0 0 auto;
+}
