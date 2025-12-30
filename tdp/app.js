@@ -204,7 +204,7 @@ editBtn.addEventListener("click", ()=>{
 });
 
 function exitEditModeUI(){
-  tapBtn.textContent = "TAP";
+  tapBtn.textContent = "CLICK";
   tapBtn.classList.remove("is-drag-hint");
 
   unitLabelEl.classList.remove("is-placeholder");
