@@ -97,7 +97,7 @@ let total = Number(localStorage.getItem("TOTAL_PAX") || 0);
 let session = Number(localStorage.getItem("SESSION_PAX") || 0);
 
 let unitLabel = localStorage.getItem("UNIT_LABEL");
-if (unitLabel === null) unitLabel = "pax";
+if (unitLabel === null) unitLabel = "x";
 
 /* layout state (persist) */
 let tapX = 0;
