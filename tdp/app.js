@@ -238,7 +238,7 @@ editMenu.addEventListener("click", e=>{
   }
 
   if (action === "reset") {
-    unitLabel = "pax";
+    unitLabel = "x";
     localStorage.setItem("UNIT_LABEL", unitLabel);
 
     tapX = 0;
@@ -420,7 +420,7 @@ resetBtn.onclick = ()=>{
 
   localStorage.clear();
 
-  unitLabel = "pax";
+  unitLabel = "x";
   localStorage.setItem("UNIT_LABEL", unitLabel);
 
   tapX = 0; tapY = 0; tapScale = 1;
