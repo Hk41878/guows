@@ -2,7 +2,7 @@
   "name": "PAX Counter",
   "short_name": "PAX",
   "start_url": "./index.html",
-  "display": "standalone",
+  "display": "minimal-ui",
   "background_color": "#0b0e13",
   "theme_color": "#0b0e13",
   "orientation": "portrait",
