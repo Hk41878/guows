@@ -1,0 +1,164 @@
+:root {
+  --blue: #51b4f7;
+  --blue-90: rgba(81,180,247,0.9);
+  --blue-80: rgba(81,180,247,0.8);
+}
+
+/* ================= A) ACTIVE PAGE ================= */
+
+/* desktop */
+.main-menu li.active > a {
+  color: var(--blue);
+}
+
+/* tablet */
+.menu-tablet li.active > .t-row > a,
+.menu-tablet li > a.active {
+  color: var(--blue);
+}
+
+/* mobile */
+.mobile-menu li.active > .m-row > a,
+.mobile-menu li > a.active {
+  color: var(--blue);
+}
+
+
+/* ================= ACTIVE FONT WIDTH (MOBILE + TABLET) ================= */
+@media (max-width: 960px) {
+
+  /* simple level-1 items */
+  .mobile-menu a.active,
+  .menu-tablet a.active {
+    font-weight: 600;
+    
+  }
+
+  /* level-1 with children */
+  .m-has-children.active > .m-row > a,
+  .t-has-children.active > .t-row > a {
+    font-weight: 600;
+  }
+
+  /* level-2 active */
+  .m-level-2 li.active > .m-row > a,
+  .t-level-2 li.active > .t-row > a,
+  .m-level-2 li > a.active,
+  .t-level-2 li > a.active {
+    font-weight: 500;
+  }
+
+  /* level-3 active */
+  .m-level-3 li.active > a,
+  .t-level-3 li.active > a {
+    font-weight: 500;
+  }
+}
+/* ===== FORCE WHITE BACKGROUND (TABLET + MOBILE) ===== */
+
+.menu-tablet .t-level-2,
+.menu-tablet .t-level-3,
+.mobile-menu .m-level-2,
+.mobile-menu .m-level-3 {
+  background: #ffffff; 
+}
+
+/* ===== REMOVE LEVEL-1 BORDERS (MOBILE + TABLET) ===== */
+
+
+
+
+/* ================= MOBILE MENU SMOOTH (SAFE) ================= */
+
+.mobile-menu {
+  display: none;               /* JS control */
+  overflow: hidden;
+  animation: none;
+}
+
+.mobile-menu[style*="display: block"] {
+  animation: mobileMenuOpen 0.45s ease forwards;
+}
+
+@keyframes mobileMenuOpen {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.m-level-2,
+.m-level-3 {
+  animation: none;
+}
+
+.m-has-children.open > .m-level-2,
+.m-has-children.open > .m-level-3 {
+  animation: submenuOpen 0.35s ease forwards;
+}
+
+@keyframes submenuOpen {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ================= TABLET MENU SMOOTH ================= */
+
+@media (min-width: 481px) and (max-width: 960px) {
+
+  .menu-tablet {
+    display: none;            /* JS control */
+    overflow: hidden;
+    animation: none;
+  }
+
+  .menu-tablet.open {
+    display: block;
+    animation: tabletMenuOpen 0.45s ease forwards;
+  }
+
+  @keyframes tabletMenuOpen {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@media (min-width: 481px) and (max-width: 960px) {
+
+  .t-level-2,
+  .t-level-3 {
+    animation: none;
+  }
+
+  .t-has-children.open > .t-level-2,
+  .t-has-children.open > .t-level-3 {
+    animation: tabletSubmenuOpen 0.35s ease forwards;
+  }
+
+  @keyframes tabletSubmenuOpen {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+

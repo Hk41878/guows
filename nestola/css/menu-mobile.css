@@ -1,0 +1,246 @@
+.mobile-menu {
+  width: 100%;
+  background: #ffffff;
+  border-top: 1px solid #e5e5e5;
+  display: none;
+}
+
+.mobile-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.m-level-1 > li {
+  border-bottom: 1px solid #eeeeee;
+}
+
+.mobile-menu a {
+  display: block;
+  padding: 16px;
+  font-size: 16px;
+  color: #333;
+  text-decoration: none;
+  background: none;
+}
+
+.m-row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.m-row > a {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.m-toggle {
+  flex: 0 0 52px;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  position: relative;
+}
+
+.m-toggle::after {
+  content: "+";
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 32px;
+  line-height: 1;
+  color: #858585;
+}
+
+.m-has-children.open > .m-row > .m-toggle::after {
+  content: "−";
+}
+
+
+
+/* mobile */
+.m-level-2 > .m-has-children.open > .m-row > a,
+.m-level-2 > .m-has-children.open > .m-row > .m-toggle::after {
+  color: var(--blue-80);
+}
+
+.m-level-2,
+.m-level-3 {
+  display: none;
+  background: #f9f9f9;
+}
+
+.m-level-3 {
+  background: #f2f2f2;
+}
+
+.m-level-2 a,
+.m-level-3 a {
+  padding-left: 32px;
+  font-size: 15px;
+}
+
+.m-level-3 a {
+  padding-left: 48px;
+}
+
+.m-level-2 .m-row > a {
+  padding-left: 32px;
+  font-size: 15px;
+}
+
+.m-level-3 .m-row > a {
+  padding-left: 48px;
+  font-size: 15px;
+}
+
+.menu-toggle-icon {
+  width: 26px;
+  height: 26px;
+  stroke: #51b4f7;
+  stroke-width: 1;
+  fill: none;
+  cursor: pointer;
+}
+
+body.menu-open {
+  overflow: hidden;
+}
+
+/* >960px lock */
+@media (min-width: 961px) {
+  .menu-toggle-icon {
+    display: none;
+  }
+
+  .mobile-menu {
+    display: block;
+    position: fixed;
+    visibility: hidden;
+    pointer-events: none;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+  }
+}
+
+/* disable mobile menu above 480px */
+@media (min-width: 481px) and (max-width: 960px) {
+  .mobile-menu {
+    display: none !important;
+  }
+}
+
+/* ================= MOBILE HEADER FIX ================= */
+@media (max-width: 480px) {
+
+  .main-header {
+    display: flex;
+    align-items: center;
+  }
+
+  /* logo left */
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+
+  /* menu toggle RIGHT side */
+  .header-menu-icon {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+  }
+
+  /* search icon hide on mobile (optional) */
+  .header-search-icon {
+    display: block;
+    margin-left: 6px;
+  }
+}
+
+/* ================= MOBILE MENU TEXT SIZES (SAFE ZONE) ================= */
+
+/* ---------- LEVEL 1 ---------- */
+.mobile-menu .m-level-1 > li > a,
+.mobile-menu .m-level-1 > li > .m-row > a {
+  font-size: 17px;      /* change freely */
+  font-weight: 500;    /* slightly bold */
+}
+
+/* ---------- LEVEL 2 ---------- */
+.mobile-menu .m-level-2 > li > a,
+.mobile-menu .m-level-2 > li > .m-row > a {
+  font-size: 16px;
+  font-weight: 400;
+  padding-left: 28px;  /* indent */
+}
+
+/* ---------- LEVEL 3 ---------- */
+.mobile-menu .m-level-3 > li > a {
+  font-size: 17px;
+  font-weight: 350;
+  padding-left: 44px;  /* deeper indent */
+}
+
+@media (min-width: 961px) {
+  .menu-toggle-icon {
+    display: none;
+    stroke-width: 1;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 960px) {
+
+  /* header flex same rahe */
+  .main-header {
+    display: flex;
+    align-items: center;
+  }
+
+  /* logo ke baad artificial spacer */
+  .logo {
+    display: flex;
+    align-items: center;
+  }
+
+  /* header-icons ko logo ke paas lao */
+  .header-icons {
+    margin-left: 12px;   /* logo ke just right */
+  }
+
+  /* menu-wrapper already hidden, to space nahi le */
+}
+
+.menu-toggle-icon .icon-burger,
+.menu-toggle-icon .icon-close {
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s cubic-bezier(.4,0,.2,1);
+  transform-origin: center;
+}
+
+/* default */
+.icon-close {
+  opacity: 0;
+  transform: scale(0.85);
+}
+
+/* open */
+body.menu-open .icon-burger {
+  opacity: 0;
+  transform: scale(0.85);
+}
+
+body.menu-open .icon-close {
+  opacity: 1;
+  transform: scale(1);
+}
