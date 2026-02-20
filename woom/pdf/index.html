@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#0b1220" />
+  <meta name="description"
+        content="Dispensa del Modulo UF2 del corso per Barman/Bartender: dietetica e nutrizione, merceologia di alimenti e bevande, contaminazioni e conservazione." />
+  <title>Merceologia Alimentare e Igiene degli Alimenti</title>
+
+  <link rel="preconnect" href="." />
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body>
+  <main class="page" role="main">
+    <section class="card" aria-label="Condivisione PDF">
+      <header class="header">
+        <div class="badge" aria-hidden="true">
+          <span class="dot"></span>
+          <span class="badge-text">PDF</span>
+        </div>
+
+        <h1 class="title">
+          MERCEOLOGIA ALIMENTARE E<br />
+          IGIENE DEGLI ALIMENTI
+        </h1>
+
+        <p class="subtitle">
+          Dispensa del Modulo UF2 del corso per Barman/Bartender, a cura della Dott.ssa Maura Manno.
+          Contiene nozioni di dietetica e nutrizione, merceologia di alimenti e bevande, principali fonti di
+          contaminazione e metodi di conservazione.
+        </p>
+      </header>
+
+      <div class="actions" role="group" aria-label="Azioni PDF">
+        <a class="btn" id="openPdf" href="./Merceologia_20alimentare_20e_20igiene_20alimenti_20CORSO_20BAR.pdf" target="_blank" rel="noopener">
+          <span class="icon" aria-hidden="true">
+            <!-- open icon -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M10 7h7a2 2 0 0 1 2 2v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M14 4h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M20 4l-9 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M6 8h3a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2Z"
+                    stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span class="btn-text">Apri il PDF</span>
+        </a>
+
+        <a class="btn" id="downloadPdf" href="./Merceologia_20alimentare_20e_20igiene_20alimenti_20CORSO_20BAR.pdf" download>
+          <span class="icon" aria-hidden="true">
+            <!-- download icon -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M12 3v10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M8 10l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M5 17v2a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <span class="btn-text">Scarica il PDF</span>
+        </a>
+
+        <button class="btn btn-primary" id="sharePdf" type="button">
+          <span class="icon" aria-hidden="true">
+            <!-- share icon -->
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M16 8a3 3 0 1 0-2.83-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M6 14a3 3 0 1 0 2.83 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M18 16a3 3 0 1 0 0-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M8.6 13.2l6.8-3.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              <path d="M8.6 14.8l6.8 3.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <span class="btn-text">Condividi il PDF</span>
+        </button>
+      </div>
+
+      <footer class="footer">
+        <p class="hint" id="hint" aria-live="polite"></p>
+      </footer>
+    </section>
+  </main>
+
+  <script src="./script.js" defer></script>
+</body>
+</html>
