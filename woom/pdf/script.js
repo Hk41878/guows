@@ -42,7 +42,7 @@ async function handleAction(type) {
 
         const link = document.createElement("a");
         link.href = blobUrl;
-        link.download = "Documento_Merceologia.pdf";
+        link.download = "Merceologia_alimentare_e_igiene_alimenti_CORSO_BAR.pdf";
 
         document.body.appendChild(link);
         link.click();
