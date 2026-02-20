@@ -4,85 +4,85 @@
   <meta charset="utf-8" />
   <meta name="viewport"
         content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
-  <meta name="color-scheme" content="light dark" />
   <meta name="theme-color" content="#0b1220" />
-  <meta name="description"
-        content="Dispensa del Modulo UF2 del corso per Barman/Bartender: dietetica e nutrizione, merceologia di alimenti e bevande, contaminazioni e conservazione." />
   <title>Merceologia Alimentare e Igiene degli Alimenti</title>
-
-  <link rel="preconnect" href="." />
   <link rel="stylesheet" href="./styles.css" />
 </head>
 
 <body>
-  <main class="page" role="main">
-    <section class="card" aria-label="Condivisione PDF">
-      <header class="header">
-        <div class="badge" aria-hidden="true">
-          <span class="dot"></span>
-          <span class="badge-text">PDF</span>
-        </div>
+  <main class="page">
+    <section class="card">
 
-        <h1 class="title">
-          MERCEOLOGIA ALIMENTARE E<br />
-          IGIENE DEGLI ALIMENTI
-        </h1>
+      <h1 class="title">
+        MERCEOLOGIA ALIMENTARE E<br />
+        IGIENE DEGLI ALIMENTI
+      </h1>
 
-        <p class="subtitle">
-          Dispensa del Modulo UF2 del corso per Barman/Bartender, a cura della Dott.ssa Maura Manno.
-          Contiene nozioni di dietetica e nutrizione, merceologia di alimenti e bevande, principali fonti di
-          contaminazione e metodi di conservazione.
-        </p>
-      </header>
+      <p class="subtitle">
+        Dispensa del Modulo UF2 del corso BAR. Include dietetica,
+        nutrizione, merceologia di alimenti e bevande,
+        contaminazione e metodi di conservazione.
+      </p>
 
-      <div class="actions" role="group" aria-label="Azioni PDF">
-        <a class="btn" id="openPdf" href="./Merceologia_20alimentare_20e_20igiene_20alimenti_20CORSO_20BAR.pdf" target="_blank" rel="noopener">
-          <span class="icon" aria-hidden="true">
-            <!-- open icon -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M10 7h7a2 2 0 0 1 2 2v7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-              <path d="M14 4h6v6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M20 4l-9 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-              <path d="M6 8h3a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V10a2 2 0 0 1 2-2Z"
-                    stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-            </svg>
-          </span>
-          <span class="btn-text">Apri il PDF</span>
+      <div class="actions">
+
+        <!-- OPEN -->
+        <a class="btn"
+           href="./Merceologia_20alimentare_20e_20igiene_20alimenti_20CORSO_20BAR.pdf"
+           target="_blank">
+          <svg viewBox="0 0 24 24">
+            <path d="M14 3h7v7" />
+            <path d="M10 14L21 3" />
+            <path d="M21 14v7H3V3h7" />
+          </svg>
+          Apri il PDF
         </a>
 
-        <a class="btn" id="downloadPdf" href="./Merceologia_20alimentare_20e_20igiene_20alimenti_20CORSO_20BAR.pdf" download>
-          <span class="icon" aria-hidden="true">
-            <!-- download icon -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M12 3v10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-              <path d="M8 10l4 4 4-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-              <path d="M5 17v2a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
-          </span>
-          <span class="btn-text">Scarica il PDF</span>
-        </a>
-
-        <button class="btn btn-primary" id="sharePdf" type="button">
-          <span class="icon" aria-hidden="true">
-            <!-- share icon -->
-            <svg viewBox="0 0 24 24" fill="none">
-              <path d="M16 8a3 3 0 1 0-2.83-4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-              <path d="M6 14a3 3 0 1 0 2.83 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-              <path d="M18 16a3 3 0 1 0 0-6" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-              <path d="M8.6 13.2l6.8-3.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-              <path d="M8.6 14.8l6.8 3.4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-            </svg>
-          </span>
-          <span class="btn-text">Condividi il PDF</span>
+        <!-- DOWNLOAD -->
+        <button class="btn" id="downloadBtn">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 3v12" />
+            <path d="M7 10l5 5 5-5" />
+            <path d="M5 21h14" />
+          </svg>
+          Scarica il PDF
         </button>
-      </div>
 
-      <footer class="footer">
-        <p class="hint" id="hint" aria-live="polite"></p>
-      </footer>
+        <!-- SHARE -->
+        <button class="btn primary" id="shareBtn">
+          <svg viewBox="0 0 24 24">
+            <circle cx="18" cy="5" r="3"/>
+            <circle cx="6" cy="12" r="3"/>
+            <circle cx="18" cy="19" r="3"/>
+            <path d="M8.5 13.5l7 4"/>
+            <path d="M15.5 6.5l-7 4"/>
+          </svg>
+          Condividi il PDF
+        </button>
+
+        <!-- QR -->
+        <button class="btn" id="qrBtn">
+          <svg viewBox="0 0 24 24">
+            <rect x="3" y="3" width="6" height="6"/>
+            <rect x="15" y="3" width="6" height="6"/>
+            <rect x="3" y="15" width="6" height="6"/>
+            <path d="M15 15h3v3h-3z"/>
+            <path d="M18 18h3v3h-3z"/>
+          </svg>
+          Crea QR Code
+        </button>
+
+      </div>
     </section>
   </main>
 
-  <script src="./script.js" defer></script>
+  <!-- QR MODAL -->
+  <div class="modal" id="qrModal">
+    <div class="modal-content">
+      <img id="qrImage" src="" alt="QR Code">
+    </div>
+  </div>
+
+  <script src="./script.js"></script>
 </body>
 </html>
