@@ -78,7 +78,7 @@ document.getElementById("shareBtn")
             window.location.origin +
             window.location.pathname.replace(/\/[^\/]*$/, "/");
 
-        const url = baseUrl + pdfFile;
+        const url = window.location.origin + window.location.pathname;
 
         if (navigator.share) {
             try {
@@ -105,7 +105,7 @@ document.getElementById("qrBtn")
             window.location.origin +
             window.location.pathname.replace(/\/[^\/]*$/, "/");
 
-        const url = baseUrl + pdfFile;
+        const url = window.location.origin + window.location.pathname;
 
         qrImage.src =
             "https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=" +
