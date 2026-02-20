@@ -1,39 +1,73 @@
 const pdfFile = "Merceologia_20alimentare_20e_20igiene_20alimenti_20CORSO_20BAR.pdf";
 
 
-// DOWNLOAD (Safari Compatible)
-async function downloadPDF() {
-    try {
-        let originalBlob = await getCachedFile();
+// MAIN HANDLER
+async function handleAction(type) {
 
-        if (!originalBlob) {
-            originalBlob = await fetchWithProgress(pdfFile);
+    let blob = await getCachedFile();
+
+    // If not cached → download with progress first
+    if (!blob) {
+        try {
+            blob = await fetchWithProgress(pdfFile);
+        } catch (err) {
+            alert("Errore durante il caricamento del file.");
+            return;
         }
+    }
 
-        // 🔥 Convert to octet-stream to force download in Safari
-        const forceDownloadBlob = new Blob(
-            [originalBlob],
-            { type: "application/octet-stream" }
-        );
+    // ===== OPEN =====
+    if (type === "open") {
 
-        const blobUrl = URL.createObjectURL(forceDownloadBlob);
+        const blobUrl = URL.createObjectURL(blob);
 
-        // Safari safe download trigger
+        // Safari safe open
         window.location.href = blobUrl;
 
         setTimeout(() => {
             URL.revokeObjectURL(blobUrl);
-        }, 3000);
+        }, 5000);
+    }
 
-    } catch (error) {
-        alert("Errore durante il download.");
+    // ===== DOWNLOAD =====
+    if (type === "download") {
+
+        // 🔥 Force Safari download
+        const downloadBlob = new Blob(
+            [blob],
+            { type: "application/octet-stream" }
+        );
+
+        const blobUrl = URL.createObjectURL(downloadBlob);
+
+        const link = document.createElement("a");
+        link.href = blobUrl;
+        link.download = "Documento_Merceologia.pdf";
+
+        document.body.appendChild(link);
+        link.click();
+
+        setTimeout(() => {
+            document.body.removeChild(link);
+            URL.revokeObjectURL(blobUrl);
+        }, 300);
     }
 }
 
 
-// BUTTON EVENT
+// BUTTON EVENTS
 document.getElementById("downloadBtn")
-    .addEventListener("click", downloadPDF);
+    .addEventListener("click", () => handleAction("download"));
+
+
+// Open link control (Apri il PDF)
+const openLink = document.querySelector(`a[href="${pdfFile}"]`);
+if (openLink) {
+    openLink.addEventListener("click", function (e) {
+        e.preventDefault();
+        handleAction("open");
+    });
+}
 
 
 // SHARE
