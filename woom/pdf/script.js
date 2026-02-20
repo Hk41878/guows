@@ -1,7 +1,8 @@
 const pdfFile = "Merceologia_20alimentare_20e_20igiene_20alimenti_20CORSO_20BAR.pdf";
 
-// MAIN HANDLER
-async function handleAction(actionType) {
+
+// DOWNLOAD (Safe for Safari + Chrome)
+async function downloadPDF() {
     try {
         let blob = await getCachedFile();
 
@@ -11,47 +12,40 @@ async function handleAction(actionType) {
 
         const blobUrl = URL.createObjectURL(blob);
 
-        if (actionType === "download") {
-            const a = document.createElement("a");
-            a.href = blobUrl;
-            a.download = "Merceologia_Alimentare.pdf";
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
+        const a = document.createElement("a");
+        a.href = blobUrl;
+        a.download = "Merceologia_Alimentare.pdf";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
 
-            setTimeout(() => {
-                URL.revokeObjectURL(blobUrl);
-            }, 1000);
-
-        } else if (actionType === "open") {
-            window.open(blobUrl, "_blank");
-
-            setTimeout(() => {
-                URL.revokeObjectURL(blobUrl);
-            }, 5000);
-        }
+        setTimeout(() => {
+            URL.revokeObjectURL(blobUrl);
+        }, 1000);
 
     } catch (error) {
-        console.error("Errore:", error);
-        alert("Errore durante il caricamento del PDF.");
+        alert("Errore durante il download.");
     }
 }
 
-// DOWNLOAD BUTTON
-document.getElementById("downloadBtn").addEventListener("click", () => {
-    handleAction("download");
-});
 
-// OPEN LINK CONTROL
-const openLink = document.querySelector(`a[href="${pdfFile}"]`);
-if (openLink) {
-    openLink.addEventListener("click", function (e) {
-        e.preventDefault();
-        handleAction("open");
-    });
+// OPEN (Direct file — no popup)
+function openPDF(e) {
+    e.preventDefault();
+    window.location.href = pdfFile;
 }
 
-// SHARE BUTTON
+
+// BUTTON EVENTS
+document.getElementById("downloadBtn").addEventListener("click", downloadPDF);
+
+const openLink = document.querySelector(`a[href="${pdfFile}"]`);
+if (openLink) {
+    openLink.addEventListener("click", openPDF);
+}
+
+
+// SHARE
 document.getElementById("shareBtn").addEventListener("click", async () => {
 
     const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, "/");
@@ -61,21 +55,15 @@ document.getElementById("shareBtn").addEventListener("click", async () => {
         try {
             await navigator.share({
                 title: "PDF Merceologia",
-                text: "Scarica il PDF del corso BAR",
                 url: url
             });
-        } catch (err) {
-            console.log("Condivisione annullata");
-        }
+        } catch {}
     } else {
-        try {
-            await navigator.clipboard.writeText(url);
-            alert("Link copiato!");
-        } catch {
-            alert("Impossibile copiare il link.");
-        }
+        await navigator.clipboard.writeText(url);
+        alert("Link copiato!");
     }
 });
+
 
 // QR CODE
 const qrModal = document.getElementById("qrModal");
@@ -93,7 +81,6 @@ document.getElementById("qrBtn").addEventListener("click", () => {
     qrModal.style.display = "flex";
 });
 
-// CLOSE QR
 document.getElementById("closeQr").addEventListener("click", () => {
     qrModal.style.display = "none";
 });
