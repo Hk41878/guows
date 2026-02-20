@@ -3,35 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF Safari Fix</title>
+    <title>PDF System - Safari Optimized</title>
     <style>
-        body { font-family: sans-serif; text-align: center; padding: 50px; }
-        .btn { padding: 15px 25px; margin: 10px; cursor: pointer; border: none; border-radius: 8px; color: white; font-size: 18px; width: 250px; }
-        .download-btn { background-color: #27ae60; }
-        .open-btn { background-color: #2980b9; }
-        #progressContainer { display: none; width: 300px; margin: 20px auto; background: #eee; border-radius: 10px; }
-        #progressBar { width: 0%; height: 15px; background: #3498db; border-radius: 10px; transition: width 0.1s; }
+        :root {
+            --primary: #2980b9;
+            --success: #27ae60;
+            --bg: #f4f7f6;
+        }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: var(--bg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+        h2 { color: #333; margin-bottom: 25px; }
+        .btn { 
+            padding: 15px 20px; 
+            margin: 10px 0; 
+            cursor: pointer; 
+            border: none; 
+            border-radius: 8px; 
+            color: white; 
+            font-size: 16px; 
+            font-weight: bold;
+            width: 100%;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+        .btn:active { transform: scale(0.98); }
+        .open-btn { background-color: var(--primary); }
+        .download-btn { background-color: var(--success); }
+        
+        /* Progress Bar Styling */
+        #progressContainer { 
+            display: none; 
+            width: 100%; 
+            background: #eee; 
+            border-radius: 10px; 
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        #progressBar { 
+            width: 0%; 
+            height: 12px; 
+            background: var(--primary); 
+            transition: width 0.1s linear; 
+        }
+        #statusText { font-size: 13px; color: #666; margin-top: 8px; }
     </style>
 </head>
 <body>
 
-    <h2>Safari Optimized PDF System</h2>
+    <div class="container">
+        <h2>Area Documenti</h2>
 
-    <div id="progressContainer">
-        <div id="progressBar"></div>
-        <p id="statusText" style="font-size:12px;">Download in corso...</p>
+        <button id="openBtn" class="btn open-btn">APRI IL PDF</button>
+        <button id="downloadBtn" class="btn download-btn">SCARICA IL PDF</button>
+
+        <div id="progressContainer">
+            <div id="progressBar"></div>
+            <p id="statusText">Inizializzazione...</p>
+        </div>
     </div>
 
-    <button id="openBtn" class="btn open-btn">Apri il PDF</button><br>
-    <button id="downloadBtn" class="btn download-btn">Scarica il PDF</button>
-
     <script>
+        // CONFIGURAZIONE
         const PDF_URL = "Merceologia_20alimentare_20e_20igiene_20alimenti_20CORSO_20BAR.pdf";
-        const DB_NAME = "SafariFixDB";
-        const STORE_NAME = "pdf_cache";
+        const DB_NAME = "PDF_Cache_System";
+        const STORE_NAME = "files";
+        const FILE_KEY = "main_pdf";
+        const EXPIRY = 24 * 60 * 60 * 1000; // 24 ore
 
-        // IndexedDB initialization
-        async function getDB() {
+        // 1. DATABASE LOGIC (IndexedDB for Local Storage)
+        function openDatabase() {
             return new Promise((resolve) => {
                 const request = indexedDB.open(DB_NAME, 1);
                 request.onupgradeneeded = (e) => e.target.result.createObjectStore(STORE_NAME);
@@ -39,29 +95,41 @@
             });
         }
 
-        // Save & Get from Local Storage
-        async function saveToLocal(blob) {
-            const db = await getDB();
+        async function saveToCache(blob) {
+            const db = await openDatabase();
             const tx = db.transaction(STORE_NAME, "readwrite");
-            tx.objectStore(STORE_NAME).put(blob, "saved_file");
+            tx.objectStore(STORE_NAME).put({ 
+                blob: blob, 
+                timestamp: Date.now() 
+            }, FILE_KEY);
         }
 
-        async function getFromLocal() {
-            const db = await getDB();
-            const tx = db.transaction(STORE_NAME, "readonly");
-            return new Promise(res => {
-                const req = tx.objectStore(STORE_NAME).get("saved_file");
-                req.onsuccess = () => res(req.result);
+        async function getFromCache() {
+            const db = await openDatabase();
+            return new Promise((resolve) => {
+                const tx = db.transaction(STORE_NAME, "readonly");
+                const req = tx.objectStore(STORE_NAME).get(FILE_KEY);
+                req.onsuccess = () => {
+                    const data = req.result;
+                    if (data && (Date.now() - data.timestamp < EXPIRY)) {
+                        resolve(data.blob);
+                    } else {
+                        resolve(null);
+                    }
+                };
             });
         }
 
-        // Progress Bar Fetch
-        async function downloadAndCache() {
+        // 2. FETCH WITH PROGRESS
+        async function startDownload() {
             const response = await fetch(PDF_URL);
+            if (!response.ok) throw new Error("File non trovato");
+
             const reader = response.body.getReader();
-            const total = +response.headers.get('Content-Length');
+            const total = +response.headers.get('Content-Length') || 0;
             
             document.getElementById('progressContainer').style.display = 'block';
+            
             let loaded = 0;
             let chunks = [];
 
@@ -70,38 +138,48 @@
                 if (done) break;
                 chunks.push(value);
                 loaded += value.length;
-                let pc = Math.round((loaded / total) * 100);
-                document.getElementById('progressBar').style.width = pc + "%";
-                document.getElementById('statusText').innerText = "Salvataggio locale: " + pc + "%";
+                
+                if (total > 0) {
+                    let pc = Math.round((loaded / total) * 100);
+                    document.getElementById('progressBar').style.width = pc + "%";
+                    document.getElementById('statusText').innerText = `Scaricamento in corso: ${pc}%`;
+                }
             }
 
+            const finalBlob = new Blob(chunks, { type: 'application/pdf' });
+            await saveToCache(finalBlob);
             document.getElementById('progressContainer').style.display = 'none';
-            const blob = new Blob(chunks, { type: 'application/pdf' });
-            await saveToLocal(blob);
-            return blob;
+            return finalBlob;
         }
 
-        async function handle(action) {
-            let blob = await getFromLocal();
-            
-            // First time use
+        // 3. ACTION HANDLER (Open/Download)
+        async function handleAction(type) {
+            let blob = await getFromCache();
+
+            // Agar cache mein nahi hai toh download karo
             if (!blob) {
-                blob = await downloadAndCache();
+                try {
+                    blob = await startDownload();
+                } catch (err) {
+                    alert("Errore durante il caricamento del file.");
+                    return;
+                }
             }
 
-            const blobUrl = URL.createObjectURL(blob);
-
-            if (action === 'open') {
-                // Safari bypass: window.open ki jagah location change ya iframe
-                // Isse popup blocker trigger nahi hota
-                window.location.href = blobUrl;
+            if (type === 'open') {
+                // Open: Safari viewer logic
+                const blobUrl = URL.createObjectURL(blob);
+                window.location.href = blobUrl; 
             } else {
-                // Safari Force Download Trick
+                // Download: Safari Force Trick (Octet-Stream)
+                // Hum file ka type change karte hain taaki Safari ise browser mein na khole
+                const downloadBlob = new Blob([blob], { type: 'application/octet-stream' });
+                const blobUrl = URL.createObjectURL(downloadBlob);
+                
                 const link = document.createElement('a');
                 link.href = blobUrl;
-                link.setAttribute('download', 'Documento_Merceologia.pdf');
+                link.download = "Documento_Merceologia.pdf";
                 
-                // Safari needs the link to be in DOM
                 document.body.appendChild(link);
                 link.click();
                 
@@ -109,12 +187,14 @@
                 setTimeout(() => {
                     document.body.removeChild(link);
                     URL.revokeObjectURL(blobUrl);
-                }, 200);
+                }, 250);
             }
         }
 
-        document.getElementById('openBtn').addEventListener('click', () => handle('open'));
-        document.getElementById('downloadBtn').addEventListener('click', () => handle('download'));
+        // Event Listeners
+        document.getElementById('openBtn').addEventListener('click', () => handleAction('open'));
+        document.getElementById('downloadBtn').addEventListener('click', () => handleAction('download'));
+
     </script>
 </body>
 </html>
