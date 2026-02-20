@@ -1,77 +1,89 @@
 const pdfFile = "Merceologia_20alimentare_20e_20igiene_20alimenti_20CORSO_20BAR.pdf";
 
 
-// DOWNLOAD
+// DOWNLOAD (Safari Compatible)
 async function downloadPDF() {
     try {
-        let blob = await getCachedFile();
+        let originalBlob = await getCachedFile();
 
-        if (!blob) {
-            blob = await fetchWithProgress(pdfFile);
+        if (!originalBlob) {
+            originalBlob = await fetchWithProgress(pdfFile);
         }
 
-        const blobUrl = URL.createObjectURL(blob);
+        // 🔥 Convert to octet-stream to force download in Safari
+        const forceDownloadBlob = new Blob(
+            [originalBlob],
+            { type: "application/octet-stream" }
+        );
 
-        const a = document.createElement("a");
-        a.href = blobUrl;
-        a.download = "Merceologia_Alimentare.pdf";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+        const blobUrl = URL.createObjectURL(forceDownloadBlob);
+
+        // Safari safe download trigger
+        window.location.href = blobUrl;
 
         setTimeout(() => {
             URL.revokeObjectURL(blobUrl);
-        }, 1000);
+        }, 3000);
 
-    } catch {
+    } catch (error) {
         alert("Errore durante il download.");
     }
 }
 
 
-// ONLY DOWNLOAD BUTTON CONTROL
-document.getElementById("downloadBtn").addEventListener("click", downloadPDF);
+// BUTTON EVENT
+document.getElementById("downloadBtn")
+    .addEventListener("click", downloadPDF);
 
 
 // SHARE
-document.getElementById("shareBtn").addEventListener("click", async () => {
+document.getElementById("shareBtn")
+    .addEventListener("click", async () => {
 
-    const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, "/");
-    const url = baseUrl + pdfFile;
+        const baseUrl =
+            window.location.origin +
+            window.location.pathname.replace(/\/[^\/]*$/, "/");
 
-    if (navigator.share) {
-        try {
-            await navigator.share({
-                title: "PDF Merceologia",
-                url: url
-            });
-        } catch {}
-    } else {
-        await navigator.clipboard.writeText(url);
-        alert("Link copiato!");
-    }
-});
+        const url = baseUrl + pdfFile;
+
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: "PDF Merceologia",
+                    url: url
+                });
+            } catch {}
+        } else {
+            await navigator.clipboard.writeText(url);
+            alert("Link copiato!");
+        }
+    });
 
 
 // QR
 const qrModal = document.getElementById("qrModal");
 const qrImage = document.getElementById("qrImage");
 
-document.getElementById("qrBtn").addEventListener("click", () => {
+document.getElementById("qrBtn")
+    .addEventListener("click", () => {
 
-    const baseUrl = window.location.origin + window.location.pathname.replace(/\/[^\/]*$/, "/");
-    const url = baseUrl + pdfFile;
+        const baseUrl =
+            window.location.origin +
+            window.location.pathname.replace(/\/[^\/]*$/, "/");
 
-    qrImage.src =
-        "https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=" +
-        encodeURIComponent(url);
+        const url = baseUrl + pdfFile;
 
-    qrModal.style.display = "flex";
-});
+        qrImage.src =
+            "https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=" +
+            encodeURIComponent(url);
 
-document.getElementById("closeQr").addEventListener("click", () => {
-    qrModal.style.display = "none";
-});
+        qrModal.style.display = "flex";
+    });
+
+document.getElementById("closeQr")
+    .addEventListener("click", () => {
+        qrModal.style.display = "none";
+    });
 
 qrModal.addEventListener("click", (e) => {
     if (e.target === qrModal) {
