@@ -1,7 +1,7 @@
 const pdfFile = "Merceologia_20alimentare_20e_20igiene_20alimenti_20CORSO_20BAR.pdf";
 
 
-// DOWNLOAD (Safe for Safari + Chrome)
+// DOWNLOAD
 async function downloadPDF() {
     try {
         let blob = await getCachedFile();
@@ -23,26 +23,14 @@ async function downloadPDF() {
             URL.revokeObjectURL(blobUrl);
         }, 1000);
 
-    } catch (error) {
+    } catch {
         alert("Errore durante il download.");
     }
 }
 
 
-// OPEN (Direct file — no popup)
-function openPDF(e) {
-    e.preventDefault();
-    window.location.href = pdfFile;
-}
-
-
-// BUTTON EVENTS
+// ONLY DOWNLOAD BUTTON CONTROL
 document.getElementById("downloadBtn").addEventListener("click", downloadPDF);
-
-const openLink = document.querySelector(`a[href="${pdfFile}"]`);
-if (openLink) {
-    openLink.addEventListener("click", openPDF);
-}
 
 
 // SHARE
@@ -65,7 +53,7 @@ document.getElementById("shareBtn").addEventListener("click", async () => {
 });
 
 
-// QR CODE
+// QR
 const qrModal = document.getElementById("qrModal");
 const qrImage = document.getElementById("qrImage");
 
