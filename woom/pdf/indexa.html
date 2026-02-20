@@ -3,39 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF System - Test</title>
+    <title>PDF Safari Fix</title>
     <style>
-        body { font-family: sans-serif; padding: 20px; text-align: center; }
-        .btn { padding: 15px 25px; margin: 10px; cursor: pointer; border: none; border-radius: 5px; color: white; font-size: 16px; }
+        body { font-family: sans-serif; text-align: center; padding: 50px; }
+        .btn { padding: 15px 25px; margin: 10px; cursor: pointer; border: none; border-radius: 8px; color: white; font-size: 18px; width: 250px; }
         .download-btn { background-color: #27ae60; }
         .open-btn { background-color: #2980b9; }
-        #progressContainer { display: none; width: 80%; margin: 20px auto; background: #eee; border-radius: 10px; overflow: hidden; }
-        #progressBar { width: 0%; height: 20px; background: #3498db; transition: width 0.1s; }
-        .status { font-size: 14px; color: #666; }
+        #progressContainer { display: none; width: 300px; margin: 20px auto; background: #eee; border-radius: 10px; }
+        #progressBar { width: 0%; height: 15px; background: #3498db; border-radius: 10px; transition: width 0.1s; }
     </style>
 </head>
 <body>
 
-    <h1>Test PDF System</h1>
-    <p>Safari & Chrome Compatibility Test</p>
+    <h2>Safari Optimized PDF System</h2>
 
     <div id="progressContainer">
         <div id="progressBar"></div>
-        <p id="statusText" class="status">Inizializzazione...</p>
+        <p id="statusText" style="font-size:12px;">Download in corso...</p>
     </div>
 
-    <button id="openBtn" class="btn open-btn">Apri il PDF</button>
+    <button id="openBtn" class="btn open-btn">Apri il PDF</button><br>
     <button id="downloadBtn" class="btn download-btn">Scarica il PDF</button>
 
     <script>
-        // PDF FILE NAME (Make sure this is exactly correct on your GitHub/Server)
         const PDF_URL = "Merceologia_20alimentare_20e_20igiene_20alimenti_20CORSO_20BAR.pdf";
-        const DB_NAME = "PDF_Storage_DB";
-        const STORE_NAME = "pdf_store";
-        const FILE_KEY = "saved_pdf";
+        const DB_NAME = "SafariFixDB";
+        const STORE_NAME = "pdf_cache";
 
-        // 1. IndexedDB Setup (Local Storage for large files)
-        function initDB() {
+        // IndexedDB initialization
+        async function getDB() {
             return new Promise((resolve) => {
                 const request = indexedDB.open(DB_NAME, 1);
                 request.onupgradeneeded = (e) => e.target.result.createObjectStore(STORE_NAME);
@@ -43,91 +39,82 @@
             });
         }
 
-        async function getSavedFile() {
-            const db = await initDB();
-            return new Promise((resolve) => {
-                const tx = db.transaction(STORE_NAME, "readonly");
-                const store = tx.objectStore(STORE_NAME);
-                const req = store.get(FILE_KEY);
-                req.onsuccess = () => resolve(req.result);
+        // Save & Get from Local Storage
+        async function saveToLocal(blob) {
+            const db = await getDB();
+            const tx = db.transaction(STORE_NAME, "readwrite");
+            tx.objectStore(STORE_NAME).put(blob, "saved_file");
+        }
+
+        async function getFromLocal() {
+            const db = await getDB();
+            const tx = db.transaction(STORE_NAME, "readonly");
+            return new Promise(res => {
+                const req = tx.objectStore(STORE_NAME).get("saved_file");
+                req.onsuccess = () => res(req.result);
             });
         }
 
-        async function saveFile(blob) {
-            const db = await initDB();
-            const tx = db.transaction(STORE_NAME, "readwrite");
-            tx.objectStore(STORE_NAME).put(blob, FILE_KEY);
-        }
-
-        // 2. Fetch with Progress (No server needed)
-        async function fetchPDF() {
+        // Progress Bar Fetch
+        async function downloadAndCache() {
             const response = await fetch(PDF_URL);
             const reader = response.body.getReader();
-            const contentLength = +response.headers.get('Content-Length');
+            const total = +response.headers.get('Content-Length');
             
             document.getElementById('progressContainer').style.display = 'block';
-            
-            let receivedLength = 0;
-            let chunks = []; 
-            
+            let loaded = 0;
+            let chunks = [];
+
             while(true) {
                 const {done, value} = await reader.read();
                 if (done) break;
                 chunks.push(value);
-                receivedLength += value.length;
-                let percent = Math.round((receivedLength / contentLength) * 100);
-                document.getElementById('progressBar').style.width = percent + '%';
-                document.getElementById('statusText').innerText = `Scaricamento: ${percent}%`;
+                loaded += value.length;
+                let pc = Math.round((loaded / total) * 100);
+                document.getElementById('progressBar').style.width = pc + "%";
+                document.getElementById('statusText').innerText = "Salvataggio locale: " + pc + "%";
             }
-            
+
             document.getElementById('progressContainer').style.display = 'none';
             const blob = new Blob(chunks, { type: 'application/pdf' });
-            await saveFile(blob);
+            await saveToLocal(blob);
             return blob;
         }
 
-        // 3. Action Logic (Open or Download)
-        async function handleAction(type) {
-            let blob = await getSavedFile();
-
-            // Agar memory mein nahi hai toh download karega (0-100% progress)
+        async function handle(action) {
+            let blob = await getFromLocal();
+            
+            // First time use
             if (!blob) {
-                try {
-                    blob = await fetchPDF();
-                } catch (err) {
-                    alert("Errore nel download. Controlla il nome del file.");
-                    return;
-                }
+                blob = await downloadAndCache();
             }
 
             const blobUrl = URL.createObjectURL(blob);
 
-            if (type === 'download') {
-                // Force Download for Safari
-                const a = document.createElement("a");
-                a.href = blobUrl;
-                a.download = "Merceologia_Alimentare.pdf";
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
+            if (action === 'open') {
+                // Safari bypass: window.open ki jagah location change ya iframe
+                // Isse popup blocker trigger nahi hota
+                window.location.href = blobUrl;
             } else {
-                // Open in new tab (Safari Friendly)
-                const newTab = window.open();
-                if (newTab) {
-                    newTab.location.href = blobUrl;
-                } else {
-                    alert("Per favore, abilita i popup per visualizzare il PDF.");
-                }
+                // Safari Force Download Trick
+                const link = document.createElement('a');
+                link.href = blobUrl;
+                link.setAttribute('download', 'Documento_Merceologia.pdf');
+                
+                // Safari needs the link to be in DOM
+                document.body.appendChild(link);
+                link.click();
+                
+                // Cleanup
+                setTimeout(() => {
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(blobUrl);
+                }, 200);
             }
-
-            // Cleanup memory
-            setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
         }
 
-        // Event Listeners
-        document.getElementById('openBtn').addEventListener('click', () => handleAction('open'));
-        document.getElementById('downloadBtn').addEventListener('click', () => handleAction('download'));
-
+        document.getElementById('openBtn').addEventListener('click', () => handle('open'));
+        document.getElementById('downloadBtn').addEventListener('click', () => handle('download'));
     </script>
 </body>
 </html>
