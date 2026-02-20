@@ -1,88 +1,60 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
-  <meta name="theme-color" content="#0b1220" />
-  <title>Merceologia Alimentare e Igiene degli Alimenti</title>
-  <link rel="stylesheet" href="./styles.css" />
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>Merceologia Alimentare</title>
+<link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-  <main class="page">
-    <section class="card">
 
-      <h1 class="title">
-        MERCEOLOGIA ALIMENTARE E<br />
-        IGIENE DEGLI ALIMENTI
-      </h1>
+<div class="container">
 
-      <p class="subtitle">
-        Dispensa del Modulo UF2 del corso BAR. Include dietetica,
-        nutrizione, merceologia di alimenti e bevande,
-        contaminazione e metodi di conservazione.
-      </p>
+  <h1>
+    MERCEOLOGIA ALIMENTARE E<br>
+    IGIENE DEGLI ALIMENTI
+  </h1>
 
-      <div class="actions">
+  <p class="description">
+    Dispensa completa del corso BAR. Include nozioni di nutrizione,
+    merceologia degli alimenti e igiene alimentare.
+  </p>
 
-        <!-- OPEN -->
-        <a class="btn"
-           href="./Merceologia_20alimentare_20e_20igiene_20alimenti_20CORSO_20BAR.pdf"
-           target="_blank">
-          <svg viewBox="0 0 24 24">
-            <path d="M14 3h7v7" />
-            <path d="M10 14L21 3" />
-            <path d="M21 14v7H3V3h7" />
-          </svg>
-          Apri il PDF
-        </a>
+  <div class="buttons">
 
-        <!-- DOWNLOAD -->
-        <button class="btn" id="downloadBtn">
-          <svg viewBox="0 0 24 24">
-            <path d="M12 3v12" />
-            <path d="M7 10l5 5 5-5" />
-            <path d="M5 21h14" />
-          </svg>
-          Scarica il PDF
-        </button>
+    <a class="btn"
+       href="Merceologia_20alimentare_20e_20igiene_20alimenti_20CORSO_20BAR.pdf"
+       target="_blank">
+       Apri il PDF
+    </a>
 
-        <!-- SHARE -->
-        <button class="btn primary" id="shareBtn">
-          <svg viewBox="0 0 24 24">
-            <circle cx="18" cy="5" r="3"/>
-            <circle cx="6" cy="12" r="3"/>
-            <circle cx="18" cy="19" r="3"/>
-            <path d="M8.5 13.5l7 4"/>
-            <path d="M15.5 6.5l-7 4"/>
-          </svg>
-          Condividi il PDF
-        </button>
+    <button class="btn" id="downloadBtn">
+       Scarica il PDF
+    </button>
 
-        <!-- QR -->
-        <button class="btn" id="qrBtn">
-          <svg viewBox="0 0 24 24">
-            <rect x="3" y="3" width="6" height="6"/>
-            <rect x="15" y="3" width="6" height="6"/>
-            <rect x="3" y="15" width="6" height="6"/>
-            <path d="M15 15h3v3h-3z"/>
-            <path d="M18 18h3v3h-3z"/>
-          </svg>
-          Crea QR Code
-        </button>
+    <button class="btn primary" id="shareBtn">
+       Condividi il PDF
+    </button>
 
-      </div>
-    </section>
-  </main>
+    <button class="btn" id="qrBtn">
+       Crea QR Code
+    </button>
 
-  <!-- QR MODAL -->
-  <div class="modal" id="qrModal">
-    <div class="modal-content">
-      <img id="qrImage" src="" alt="QR Code">
-    </div>
   </div>
 
-  <script src="./script.js"></script>
+</div>
+
+
+<!-- QR MODAL -->
+<div class="modal" id="qrModal">
+  <div class="modal-box">
+      <button class="close-btn" id="closeQr">✕</button>
+      <img id="qrImage" src="" alt="QR Code">
+  </div>
+</div>
+
+
+<script src="script.js"></script>
 </body>
 </html>
