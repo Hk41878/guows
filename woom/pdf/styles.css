@@ -23,9 +23,8 @@ html,body{
   min-height:100svh;
   display:flex;
   flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
+  justify-content:space-between;  /* 🔥 main change */
+  padding:70px 20px 40px;         /* 🔥 top & bottom spacing */
   text-align:center;
 }
 
@@ -36,7 +35,7 @@ h1{
   font-weight:800;
   letter-spacing:1.5px;
   line-height:1.2;
-  margin-bottom:20px;
+  margin-bottom:15px;
 }
 
 
@@ -44,7 +43,7 @@ h1{
 .description{
   max-width:650px;
   opacity:.85;
-  margin-bottom:35px;
+  margin-bottom:30px;
   font-size:clamp(14px,1.4vw,16px);
   line-height:1.5;
 }
@@ -56,6 +55,7 @@ h1{
   max-width:420px;
   display:grid;
   gap:16px;
+  margin:0 auto 10px auto;  /* 🔥 bottom spacing */
 }
 
 
@@ -200,6 +200,10 @@ h1{
 
 /* MOBILE OPTIMIZATION */
 @media (max-width:480px){
+
+  .container{
+    padding:60px 20px 30px;
+  }
 
   h1{
     font-size:20px;
