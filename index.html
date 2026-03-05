@@ -1,165 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GUOWS.com is for Sale</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domain for Sale</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --bg-color: #f1f5f9;
+            --text-color: #1e293b;
+        }
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: Arial, Helvetica, sans-serif;
-    }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', -apple-system, sans-serif; }
 
-    body {
-      height: 100vh;
-      background: #f5f7fa;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #1a1a1a;
-    }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
 
-    .container {
-      max-width: 720px;
-      width: 90%;
-      background: #ffffff;
-      padding: 48px 32px;
-      border-radius: 16px;
-      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.08);
-      text-align: center;
-    }
+        .card {
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+        }
 
-    h1 {
-      margin-bottom: 18px;
-      line-height: 1.2;
-    }
+        .badge {
+            background: #dcfce7;
+            color: #166534;
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
 
-    .domain {
-      display: block;
-      font-size: 46px;
-      font-weight: 900;
-      letter-spacing: 1px;
-      color: #1f3cff;
-    }
+        h1 { font-size: 1.8rem; margin-bottom: 8px; color: var(--primary-color); word-break: break-all; }
+        p { color: #64748b; margin-bottom: 25px; font-size: 15px; }
 
-    .sale-text {
-      display: block;
-      margin-top: 6px;
-      font-size: 22px;
-      font-weight: 600;
-      color: #555;
-    }
+        .form-group { text-align: left; margin-bottom: 15px; }
+        label { display: block; margin-bottom: 6px; font-weight: 600; font-size: 14px; }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.2s;
+        }
 
-    .tagline {
-      font-size: 16px;
-      color: #555;
-      margin-bottom: 34px;
-    }
+        input:focus, select:focus, textarea:focus { border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
 
-    .features {
-      margin-bottom: 34px;
-    }
+        .flex-row { display: flex; gap: 10px; }
+        .flex-row .currency { width: 35%; }
+        .flex-row .amount { width: 65%; }
 
-    .features li {
-      list-style: none;
-      margin: 10px 0;
-      font-size: 15px;
-      color: #333;
-    }
+        .checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 15px 0;
+    cursor: pointer;
+    font-size: 14px;
+    color: #475569;
+    white-space: nowrap;
+}
 
-    .contact p {
-      margin: 8px 0;
-      font-size: 15px;
-    }
+.checkbox-group input {
+    width: auto;
+    flex-shrink: 0;
+}
 
-    .buttons {
-      margin-top: 30px;
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
+        #customMsgArea { display: none; margin-top: 10px; }
 
-    .btn {
-      padding: 15px 28px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-size: 15px;
-      font-weight: bold;
-      transition: 0.2s ease;
-    }
+        .btn {
+            width: 100%;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 15px;
+            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+        }
 
-    .btn-whatsapp {
-      background: #25d366;
-      color: #fff;
-    }
+        .btn:hover { background: #1d4ed8; }
 
-    .btn-email {
-      background: #007bff;
-      color: #fff;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
-      opacity: 0.9;
-    }
-
-    .language-note {
-      margin-top: 32px;
-      font-size: 13px;
-      color: #666;
-    }
-  </style>
+        footer { margin-top: 25px; font-size: 13px; color: #94a3b8; border-top: 1px solid #f1f5f9; padding-top: 15px; }
+    </style>
 </head>
 <body>
 
-  <div class="container">
-    <h1>
-      <span class="domain">GUOWS.com</span>
-      <span class="sale-text">is for sale</span>
-    </h1>
+<div class="card">
+    <div class="badge">Premium Domain</div>
+    <h1 id="domainName">Loading...</h1>
+    <p>Direct purchase offer for this domain.</p>
 
-    <p class="tagline">
-      A clean, brand-ready domain available for serious buyers
-    </p>
-
-    <ul class="features">
-      <li>• Short and easy to remember</li>
-      <li>• Perfect for business or brand identity</li>
-      <li>• Professional and premium-looking domain</li>
-      <li>• Ready for immediate ownership transfer</li>
-    </ul>
-
-    <div class="contact">
-      <p><strong>Email:</strong> info@guows.com</p>
-      <p><strong>WhatsApp / Cell:</strong> +39 331 902 1033</p>
+    <div class="form-group">
+        <label>Your Full Name</label>
+        <input type="text" id="userName" placeholder="John Doe">
     </div>
 
-    <div class="buttons">
-      <a
-        class="btn btn-whatsapp"
-        href="https://wa.me/393319021033?text=Hello%2C%20I%20am%20interested%20to%20purchase%20the%20domain%20GUOWS.com."
-        target="_blank"
-      >
-        Contact on WhatsApp
-      </a>
-
-      <a
-        class="btn btn-email"
-        href="mailto:info@guows.com?subject=Interest%20in%20GUOWS.com%20Domain"
-      >
-        Contact via Email
-      </a>
+    <div class="form-group">
+        <label>Proposed Offer</label>
+        <div class="flex-row">
+            <select id="currency" class="currency">
+                <option value="USD">USD ($)</option>
+                <option value="EUR">EURO (€)</option>
+                <option value="INR">INR (₹)</option>
+            </select>
+            <input type="number" id="offerPrice" class="amount" placeholder="Amount">
+        </div>
     </div>
 
-    <div class="language-note">
-      Preferred language: Italian / English<br />
-      GUOWS — Thanks
+    <label class="checkbox-group">
+        <input type="checkbox" id="msgToggle" onclick="toggleMessage()"> Add a personal message?
+    </label>
+
+    <div id="customMsgArea" class="form-group">
+        <textarea id="customMessage" rows="3" placeholder="Write your message here..."></textarea>
     </div>
-  </div>
+
+    <button class="btn" onclick="sendEmail()">Submit Offer</button>
+
+    <footer>
+        Inquiries: <strong>info@vadhwa.com</strong>
+    </footer>
+</div>
+
+<script>
+    // Automatically detect domain
+    const currentDomain = window.location.hostname || "this domain";
+    document.getElementById('domainName').innerText = currentDomain;
+
+    // Show/Hide Message Area
+    function toggleMessage() {
+        const msgArea = document.getElementById('customMsgArea');
+        const checkbox = document.getElementById('msgToggle');
+        msgArea.style.display = checkbox.checked ? 'block' : 'none';
+    }
+
+    function sendEmail() {
+        const name = document.getElementById('userName').value.trim();
+        const currency = document.getElementById('currency').value;
+        const price = document.getElementById('offerPrice').value;
+        const isMsgChecked = document.getElementById('msgToggle').checked;
+        const userMsg = document.getElementById('customMessage').value.trim();
+        
+        const emailTo = "info@vadhwa.com";
+        
+        if(!name || !price) {
+            alert("Please provide your name and an offer amount.");
+            return;
+        }
+
+        // Prepare message content
+        let messageBody = `Hello Mr. Vadhwa,\n\n`;
+        messageBody += `I am interested in acquiring the domain: ${currentDomain}\n`;
+        messageBody += `My Name: ${name}\n`;
+        messageBody += `My Offer: ${price} ${currency}\n\n`;
+        
+        if(isMsgChecked && userMsg) {
+            messageBody += `Additional Message:\n"${userMsg}"\n\n`;
+        } else {
+            messageBody += `I would like to discuss the next steps for the purchase.\n\n`;
+        }
+        
+        messageBody += `Looking forward to your reply.\nRegards,\n${name}`;
+
+        const subject = `Purchase Offer: ${currentDomain} (${price} ${currency})`;
+        
+        // Final mailto URL
+        window.location.href = `mailto:${emailTo}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(messageBody)}`;
+    }
+</script>
 
 </body>
 </html>
